@@ -21,12 +21,30 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.doughpaze.R;;
+import com.example.doughpaze.address_activity;
+import com.example.doughpaze.models.Address;
+import com.example.doughpaze.models.AddressResponse;
 import com.example.doughpaze.models.FoodCart;
 import com.example.doughpaze.models.MyOrderResponse;
+import com.example.doughpaze.models.Response;
+import com.example.doughpaze.network.networkUtils;
 import com.example.doughpaze.order_confirm_activity;
+import com.example.doughpaze.utils.constants;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+
+import retrofit2.adapter.rxjava.HttpException;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.transactionItemHolder>  {
@@ -35,14 +53,18 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
     private CompositeSubscription mSubscriptions;
     private List<MyOrderResponse> myOrderResponseList;
     private SharedPreferences mSharedPreferences;
+    private Context context;
+    private ProgressDialog progressDialog;
 
 
 
 
 
 
-    public transactionAdapter(List<MyOrderResponse> list) {
+
+    public transactionAdapter(List<MyOrderResponse> list,Context context) {
         this.myOrderResponseList=list;
+        this.context=context;
 
     }
 
@@ -63,6 +85,20 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
         transactionItemHolder.rvItem.setAdapter(confirmOrderAdapter);
         transactionItemHolder.rvItem.setLayoutManager(layoutManager);
 
+        Date d1=new Date();
+        long diff= (d1.getTime()-myOrderResponse.getDate().getTime())/1000;
+        Log.w("time",String.valueOf(diff));
+        if(diff>1800 || !myOrderResponse.getOrder_status().equals("Ordered"))
+        {
+            transactionItemHolder.reorder.setVisibility(View.VISIBLE);
+            transactionItemHolder.cancel.setVisibility(View.GONE);
+        }
+        else
+        {
+            transactionItemHolder.reorder.setVisibility(View.GONE);
+            transactionItemHolder.cancel.setVisibility(View.VISIBLE);
+        }
+
 
         transactionItemHolder.reorder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,11 +114,44 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
                 editor.putString("cart",cart);
                 String address = gson.toJson(myOrderResponse.getAddress());
                 editor.putString("address",address);
+                editor.putString("reorder","yes");
                 editor.apply();
 
                 Intent intent=new Intent(transactionItemHolder.rvItem.getContext(),order_confirm_activity.class);
                 transactionItemHolder.rvItem.getContext().startActivity(intent);
 
+            }
+        });
+
+        transactionItemHolder.cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(transactionItemHolder.itemView.getContext())
+                        .setTitle("Cancel Order")
+                        .setMessage("Are you sure you want to cancel order??")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                progressDialog=new ProgressDialog(context);
+                                progressDialog.show();
+                                progressDialog.setContentView(R.layout.progress_loading);
+                                Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+                               if(myOrderResponse.getPayment_mode().equals("Online"))
+                               {
+                                   CANCEL_ONLINE_ORDER(myOrderResponse.get_id(),myOrderResponse.getOrderId(),
+                                           myOrderResponse.getPaymentDetails().getTransactionId(),myOrderResponse.getTotalAmount());
+                               }
+                               else
+                               {
+                                   CANCEL_OFFLINE_ORDER(myOrderResponse.get_id(),myOrderResponse.getOrderId());
+                               }
+
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         });
     }
@@ -97,6 +166,7 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
         private Button reorder;
         private TextView total;
         private RecyclerView rvItem;
+        private Button cancel;
 
 
 
@@ -105,13 +175,79 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
             reorder = itemView.findViewById(R.id.reorder_btn);
             total = itemView.findViewById(R.id.total);
             rvItem=itemView.findViewById(R.id.items);
+            cancel=itemView.findViewById(R.id.cancel_btn) ;
+            mSubscriptions = new CompositeSubscription();
+
+        }
+    }
+
+    private void CANCEL_ONLINE_ORDER(String id,String orderId,String trasnsactionId,Double amount)
+    {
+        mSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        String token = mSharedPreferences.getString(constants.TOKEN, null);
+        mSubscriptions.add(networkUtils.getRetrofit(token)
+                .CANCEL_ONLINE_ORDER(id,orderId,constants.MID,trasnsactionId,amount,GENERATE_ID())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse,this::handleError));
+    }
+
+    private void CANCEL_OFFLINE_ORDER(String id,String orderId)
+    {
+
+        mSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        String token = mSharedPreferences.getString(constants.TOKEN, null);
+        mSubscriptions.add(networkUtils.getRetrofit(token)
+                .CANCEL_OFFLINE_ORDER(id,orderId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse,this::handleError));
+    }
+
+
+    private void handleResponse(Response response) {
+        progressDialog.dismiss();
+        Toast.makeText(context, "Order Cancelled!", Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void handleError(Throwable error) {
+
+        progressDialog.dismiss();
+
+        if (error instanceof HttpException) {
+
+            Gson gson = new GsonBuilder().create();
+
+            try {
+
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Response response = gson.fromJson(errorBody,Response.class);
+                Toast.makeText(context, response.getMessage(), Toast.LENGTH_SHORT).show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show();
+            Log.e("error",error.toString());
+
         }
     }
 
 
 
 
-
+    private String GENERATE_ID()
+    {
+        String ts=String.valueOf(System.currentTimeMillis());
+        String rand= UUID.randomUUID().toString();
+        return ts;
+    }
 
 
 

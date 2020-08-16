@@ -1,10 +1,15 @@
 package com.example.doughpaze.models;
 
+import com.example.doughpaze.FoodList.PaymentDetails;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 public class MyOrderResponse {
+
+    @SerializedName("_id")
+    String _id;
 
     @SerializedName("customer_name")
     String customer_name;
@@ -16,7 +21,7 @@ public class MyOrderResponse {
     String customer_email;
 
     @SerializedName("orderId")
-    Double orderId;
+    String orderId;
 
     @SerializedName("Order_details")
     List<FoodCart> finalOrderList;
@@ -30,8 +35,17 @@ public class MyOrderResponse {
     @SerializedName("payment_mode")
     String payment_mode;
 
+    @SerializedName("date")
+    Date date;
 
-    public Double getOrderId() {
+    @SerializedName("order_status")
+    String order_status;
+
+    @SerializedName("payment_details")
+    PaymentDetails paymentDetails;
+
+
+    public String getOrderId() {
         return orderId;
     }
 
@@ -63,7 +77,7 @@ public class MyOrderResponse {
         return payment_mode;
     }
 
-    public void setOrderId(Double orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 
@@ -94,5 +108,39 @@ public class MyOrderResponse {
     public void setTotalAmount(Double totalAmount) {
         TotalAmount = totalAmount;
     }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setOrder_status(String order_status) {
+        this.order_status = order_status;
+    }
+
+    public String getOrder_status() {
+        return order_status;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public PaymentDetails getPaymentDetails() {
+        return paymentDetails;
+    }
+
+    public void setPaymentDetails(PaymentDetails paymentDetails) {
+        this.paymentDetails = paymentDetails;
+    }
 }
+
+
 

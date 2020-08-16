@@ -2,9 +2,10 @@ package com.example.doughpaze.FoodList;
 
 public class PaymentDetails {
     private String status,bankname, date, transactionId, paymentType, bankTransactionId;
-    private Double amountpaid,orderId;
+    private Double amountpaid;
+    String orderId;
 
-    public void setOrderId(Double orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 
@@ -37,12 +38,20 @@ public class PaymentDetails {
         this.transactionId = transactionId;
     }
 
-    public Double getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
     public Double getAmountpaid() {
         return amountpaid;
+    }
+
+    public String getBankTransactionId() {
+        return bankTransactionId;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
     }
 }
 

@@ -85,7 +85,7 @@ public class my_transaction_activity extends Activity {
     private void handleResponse(List<MyOrderResponse> finalOrder) {
 
         progressDialog.dismiss();
-        transactionAdapter transactionAdapter=new transactionAdapter(finalOrder);
+        transactionAdapter transactionAdapter=new transactionAdapter(finalOrder,this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvItem.setAdapter(transactionAdapter);
         rvItem.setLayoutManager(layoutManager);

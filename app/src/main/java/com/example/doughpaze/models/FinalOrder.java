@@ -2,6 +2,7 @@ package com.example.doughpaze.models;
 
 import com.example.doughpaze.FoodList.PaymentDetails;
 
+import java.util.Date;
 import java.util.List;
 
 public class FinalOrder {
@@ -9,10 +10,11 @@ public class FinalOrder {
     private Address address;
     private User user;
     private PaymentDetails paymentDetails;
-    private Double total, orderId;
+    private Double total;
     private boolean coupon_applied;
-    private String coupon_name;
+    private String coupon_name, orderId;
     private Double discount;
+    private Date date;
 
 
     public Address getAddress() {
@@ -47,11 +49,11 @@ public class FinalOrder {
         return total;
     }
 
-    public Double getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Double orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 
@@ -75,5 +77,11 @@ public class FinalOrder {
         this.coupon_applied = coupon_applied;
     }
 
+    public Date getDate() {
+        return date;
+    }
 
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }

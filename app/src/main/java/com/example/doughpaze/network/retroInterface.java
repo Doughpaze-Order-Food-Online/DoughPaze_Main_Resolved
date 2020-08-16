@@ -88,6 +88,13 @@ public interface retroInterface {
     @GET("my_coupons")
     Observable<List<Coupon>> GET_COUPONS();
 
+    @PUT("cancel_offline_order")
+    Observable<Response> CANCEL_OFFLINE_ORDER(@Query("id") String id,@Query("orderId") String orderId);
+
+    @PUT("cancel_online_order")
+    Observable<Response> CANCEL_ONLINE_ORDER(@Query("id") String id,@Query("orderId") String orderId, @Query("mid") String mid,
+                                                @Query("tid") String tid,@Query("amount") Double amount,@Query("refundId") String refundId);
+
 
 
 }

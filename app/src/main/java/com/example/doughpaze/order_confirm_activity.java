@@ -51,6 +51,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -207,9 +208,11 @@ public class order_confirm_activity extends Activity {
 
         final_order.setCoupon_applied(false);
         final_order.setTotal(Double.parseDouble(total.getText().toString()));
-        final_order.setOrderId(Double.parseDouble(GENERATE_ID()));
+        final_order.setOrderId(GENERATE_ID());
+        Date date=new Date();
+        final_order.setDate(date);
 
-        if(mSharedPreferences.getString("discount", null)!=null)
+        if(mSharedPreferences.getString("discount", null)!=null && !Objects.equals(mSharedPreferences.getString("reorder", null), "yes"))
         {
             final_order.setCoupon_applied(true);
             final_order.setCoupon_name(mSharedPreferences.getString("coupon_name", null));
@@ -306,13 +309,13 @@ public class order_confirm_activity extends Activity {
                 double taxamount = 0.05 * sum;
                 int deliveryfees = sum > 1000 ? 0 : 40;
 
-                if(mSharedPreferences.getString("discount", null)==null)
-                {
-                    total.setText(String.valueOf(sum + taxamount + deliveryfees));
-                }
-                else
+                if(mSharedPreferences.getString("discount", null)!=null  && !Objects.equals(mSharedPreferences.getString("reorder", null), "yes") )
                 {
                     total.setText(String.valueOf(sum + taxamount + deliveryfees-Double.parseDouble(Objects.requireNonNull(mSharedPreferences.getString("discount", null)))));
+                }
+                else
+                { total.setText(String.valueOf(sum + taxamount + deliveryfees));
+
                 }
 
 
@@ -356,7 +359,7 @@ public class order_confirm_activity extends Activity {
                 if(Objects.equals(bundle.get("RESPCODE"), "01") || Objects.equals(bundle.get("RESPCODE"), "400"))
                 {
                     paymentDetails.setBankname(bundle.getString("BANKNAME"));
-                    paymentDetails.setOrderId(Double.parseDouble(bundle.getString("ORDERID")));
+                    paymentDetails.setOrderId(bundle.getString("ORDERID"));
                     paymentDetails.setAmountpaid(Double.parseDouble(bundle.getString("TXNAMOUNT")));
                     paymentDetails.setDate(bundle.getString("TXNDATE"));
                     paymentDetails.setTransactionId(bundle.getString("TXNID"));
@@ -479,8 +482,10 @@ public class order_confirm_activity extends Activity {
         final_order.setOrderId(paymentDetails.getOrderId());
         final_order.setTotal(paymentDetails.getAmountpaid());
         final_order.setCoupon_applied(false);
+        Date date=new Date();
+        final_order.setDate(date);
 
-        if(mSharedPreferences.getString("discount", null)!=null)
+        if(mSharedPreferences.getString("discount", null)!=null  && !Objects.equals(mSharedPreferences.getString("reorder", null), "yes"))
         {
             final_order.setCoupon_applied(true);
             final_order.setCoupon_name(mSharedPreferences.getString("coupon_name", null));
@@ -545,6 +550,14 @@ public class order_confirm_activity extends Activity {
         finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
 
-
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString("reorder",null);
+        editor.apply();
+    }
 }
