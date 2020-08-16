@@ -211,7 +211,7 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
 
     private void handleResponse(Response response) {
         progressDialog.dismiss();
-        Toast.makeText(context, "Order Cancelled!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, response.getMessage(), Toast.LENGTH_SHORT).show();
 
     }
 
