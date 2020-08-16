@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/dashboard_icon"
+        android:icon="@drawable/ic_baseline_store_24"
+        android:title="@string/homepage"/>
+
+    <item
+        android:id="@+id/offers_icon"
+        android:icon="@drawable/ic_baseline_stars_24"
+        android:title="@string/offers"/>
+    <item
+        android:id="@+id/cart_icon"
+        android:icon="@drawable/ic_baseline_shopping_cart_24"
+        android:title="@string/cart"/>
+
+    <item
+        android:id="@+id/account_icon"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:title="@string/account"/>
+
+</menu>
