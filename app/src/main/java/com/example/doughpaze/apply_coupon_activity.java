@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,16 +63,17 @@ public class apply_coupon_activity extends Activity implements finishActivity {
         setContentView(R.layout.apply_coupon_activity);
 
         mSubscriptions = new CompositeSubscription();
-        rvItem=findViewById(R.id.coupon_list_view);
-        coupon=findViewById(R.id.enter_edit_txt);
-        apply=findViewById(R.id.apply);
+        rvItem = findViewById(R.id.coupon_list_view);
+        coupon = findViewById(R.id.enter_edit_txt);
+        apply = findViewById(R.id.apply);
 
 
-
-        progressDialog=new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
         progressDialog.show();
         progressDialog.setContentView(R.layout.progress_loading);
         Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         FETCH_COUPONS();
 
