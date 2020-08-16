@@ -10,6 +10,9 @@ public class FinalOrder {
     private User user;
     private PaymentDetails paymentDetails;
     private Double total, orderId;
+    private boolean coupon_applied;
+    private String coupon_name;
+    private Double discount;
 
 
     public Address getAddress() {
@@ -59,4 +62,18 @@ public class FinalOrder {
     public void setPaymentDetails(PaymentDetails paymentDetails) {
         this.paymentDetails = paymentDetails;
     }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+
+    public void setCoupon_name(String coupon_name) {
+        this.coupon_name = coupon_name;
+    }
+
+    public void setCoupon_applied(boolean coupon_applied) {
+        this.coupon_applied = coupon_applied;
+    }
+
+
 }

@@ -205,8 +205,16 @@ public class order_confirm_activity extends Activity {
         user.setName(mSharedPreferences.getString(constants.NAME, null));
         final_order.setUser(user);
 
+        final_order.setCoupon_applied(false);
         final_order.setTotal(Double.parseDouble(total.getText().toString()));
         final_order.setOrderId(Double.parseDouble(GENERATE_ID()));
+
+        if(mSharedPreferences.getString("discount", null)!=null)
+        {
+            final_order.setCoupon_applied(true);
+            final_order.setCoupon_name(mSharedPreferences.getString("coupon_name", null));
+            final_order.setDiscount(Double.parseDouble(Objects.requireNonNull(mSharedPreferences.getString("discount", null))));
+        }
 
         String token = mSharedPreferences.getString(constants.TOKEN, null);
         mSubscriptions.add(networkUtils.getRetrofit(token)
@@ -297,7 +305,16 @@ public class order_confirm_activity extends Activity {
 
                 double taxamount = 0.05 * sum;
                 int deliveryfees = sum > 1000 ? 0 : 40;
-                total.setText(String.valueOf(sum + taxamount + deliveryfees));
+
+                if(mSharedPreferences.getString("discount", null)==null)
+                {
+                    total.setText(String.valueOf(sum + taxamount + deliveryfees));
+                }
+                else
+                {
+                    total.setText(String.valueOf(sum + taxamount + deliveryfees-Double.parseDouble(Objects.requireNonNull(mSharedPreferences.getString("discount", null)))));
+                }
+
 
             }
 
@@ -461,6 +478,14 @@ public class order_confirm_activity extends Activity {
 
         final_order.setOrderId(paymentDetails.getOrderId());
         final_order.setTotal(paymentDetails.getAmountpaid());
+        final_order.setCoupon_applied(false);
+
+        if(mSharedPreferences.getString("discount", null)!=null)
+        {
+            final_order.setCoupon_applied(true);
+            final_order.setCoupon_name(mSharedPreferences.getString("coupon_name", null));
+            final_order.setDiscount(Double.parseDouble(Objects.requireNonNull(mSharedPreferences.getString("discount", null))));
+        }
 
 
         String token = mSharedPreferences.getString(constants.TOKEN, null);
@@ -511,6 +536,8 @@ public class order_confirm_activity extends Activity {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString("cart",null);
         editor.putString("address",null);
+        editor.putString("discount",null);
+        editor.putString("coupon_name",null);
         editor.apply();
 
         Intent intent=new Intent(order_confirm_activity.this,order_sucess_activity.class);

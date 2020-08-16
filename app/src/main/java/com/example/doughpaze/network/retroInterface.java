@@ -2,6 +2,7 @@ package com.example.doughpaze.network;
 
 import com.example.doughpaze.models.Address;
 import com.example.doughpaze.models.AddressResponse;
+import com.example.doughpaze.models.Coupon;
 import com.example.doughpaze.models.FinalOrder;
 import com.example.doughpaze.models.Food_Response;
 import com.example.doughpaze.models.MyOrderResponse;
@@ -83,6 +84,9 @@ public interface retroInterface {
 
     @GET("my_orders")
     Observable<List<MyOrderResponse>> GET_TRANSACTIONS(@Query("mobile_no") String mobile);
+
+    @GET("my_coupons")
+    Observable<List<Coupon>> GET_COUPONS();
 
 
 

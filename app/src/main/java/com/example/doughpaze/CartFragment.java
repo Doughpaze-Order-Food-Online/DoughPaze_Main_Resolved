@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -26,6 +27,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static java.lang.Integer.parseInt;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,9 +41,10 @@ public class CartFragment extends Fragment implements ChangePrice {
 private RecyclerView recyclerView;
 private CartAdapter cartAdapter;
 List<FoodCart> Cartlist;
-private TextView Itemtotal,tax,delivery,topay,empty;
+private TextView Itemtotal,tax,delivery,topay,empty, t1,t2,t3,t4;
 private ScrollView scrollView;
 private Button proceed;
+private RelativeLayout apply_coupon;
 
     private SharedPreferences mSharedPreferences;
 
@@ -63,6 +68,11 @@ private Button proceed;
         empty = (TextView) view.findViewById(R.id.empty);
         scrollView = (ScrollView) view.findViewById(R.id.scrollView4);
         proceed=(Button)view.findViewById(R.id.proceed);
+        apply_coupon=(RelativeLayout)view.findViewById(R.id.apply_coupon);
+        t1=view.findViewById(R.id.dash_line1);
+        t2=view.findViewById(R.id.Discount_txt);
+        t3=view.findViewById(R.id.rs_txt4);
+        t4=view.findViewById(R.id.discount_value);
 
 
         Cartlist = CART();
@@ -71,15 +81,9 @@ private Button proceed;
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setAdapter(cartAdapter);
         recyclerView.setLayoutManager(layoutManager);
-        try {
             TOTAL(Cartlist);
 
-        }catch (NullPointerException e)
-        {
-            e.printStackTrace();
-            empty.setVisibility(View.VISIBLE);
-            scrollView.setVisibility(View.GONE);
-        }
+
 
         proceed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +109,14 @@ private Button proceed;
             }
         });
 
+        apply_coupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(),apply_coupon_activity.class);
+                startActivityForResult(intent,1);
+            }
+        });
+
         return view;
     }
 
@@ -125,7 +137,7 @@ private Button proceed;
 
     @Override
     public void TOTAL(List<FoodCart> list) {
-        {
+        try{
             if (!list.isEmpty()) {
 
 
@@ -141,7 +153,32 @@ private Button proceed;
                 int deliveryfees = sum > 1000 ? 0 : 40;
                 delivery.setText(String.valueOf(deliveryfees));
 
-                topay.setText(String.valueOf(sum + taxamount + deliveryfees));
+                mSharedPreferences = PreferenceManager
+                        .getDefaultSharedPreferences(getContext());
+
+
+
+
+                if(mSharedPreferences.getString("discount", null)==null)
+                {
+                    topay.setText(String.valueOf(sum + taxamount + deliveryfees));
+                    t1.setVisibility(View.GONE);
+                    t2.setVisibility(View.GONE);
+                    t3.setVisibility(View.GONE);
+                    t4.setVisibility(View.GONE);
+
+                }
+                else
+                {
+                    topay.setText(String.valueOf(sum + taxamount + deliveryfees-Double.parseDouble(Objects.requireNonNull(mSharedPreferences.getString("discount", null)))));
+
+                    t4.setText(Objects.requireNonNull(mSharedPreferences.getString("discount", null)));
+                    t1.setVisibility(View.VISIBLE);
+                    t2.setVisibility(View.VISIBLE);
+                    t3.setVisibility(View.VISIBLE);
+                    t4.setVisibility(View.VISIBLE);
+                }
+
 
                 empty.setVisibility(View.GONE);
                 scrollView.setVisibility(View.VISIBLE);
@@ -153,11 +190,18 @@ private Button proceed;
                 empty.setVisibility(View.VISIBLE);
                 scrollView.setVisibility(View.GONE);
             }
+        }catch (NullPointerException e)
+        {
+            e.printStackTrace();
+            empty.setVisibility(View.VISIBLE);
+            scrollView.setVisibility(View.GONE);
         }
     }
 
-
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        TOTAL(CART());
+    }
 }
 

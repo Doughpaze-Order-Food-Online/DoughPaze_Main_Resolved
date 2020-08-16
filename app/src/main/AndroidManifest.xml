@@ -17,9 +17,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".HelpAndSupportActivity"></activity>
-        <activity android:name=".TermsAndPoliciesActivity" />
-        <activity android:name=".feedBack_Activity" />
+        <activity android:name=".HelpAndSupportActivity"
+            android:screenOrientation="portrait" ></activity>
+        <activity android:name=".TermsAndPoliciesActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".feedBack_Activity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".apply_coupon_activity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
