@@ -22,6 +22,9 @@ public class Coupon {
     @SerializedName("limit")
      private int limit;
 
+    @SerializedName("coupon_location")
+    String coupon_location;
+
 
     public String getCategory() {
         return category;
@@ -69,5 +72,13 @@ public class Coupon {
 
     public int getLimit() {
         return limit;
+    }
+
+    public String getCoupon_location() {
+        return coupon_location;
+    }
+
+    public void setCoupon_location(String coupon_location) {
+        this.coupon_location = coupon_location;
     }
 }

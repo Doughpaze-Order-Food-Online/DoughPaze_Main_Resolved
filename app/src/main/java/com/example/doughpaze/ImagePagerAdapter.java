@@ -64,7 +64,7 @@ public class ImagePagerAdapter extends PagerAdapter {
         {
             Glide
                     .with(context)
-                    .load(R.drawable.loading3)
+                    .load(R.drawable.image_loading)
                     .into(imageView);
         }
         else
@@ -72,7 +72,7 @@ public class ImagePagerAdapter extends PagerAdapter {
             Glide
                     .with(context)
                     .load(arrayList.get(position))
-                    .thumbnail(Glide.with(context).load(R.drawable.loading3))
+                    .placeholder(R.drawable.image_loading)
                     .fitCenter()
                     .diskCacheStrategy(DiskCacheStrategy.DATA)
                     .into(imageView);
