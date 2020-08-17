@@ -137,7 +137,6 @@
     <string name="size">Size</string>
     <string name="cart_is_empty">Cart is Empty</string>
     <string name="get_10_off_over_pizzas">Get 10% off over Pizzas</string>
-    <string name="order_details">Order Details</string>
     <string name="bill_total">\  Bill Total :</string>
     <string name="proceed_to_pay">Place Order</string>
     <string name="cash_on_delivery">\Cash On Delivery</string>
@@ -146,7 +145,7 @@
     <string name="my_transactions_amp_norders"><![CDATA[My Transactions &\nOrders]]></string>
     <string name="amount_paid">Total Amount : </string>
     <string name="reorder">Reorder</string>
-    <string name="small">Small</string>
+    <string name="small">Small -\ </string>
     <string name="delivery_address">Delivery Address</string>
     <string name="terms_and_policies">Terms and Policies</string>
     <string name="help_contact_us">Help/Contact Us</string>
@@ -154,7 +153,7 @@
     <string name="order_placed_nsuccessfully">Order Placed\nSuccessfully !!</string>
     <string name="cancel">Cancel</string>
     <string name="order_id">Order ID:\ </string>
-    <string name="payment_mode">\"Payment Mode:\ "</string>
+    <string name="payment_mode">Payment Mode:\ </string>
     <string name="online">Online</string>
     <string name="transaction_id">Transaction ID:\ </string>
     <string name="status">Status:\ </string>
@@ -166,6 +165,13 @@
     <string name="enter_feedback">Enter feedback</string>
     <string name="help_or_contact_us">Help Or Contact Us</string>
     <string name="coupon_applied">Coupon Applied</string>
+    <string name="order_details">Order Details</string>
+    <string name="bck_to_home">Back to home</string>
+    <string name="select_pizza_size">Select Pizza Size</string>
+    <string name="large">Large</string>
+    <string name="select_quantity">Select Quantity</string>
+    <string name="largeee">Large -\ </string>
+    <string name="smallll">Small</string>
     >>>>>>> fd2a430ea5c89a347bfea37eff252d789e63a659
 
     <string-array name="PizzaSize">

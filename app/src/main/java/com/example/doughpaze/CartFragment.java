@@ -29,6 +29,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import static java.lang.Integer.parseInt;
@@ -190,7 +191,7 @@ private ImageView remove;
                 Itemtotal.setText(String.valueOf(sum));
 
                 double taxamount = 0.05 * sum;
-                tax.setText(String.valueOf(taxamount));
+                tax.setText(String.format(Locale.ENGLISH, "%.2f", taxamount));
 
                 int deliveryfees = sum > 1000 ? 0 : 40;
                 delivery.setText(String.valueOf(deliveryfees));
@@ -203,7 +204,7 @@ private ImageView remove;
 
                 if(mSharedPreferences.getString("discount", null)==null)
                 {
-                    topay.setText(String.valueOf(sum + taxamount + deliveryfees));
+                    topay.setText(String.format(Locale.ENGLISH, "%.2f", sum + taxamount + deliveryfees));
                     t1.setVisibility(View.GONE);
                     t2.setVisibility(View.GONE);
                     t3.setVisibility(View.GONE);
@@ -217,7 +218,7 @@ private ImageView remove;
                 }
                 else
                 {
-                    topay.setText(String.valueOf(sum + taxamount + deliveryfees-Double.parseDouble(Objects.requireNonNull(mSharedPreferences.getString("discount", null)))));
+                    topay.setText(String.format(Locale.ENGLISH, "%.2f", sum + taxamount + deliveryfees - Double.parseDouble(Objects.requireNonNull(mSharedPreferences.getString("discount", null)))));
 
                     t4.setText(Objects.requireNonNull(mSharedPreferences.getString("discount", null)));
                     t7.setText(Objects.requireNonNull(mSharedPreferences.getString("coupon_name", null)));

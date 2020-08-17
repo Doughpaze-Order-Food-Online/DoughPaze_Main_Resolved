@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:elevation="14dp"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/select_pizza_size"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/dimen_18sp" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="@dimen/dimen_8dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/smallll"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/dimen_18sp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:text="@string/large"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/dimen_18sp" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/select_quantity"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/dimen_18sp" />
+
+            <RelativeLayout
+                android:id="@+id/plus_minus_Or_AddContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="@dimen/dimen_8dp"
+                android:visibility="visible">
+
+                <Button
+                    android:id="@+id/plus_btn_1"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_toEndOf="@id/quantity_text_view_1"
+                    android:background="@drawable/round_button_shape"
+                    android:text="@string/plus"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/quantity_text_view_1"
+                    style="@style/headertext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_toEndOf="@id/minus_btn_1"
+                    android:gravity="center_vertical"
+                    android:padding="4dp"
+                    android:text="@string/zero" />
+
+                <Button
+                    android:id="@+id/minus_btn_1"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/round_button_shape"
+                    android:text="@string/minus"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical"
     tools:context=".ProfileFragment">
 
@@ -41,7 +42,7 @@
                     android:maxWidth="260dp"
                     android:text="@string/siddhant_deepak_khobragade"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/mobile_no"
@@ -50,7 +51,7 @@
                     android:layout_marginTop="@dimen/dimen_16dp"
                     android:layout_marginBottom="@dimen/dimen_16dp"
                     android:text="@string/email_id"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/email"
@@ -58,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/mobile_number"
                     android:layout_marginBottom="@dimen/dimen_16dp"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/date_of_birth"
@@ -96,9 +97,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:layout_marginBottom="@dimen/dimen_16dp"
+            android:gravity="center_vertical"
             android:textColor="@color/colorPrimaryText"
             android:text="@string/manage_addresses"
-            android:textSize="24sp"
+            android:textSize="18sp"
             app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
             app:drawableStartCompat="@drawable/ic_baseline_notes_24"
             app:drawableTint="@color/colorPrimaryText" />
@@ -114,9 +116,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
+            android:gravity="center_vertical"
             android:text="@string/my_transactions"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="24sp"
+            android:textSize="18sp"
             app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
             app:drawableStartCompat="@drawable/ic_baseline_payment_24"
             app:drawableTint="@color/colorPrimaryText" />

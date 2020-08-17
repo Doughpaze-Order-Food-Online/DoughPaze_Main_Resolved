@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_navigation_container">
 
+
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/bottom_nav_menu"
         android:layout_width="match_parent"
