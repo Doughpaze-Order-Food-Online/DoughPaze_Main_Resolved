@@ -283,7 +283,7 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
     private void alertBox(SubItem subItem, Context context)
     {
             LayoutInflater layoutInflater= LayoutInflater.from(context);
-            final View offerView=layoutInflater.inflate(R.layout.progress_loading,null);
+            final View offerView=layoutInflater.inflate(R.layout.pizza_list_item_popup,null);
 
 
             progressDialog=new ProgressDialog(context);
