@@ -73,7 +73,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/round_button_shape"
+        android:background="@drawable/login_bordershape"
         android:elevation="16dp"
         android:text="@string/add_to_cart" />
 
