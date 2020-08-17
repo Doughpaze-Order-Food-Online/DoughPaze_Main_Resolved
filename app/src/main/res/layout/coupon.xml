@@ -2,17 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        app:cardCornerRadius="16dp">
+        app:cardCornerRadius="20dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical">
@@ -21,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="64dp"
                 android:layout_marginRight="32dp"
                 android:orientation="horizontal">
 
@@ -60,14 +60,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:padding="16dp"
-                android:text="@string/pay_with_indusind_credit_card_to_avail_this_offer"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:text="@string/yay"
                 android:textColor="@color/colorPrimary"
@@ -79,11 +71,12 @@
     </androidx.cardview.widget.CardView>
 
     <ImageView
+        android:id="@+id/discount_img"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_above="@+id/view"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-25dp"
+        android:layout_marginBottom="-60dp"
         android:contentDescription="@string/todo"
         android:elevation="2dp"
         android:src="@drawable/discount" />
