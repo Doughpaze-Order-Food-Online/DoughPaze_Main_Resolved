@@ -173,6 +173,7 @@
     <string name="largeee">Large -\ </string>
     <string name="smallll">Small</string>
     <string name="add_to_cart2">add to cart</string>
+    <string name="copy_to_clipboard">Copy to clipboard</string>
     >>>>>>> fd2a430ea5c89a347bfea37eff252d789e63a659
 
     <string-array name="PizzaSize">
