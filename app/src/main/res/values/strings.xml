@@ -165,6 +165,7 @@
     <string name="tell_us_what_you_love_about_the_app_or_what_could_be_we_doing_better">Tell us what you love about the app or what could be we doing better?</string>
     <string name="enter_feedback">Enter feedback</string>
     <string name="help_or_contact_us">Help Or Contact Us</string>
+    <string name="coupon_applied">Coupon Applied</string>
     >>>>>>> fd2a430ea5c89a347bfea37eff252d789e63a659
 
     <string-array name="PizzaSize">
