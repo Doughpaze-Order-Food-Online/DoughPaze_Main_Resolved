@@ -16,7 +16,7 @@
         android:layout_marginBottom="16dp"
         android:text="@string/address_details"
         android:textColor="@color/colorPrimaryText"
-        android:textSize="36sp" />
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/location"
@@ -32,7 +32,7 @@
         android:padding="8dp"
         android:text="@string/use_current_location"
         android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
+        android:textSize="14sp"
         tools:targetApi="m" />
 
     <TextView

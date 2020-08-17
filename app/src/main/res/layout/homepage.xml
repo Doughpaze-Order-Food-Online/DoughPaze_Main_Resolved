@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".MainActivity"
     tools:openDrawer="start">
 
@@ -34,6 +35,33 @@
             android:contentDescription="@string/todo"
             android:scaleType="fitXY"
             android:src="@drawable/logo_doughpaze" />
+
+        <ImageView
+            android:id="@+id/cart_Img"
+            android:layout_width="48dp"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_baseline_add_shopping_cart_24"
+            android:tint="@color/colorPrimaryText"
+            app:tint="@color/colorPrimaryText"
+            tools:ignore="UseAppTint" />
+
+        <TextView
+            android:id="@+id/cart_fill_update_txt"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/round_button_shape"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="@string/_1"
+            android:textColor="@color/colorPrimaryText"
+            android:visibility="visible" />
     </RelativeLayout>
 
     <ScrollView
@@ -412,7 +440,7 @@
                 android:layout_height="200dp"
                 android:layout_below="@id/topOffers_txt"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="96dp"
+                android:layout_marginBottom="80dp"
                 android:background="@android:color/transparent" />
 
         </RelativeLayout>

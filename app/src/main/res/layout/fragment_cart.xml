@@ -4,21 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".CartFragment">
-
-    <ImageView
-        android:id="@+id/back_btn"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/ic_baseline_arrow_back_24"
-        android:tint="@color/colorPrimaryText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorPrimaryText"
-        tools:ignore="UseAppTint" />
 
     <TextView
         android:id="@+id/textView"
@@ -28,7 +15,7 @@
         android:fontFamily="sans-serif-medium"
         android:text="@string/cart"
         android:textColor="@color/colorPrimary"
-        android:textSize="36sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,8 +23,8 @@
 
     <TextView
         android:id="@+id/empty"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/cart_is_empty"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -253,7 +240,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
                     android:background="#e0e0e0"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <TextView
 
@@ -264,7 +251,7 @@
                     android:text="@string/discount"
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <TextView
 
@@ -272,12 +259,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/dash_line1"
-                    android:layout_toStartOf="@id/Taxes_charges_txt"
+                    android:layout_toStartOf="@id/discount_value"
                     android:fontFamily="sans-serif-medium"
                     android:text="@string/rs"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="14sp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <TextView
 
@@ -290,7 +277,7 @@
                     android:text="₹0.00"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="14sp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/dash_line2"
@@ -298,7 +285,8 @@
                     android:layout_height="2dp"
                     android:layout_below="@id/Discount_txt"
                     android:layout_marginTop="16dp"
-                    android:background="#e0e0e0" />
+                    android:background="#e0e0e0"
+                    android:visibility="visible" />
 
                 <TextView
 
@@ -310,7 +298,7 @@
                     android:text="@string/coupon_applied"
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <TextView
 
@@ -327,7 +315,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="14sp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
 
                 <ImageView
@@ -340,6 +328,7 @@
                     android:src="@drawable/ic_baseline_remove_circle_outline_24"
                     android:tint="@color/colorPrimaryText"
                     app:tint="@color/colorPrimaryText"
+                    android:visibility="gone"
                     tools:ignore="UseAppTint" />
 
                 <TextView
@@ -349,7 +338,8 @@
                     android:layout_below="@id/applied_txt"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:background="#e0e0e0" />
+                    android:background="#e0e0e0"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/toPay_txt"

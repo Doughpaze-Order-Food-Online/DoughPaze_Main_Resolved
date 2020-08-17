@@ -154,7 +154,7 @@
     <string name="order_placed_nsuccessfully">Order Placed\nSuccessfully !!</string>
     <string name="cancel">Cancel</string>
     <string name="order_id">Order ID:\ </string>
-    <string name="payment_mode">\"Payment Mode:\ "</string>
+    <string name="payment_mode">Payment Mode:\ </string>
     <string name="online">Online</string>
     <string name="transaction_id">Transaction ID:\ </string>
     <string name="status">Status:\ </string>
@@ -166,6 +166,7 @@
     <string name="enter_feedback">Enter feedback</string>
     <string name="help_or_contact_us">Help Or Contact Us</string>
     <string name="coupon_applied">Coupon Applied</string>
+    <string name="order_details">Order Details</string>
     >>>>>>> fd2a430ea5c89a347bfea37eff252d789e63a659
 
     <string-array name="PizzaSize">
