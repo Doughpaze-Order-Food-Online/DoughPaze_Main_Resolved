@@ -27,9 +27,9 @@
 
     <Button
         android:id="@+id/apply_btn"
-        android:layout_width="64dp"
+        android:layout_width="wrap_content"
         android:layout_height="44dp"
-        android:text="@string/apply"
+        android:text="@string/copy_to_clipboard"
         android:textColor="@color/colorPrimary"
         android:background="@android:color/transparent"
         android:layout_alignParentEnd="true"
