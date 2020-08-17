@@ -151,11 +151,29 @@
             android:textSize="@dimen/dimen_18sp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/items"
+            android:id="@+id/recycler_item_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/transaction_txt"
             android:layout_marginTop="16dp" />
+
+
+        <Button
+            android:id="@+id/proceed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recycler_item_container"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="64dp"
+            android:background="@drawable/login_bordershape"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/bck_to_home"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="24sp"
+            app:fontFamily="sans-serif-medium" />
 
 
     </RelativeLayout>

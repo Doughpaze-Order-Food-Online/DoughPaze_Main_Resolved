@@ -37,31 +37,77 @@
         android:textSize="14sp" />
 
     <LinearLayout
-        android:id="@+id/price_container"
+        android:id="@+id/prices_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/foodName_txt_1"
         android:layout_centerHorizontal="true"
-        android:orientation="horizontal"
-        android:visibility="visible">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/Rupees_txt_"
+
+        <RelativeLayout
+            android:id="@+id/price_container1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/rs"
-            android:textColor="@color/colorOrange"
-            android:textSize="16sp" />
+            android:layout_gravity="center_horizontal"
+            android:visibility="visible">
 
-        <TextView
-            android:id="@+id/foodPrice_txt_1"
+            <TextView
+                android:id="@+id/small_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/small"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/Rupees_txt_"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/small_txt"
+                android:text="@string/rs"
+                android:textColor="@color/colorOrange" />
+
+            <TextView
+                android:id="@+id/foodPrice_txt_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/Rupees_txt_"
+                android:textColor="@color/colorOrange"
+                tools:text="100" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/price_container2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/colorOrange"
-            android:textSize="16sp"
-            tools:text="₹1000.00" />
+            android:layout_gravity="center_horizontal"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/large_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/largeee"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/Rupees_txt_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/large_txt"
+                android:text="@string/rs"
+                android:textColor="@color/colorOrange" />
+
+            <TextView
+                android:id="@+id/foodPrice_txt_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/Rupees_txt_1"
+                android:text="100"
+                android:textColor="@color/colorOrange" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
@@ -71,7 +117,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:theme="@style/MatchSpinnerTheme"
-        android:layout_below="@id/price_container"
+        android:layout_below="@id/prices_container"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:gravity="center_vertical"
@@ -81,13 +127,13 @@
 
     <Button
         android:id="@+id/add"
-        android:layout_width="104dp"
+        android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:layout_below="@id/static_size_spinner"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/round_button_shape"
+        android:background="@drawable/login_bordershape"
         android:elevation="16dp"
         android:text="@string/add_to_cart" />
 
