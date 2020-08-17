@@ -17,14 +17,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".HelpAndSupportActivity"
-            android:screenOrientation="portrait" ></activity>
-        <activity android:name=".TermsAndPoliciesActivity"
+        <activity android:name=".ItemDescriptionActivity"></activity>
+        <activity
+            android:name=".HelpAndSupportActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".feedBack_Activity"
+        <activity
+            android:name=".TermsAndPoliciesActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".apply_coupon_activity"
+        <activity
+            android:name=".feedBack_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".apply_coupon_activity"
             android:screenOrientation="portrait" />
 
         <meta-data
