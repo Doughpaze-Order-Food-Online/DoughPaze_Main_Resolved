@@ -119,7 +119,8 @@
         android:layout_marginTop="8dp"
         android:gravity="center_vertical"
         android:text="@string/size"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="gone"/>
 
 
     <Button
