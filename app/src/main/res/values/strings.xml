@@ -172,6 +172,7 @@
     <string name="select_quantity">Select Quantity</string>
     <string name="largeee">Large -\ </string>
     <string name="smallll">Small</string>
+    <string name="add_to_cart2">add to cart</string>
     >>>>>>> fd2a430ea5c89a347bfea37eff252d789e63a659
 
     <string-array name="PizzaSize">
