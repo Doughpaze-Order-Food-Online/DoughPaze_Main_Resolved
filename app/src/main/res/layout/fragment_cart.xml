@@ -253,7 +253,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
                     android:background="#e0e0e0"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <TextView
 
@@ -264,7 +264,7 @@
                     android:text="@string/discount"
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <TextView
 
@@ -277,7 +277,7 @@
                     android:text="@string/rs"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="14sp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <TextView
 
@@ -290,7 +290,7 @@
                     android:text="₹0.00"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="14sp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/dash_line2"
@@ -298,6 +298,7 @@
                     android:layout_height="2dp"
                     android:layout_below="@id/Discount_txt"
                     android:layout_marginTop="16dp"
+                    android:visibility="gone"
                     android:background="#e0e0e0" />
 
                 <TextView
@@ -310,7 +311,7 @@
                     android:text="@string/coupon_applied"
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <TextView
 
@@ -327,7 +328,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="14sp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
 
                 <ImageView
@@ -340,6 +341,7 @@
                     android:src="@drawable/ic_baseline_remove_circle_outline_24"
                     android:tint="@color/colorPrimaryText"
                     app:tint="@color/colorPrimaryText"
+                    android:visibility="gone"
                     tools:ignore="UseAppTint" />
 
                 <TextView

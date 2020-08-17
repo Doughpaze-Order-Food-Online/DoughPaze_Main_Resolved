@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -42,11 +43,12 @@ public class CartFragment extends Fragment implements ChangePrice {
 private RecyclerView recyclerView;
 private CartAdapter cartAdapter;
 List<FoodCart> Cartlist;
-private TextView Itemtotal,tax,delivery,topay,empty, t1,t2,t3,t4;
+private TextView Itemtotal,tax,delivery,topay,empty, t1,t2,t3,t4,t5,t6,t7;
 private ScrollView scrollView;
 private Button proceed;
 private RelativeLayout apply_coupon;
 
+private ImageView remove;
     private SharedPreferences mSharedPreferences;
 
     public CartFragment() {
@@ -74,6 +76,10 @@ private RelativeLayout apply_coupon;
         t2=view.findViewById(R.id.Discount_txt);
         t3=view.findViewById(R.id.rs_txt4);
         t4=view.findViewById(R.id.discount_value);
+        t5=view.findViewById(R.id.dash_line2);
+        t6=view.findViewById(R.id.applied_txt);
+        t7=view.findViewById(R.id.coupon_applied);
+        remove=view.findViewById(R.id.remove_coupon);
 
 
         Cartlist = CART();
@@ -138,6 +144,21 @@ private RelativeLayout apply_coupon;
             }
         });
 
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSharedPreferences = PreferenceManager
+                        .getDefaultSharedPreferences(getContext());
+
+                SharedPreferences.Editor editor = mSharedPreferences.edit();
+                editor.putString("discount",null);
+                editor.putString("coupon_name",null);
+                editor.apply();
+
+                TOTAL(CART());
+            }
+        });
+
         return view;
     }
 
@@ -187,6 +208,11 @@ private RelativeLayout apply_coupon;
                     t2.setVisibility(View.GONE);
                     t3.setVisibility(View.GONE);
                     t4.setVisibility(View.GONE);
+                    t5.setVisibility(View.GONE);
+                    t6.setVisibility(View.GONE);
+                    t7.setVisibility(View.GONE);
+                    remove.setVisibility(View.GONE);
+
 
                 }
                 else
@@ -194,10 +220,15 @@ private RelativeLayout apply_coupon;
                     topay.setText(String.valueOf(sum + taxamount + deliveryfees-Double.parseDouble(Objects.requireNonNull(mSharedPreferences.getString("discount", null)))));
 
                     t4.setText(Objects.requireNonNull(mSharedPreferences.getString("discount", null)));
+                    t7.setText(Objects.requireNonNull(mSharedPreferences.getString("coupon_name", null)));
                     t1.setVisibility(View.VISIBLE);
                     t2.setVisibility(View.VISIBLE);
                     t3.setVisibility(View.VISIBLE);
                     t4.setVisibility(View.VISIBLE);
+                    t5.setVisibility(View.VISIBLE);
+                    t6.setVisibility(View.VISIBLE);
+                    t7.setVisibility(View.VISIBLE);
+                    remove.setVisibility(View.VISIBLE);
                 }
 
 
@@ -223,6 +254,20 @@ private RelativeLayout apply_coupon;
     public void onResume() {
         super.onResume();
         TOTAL(CART());
+    }
+
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getContext());
+
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString("discount",null);
+        editor.putString("coupon_name",null);
+        editor.apply();
     }
 }
 

@@ -168,10 +168,10 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     public class fetchImage extends AsyncTask<String, Integer, Void> {
 
         //api for banners
-        String Banner_URL = "http://40.88.123.141:3000/api/banner";
+        String Banner_URL = "https://doughpaze.ddns.net/api/banner";
 
         //api for coupons
-        String coupons_URL = "http://40.88.123.141:3000/api/coupons";
+        String coupons_URL = "https://doughpaze.ddns.net/api/coupons";
 
         //creating new volley request instance
 
@@ -191,7 +191,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
                             banners=new ArrayList<>();
                             JSONArray array = response.getJSONArray("result");
                             for(int i = 0 ; i < array.length() ; i++){
-                                banners.add("http://40.88.123.141:3000"+array.getJSONObject(i).getString("banner_location"));
+                                banners.add("https://doughpaze.ddns.net"+array.getJSONObject(i).getString("banner_location"));
                             }
 
                             try {
@@ -248,8 +248,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
                             JSONArray array = response.getJSONArray("result");
 
                             for (int i = 0; i < array.length(); i++) {
-                                coupons.add("http://40.88.123.141:3000" + array.getJSONObject(i).getString("coupon_location"));
-
+                                coupons.add("https://doughpaze.ddns.net" + array.getJSONObject(i).getString("coupon_location"));
                             }
 
 
