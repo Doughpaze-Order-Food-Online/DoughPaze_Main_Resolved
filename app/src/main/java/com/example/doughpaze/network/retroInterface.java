@@ -95,6 +95,7 @@ public interface retroInterface {
     Observable<Response> CANCEL_ONLINE_ORDER(@Query("id") String id,@Query("orderId") String orderId, @Query("mid") String mid,
                                                 @Query("tid") String tid,@Query("amount") Double amount,@Query("refundId") String refundId);
 
-
+    @POST("coupon_available")
+    Observable<Response>  CHECK_COUPON_AVAILIBILITY(@Query("mobile_no") String mobile_no, @Query("coupon") String coupon,@Query("saving") Double saving,@Query("limit") int limit);
 
 }

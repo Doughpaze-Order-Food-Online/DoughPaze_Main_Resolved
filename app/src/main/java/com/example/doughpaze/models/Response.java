@@ -20,6 +20,9 @@ public class Response {
     private String type;
     private String result;
     private int position;
+    private Boolean available;
+    private Double saving;
+    private String coupon_name;
 
 
 
@@ -49,5 +52,21 @@ public class Response {
 
     public int getPosition() {
         return position;
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
+
+    public String getCoupon_name() {
+        return coupon_name;
+    }
+
+    public Double getSaving() {
+        return saving;
     }
 }

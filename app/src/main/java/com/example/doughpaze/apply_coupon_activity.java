@@ -177,14 +177,9 @@ public class apply_coupon_activity extends Activity implements finishActivity {
                         else {
                             double saving = (total * x.getDiscount()) / 100;
                             saving = saving > x.getMax_discount() ? x.getMax_discount() : saving;
-                            int discount = x.getDiscount();
-                            int max_discount = x.getMax_discount();
                             String coupon_name = x.getCoupon_name();
-                            OfferBox(saving, coupon_name);
-                            SharedPreferences.Editor editor = mSharedPreferences.edit();
-                            editor.putString("discount", String.valueOf(saving));
-                            editor.putString("coupon_name", String.valueOf(coupon_name));
-                            editor.apply();
+                            CouponsUsed(saving,coupon_name,x.getLimit());
+
                             break;
                         }
 
@@ -195,7 +190,7 @@ public class apply_coupon_activity extends Activity implements finishActivity {
                         {
                             if(y.getFood_category().equals(x.getCategory()))
                             {flag2=1;
-                                if(y.getQuantity()*y.getPrice()<x.getMin_amount())
+                                if((y.getQuantity()*y.getPrice())<x.getMin_amount())
                                 {
                                     alertBox("Coupon not Applied! "+x.getCategory()+" Items should Price above Rs."+x.getMin_amount());
                                 }
@@ -203,15 +198,9 @@ public class apply_coupon_activity extends Activity implements finishActivity {
                                 {
                                     double saving=(total*x.getDiscount())/100;
                                     saving=saving>x.getMax_discount()?x.getMax_discount():saving;
-                                    int discount=x.getDiscount();
-                                    int max_discount=x.getMax_discount();
                                     String coupon_name=x.getCoupon_name();
-                                    OfferBox(saving,coupon_name);
-                                    SharedPreferences.Editor editor = mSharedPreferences.edit();
-                                    editor.putString("discount", String.valueOf(saving));
-                                    editor.putString("coupon_name", String.valueOf(coupon_name));
-                                    editor.apply();
-                                    break;
+                                    CouponsUsed(saving,coupon_name,x.getLimit());
+
 
                                 }
 
@@ -282,4 +271,65 @@ public class apply_coupon_activity extends Activity implements finishActivity {
         }.start();
 
     }
+
+    private void CouponsUsed(Double saving,String coupon_name,int limit)
+    {
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_loading);
+        Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+        mSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        mSubscriptions.add(networkUtils.getRetrofit(mSharedPreferences.getString(constants.TOKEN, null))
+                .CHECK_COUPON_AVAILIBILITY(mSharedPreferences.getString(constants.PHONE, null),coupon_name,saving,limit)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse2,this::handleError2));
+    }
+
+    private void handleResponse2(Response response) {
+
+        progressDialog.dismiss();
+        if(response.getAvailable())
+        {
+            OfferBox(response.getSaving(),response.getCoupon_name());
+            SharedPreferences.Editor editor = mSharedPreferences.edit();
+            editor.putString("discount", String.valueOf(response.getSaving()));
+            editor.putString("coupon_name", String.valueOf(response.getCoupon_name()));
+            editor.apply();
+        }
+        else {
+            alertBox("Sorry! This Coupon is not valid");
+        }
+
+
+    }
+
+    private void handleError2(Throwable error) {
+
+        progressDialog.dismiss();
+
+        if (error instanceof HttpException) {
+
+            Gson gson = new GsonBuilder().create();
+
+            try {
+
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Response response = gson.fromJson(errorBody,Response.class);
+                Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(this, "Network Error!", Toast.LENGTH_SHORT).show();
+            Log.e("error",error.toString());
+
+        }
+    }
+
 }

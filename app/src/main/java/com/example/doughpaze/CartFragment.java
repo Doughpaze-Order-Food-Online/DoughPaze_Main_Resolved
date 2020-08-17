@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.doughpaze.FoodList.CartAdapter;
 import com.example.doughpaze.FoodList.ChangePrice;
@@ -112,8 +113,28 @@ private RelativeLayout apply_coupon;
         apply_coupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),apply_coupon_activity.class);
-                startActivityForResult(intent,1);
+
+                mSharedPreferences = PreferenceManager
+                        .getDefaultSharedPreferences(getContext());
+                if(mSharedPreferences.getString("token", null)==null)
+                {
+                    Fragment fragment=new AccountFragment();
+                    assert getFragmentManager() != null;
+                    getFragmentManager().beginTransaction()
+                            .add(android.R.id.content, fragment)
+                            .addToBackStack(HomeFragment.class.getSimpleName())
+                            .commit();
+
+                    Toast.makeText(getContext(), "Login to Apply Coupons!", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Intent intent=new Intent(getContext(),apply_coupon_activity.class);
+                    startActivityForResult(intent,1);
+                }
+
+
+
             }
         });
 

@@ -19,6 +19,9 @@ public class Coupon {
     @SerializedName("min_amount")
     private int min_amount;
 
+    @SerializedName("limit")
+     private int limit;
+
 
     public String getCategory() {
         return category;
@@ -58,5 +61,13 @@ public class Coupon {
 
     public void setMax_discount(int max_discount) {
         this.max_discount = max_discount;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public int getLimit() {
+        return limit;
     }
 }
