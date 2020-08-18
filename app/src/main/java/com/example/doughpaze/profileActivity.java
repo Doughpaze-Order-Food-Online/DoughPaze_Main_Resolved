@@ -11,24 +11,35 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class profileActivity extends AppCompatActivity {
     private ChipNavigationBar chipNavigationBar;
+    private Fragment fragment=null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bootom_navigation_container);
+
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(profileActivity.this);
+        fragment = sharedPreferences.getString("token", null) == null ?
+                new AccountFragment() :
+                new ProfileFragment();
         chipNavigationBar = findViewById(R.id.bottom_nav_menu);
         chipNavigationBar.setItemSelected(R.id.account_icon, true);
-        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_navigation_container, new CartFragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.bottom_navigation_container, fragment).commit();
         bottomMenu();
+
+
     }
 
     @Override
     public void onBackPressed() {
         int menuItemId = chipNavigationBar.getSelectedItemId();
+
+
         if (menuItemId != R.id.dashboard_icon) {
             chipNavigationBar.setItemSelected(R.id.dashboard_icon, true);
-            getSupportFragmentManager().beginTransaction().add(R.id.bottom_navigation_container, new HomeFragment()).addToBackStack("HomeFragment").commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.bottom_navigation_container, new Fragment()).addToBackStack("HomeFragment").commit();
 //            Intent intent=new Intent(MainActivity.this, MainActivity.class);
 //            startActivity(intent);
         }
