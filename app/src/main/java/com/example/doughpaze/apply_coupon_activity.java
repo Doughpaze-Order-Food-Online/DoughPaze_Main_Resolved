@@ -122,10 +122,17 @@ public class apply_coupon_activity extends Activity implements finishActivity {
                     applicable.add(x);
                 }
             }
+            if(x.getCategory().equals("all"))
+            {   flag=1;
+                applicable.add(x);
+            }
+
             if(flag==0)
             {
                 others.add(x);
             }
+
+
         }
 
 
