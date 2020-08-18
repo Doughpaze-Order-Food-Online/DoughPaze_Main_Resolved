@@ -80,7 +80,11 @@ public class item_description_activity extends Activity {
                 alertBox(subItem);
             }
         });
-        updateCartQuantity();
+        try {
+            updateCartQuantity();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     private void Fetch_Details(String id) {
