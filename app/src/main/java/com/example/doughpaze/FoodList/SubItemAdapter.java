@@ -8,6 +8,7 @@ import android.media.Image;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
@@ -43,6 +46,7 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
     private SharedPreferences mSharedPreferences;
     private Cart_Quantity cart_quantity;
     private ProgressDialog progressDialog;
+    private LinearLayout linearLayout;
 
 
 
@@ -292,48 +296,37 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
 
 
 
-    private void alertBox(SubItem subItem, Context context)
-    {
-            LayoutInflater layoutInflater= LayoutInflater.from(context);
-            final View offerView=layoutInflater.inflate(R.layout.pizza_list_item_popup,null);
-            RadioGroup size=(RadioGroup) offerView.findViewById(R.id.size);
-            Button plus,minus;
-            plus=offerView.findViewById(R.id.plus_btn_1);
-            minus=offerView.findViewById(R.id.minus_btn_1);
-            TextView pizzaquantity=offerView.findViewById(R.id.quantity_text_view_1);
-        ImageView close=offerView.findViewById(R.id.close);
 
-            close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(progressDialog!=null)
-                    {
-                        progressDialog.dismiss();
+    private void alertBox(SubItem subItem, Context context) {
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        try {
+            final View offerView = layoutInflater.inflate(R.layout.pizza_list_item_popup, null);
+
+            RadioGroup size = (RadioGroup) offerView.findViewById(R.id.size);
+            Button plus, minus;
+            plus = offerView.findViewById(R.id.plus_btn_1);
+            minus = offerView.findViewById(R.id.minus_btn_1);
+            TextView pizzaquantity = offerView.findViewById(R.id.quantity_text_view_1);
+
+            try {
+                Gson gson = new Gson();
+                String cart = mSharedPreferences.getString("cart", null);
+                Type type=new TypeToken<ArrayList<FoodCart>>(){}.getType();
+                List<FoodCart> newfoodCarts=new ArrayList<>();
+                newfoodCarts=gson.fromJson(cart,type);
+
+                int q=0;
+                assert newfoodCarts != null;
+                for(FoodCart x:newfoodCarts) {
+                    if(x.getFood_name().equals(subItem.getFood_name())) {   q+=x.getQuantity();
                     }
-                }
-            });
 
-        try{
-            Gson gson = new Gson();
-            String cart=mSharedPreferences.getString("cart", null);
-            Type type=new TypeToken<ArrayList<FoodCart>>(){}.getType();
-            List<FoodCart> newfoodCarts=new ArrayList<>();
-            newfoodCarts=gson.fromJson(cart,type);
-
-            int q=0;
-            assert newfoodCarts != null;
-            for(FoodCart x:newfoodCarts)
-            {
-                if(x.getFood_name().equals(subItem.getFood_name()))
-                {   q+=x.getQuantity();
                 }
+
+                pizzaquantity.setText(String.valueOf(q));
+            }catch (NullPointerException e) {
+                e.printStackTrace();
             }
-
-            pizzaquantity.setText(String.valueOf(q));
-        }catch (NullPointerException e)
-        {
-            e.printStackTrace();
-        }
 
 
             plus.setOnClickListener(new View.OnClickListener() {
@@ -342,12 +335,9 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
 
                     mSharedPreferences = PreferenceManager
                             .getDefaultSharedPreferences(context);
-                    if(size.getCheckedRadioButtonId()==-1)
-                    {
+                    if(size.getCheckedRadioButtonId()==-1) {
                         Toast.makeText(context, "Select the size !", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {   int id=size.getCheckedRadioButtonId();
+                    } else {   int id=size.getCheckedRadioButtonId();
                         RadioButton radioButton=offerView.findViewById(id);
 
                         FoodCart foodCart=new FoodCart();
@@ -362,8 +352,7 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
                         foodCart.setAlt_price(radioButton.getText().toString().equals("Small")?subItem.getLarge_price():subItem.getPrice());
                         pizzaquantity.setText(String.valueOf(foodCart.getQuantity()));
 
-                        if(mSharedPreferences.getString("cart", null) == null)
-                        {
+                        if(mSharedPreferences.getString("cart", null) == null) {
 
                             List<FoodCart> foodCarts=new ArrayList<>();
                             foodCarts.add(foodCart);
@@ -375,9 +364,7 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
                             cart_quantity.UpdateNumber(foodCarts);
                             Log.e("cart",cart);
 
-                        }
-                        else
-                        {
+                        } else {
 
 
                             Gson gson = new Gson();
@@ -389,27 +376,22 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
 
                             int flag=0;
                             assert newfoodCarts != null;
-                            for(FoodCart x:newfoodCarts)
-                            {
-                                if(x.getFood_name().equals(subItem.getFood_name()) &&  radioButton.getText().toString().equals(x.getSize()))
-                                {   flag=1;
+                            for(FoodCart x:newfoodCarts) {
+                                if(x.getFood_name().equals(subItem.getFood_name()) &&  radioButton.getText().toString().equals(x.getSize())) {   flag=1;
                                     x.increment();
                                     pizzaquantity.setText(String.valueOf(x.getQuantity()));
                                 }
                             }
 
 
-                            if(flag==0)
-                            {
+                            if(flag==0) {
                                 newfoodCarts.add(foodCart);
 
                             }
 
                             int q=0;
-                            for(FoodCart x:newfoodCarts)
-                            {
-                                if(x.getFood_name().equals(subItem.getFood_name()))
-                                {   q+=x.getQuantity();
+                            for(FoodCart x:newfoodCarts) {
+                                if(x.getFood_name().equals(subItem.getFood_name())) {   q+=x.getQuantity();
                                 }
                             }
                             cart_quantity.UpdateNumber(newfoodCarts);
@@ -423,11 +405,11 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
                         }
 
 
-
-
                     }
 
-                    }
+
+                }
+
 
             });
 
@@ -436,11 +418,9 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
                 @Override
                 public void onClick(View v) {
 
-                    if(size.getCheckedRadioButtonId()==-1)
-                    {
+                    if(size.getCheckedRadioButtonId()==-1) {
                         Toast.makeText(context, "Select the size to remove !", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                    } else {
                         Gson gson = new Gson();
                         String cart=mSharedPreferences.getString("cart", null);
                         Log.e("cart",cart);
@@ -452,23 +432,18 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
                         RadioButton radioButton=offerView.findViewById(id);
 
                         assert newfoodCarts != null;
-                        for(int i = newfoodCarts.size()-1; i>=0; --i)
-                        {
-                            if(newfoodCarts.get(i).getFood_name().equals(subItem.getFood_name()) && newfoodCarts.get(i).getSize().equals(radioButton.getText().toString()))
-                            {
+                        for(int i = newfoodCarts.size()-1; i>=0; --i) {
+                            if(newfoodCarts.get(i).getFood_name().equals(subItem.getFood_name()) && newfoodCarts.get(i).getSize().equals(radioButton.getText().toString())) {
                                 newfoodCarts.get(i).decrement();
                             }
-                            if(newfoodCarts.get(i).getQuantity()==0)
-                            {
+                            if(newfoodCarts.get(i).getQuantity()==0) {
                                 newfoodCarts.remove(i);
                             }
                         }
 
                         int q=0;
-                        for(FoodCart x:newfoodCarts)
-                        {
-                            if(x.getFood_name().equals(subItem.getFood_name()))
-                            {   q+=x.getQuantity();
+                        for(FoodCart x:newfoodCarts) {
+                            if(x.getFood_name().equals(subItem.getFood_name())) {   q+=x.getQuantity();
                             }
                         }
 
@@ -490,9 +465,12 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
             });
 
 
-            progressDialog=new ProgressDialog(context);
+            progressDialog = new ProgressDialog(context);
             progressDialog.show();
             progressDialog.setContentView(offerView);
+        } catch (InflateException e) {
+            e.printStackTrace();
+        }
 
 
 

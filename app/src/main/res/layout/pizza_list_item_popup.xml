@@ -28,6 +28,7 @@
                 android:layout_height="36dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/dimen_16dp"
+                android:contentDescription="@string/todo"
                 android:src="@drawable/crosscircle" />
 
             <TextView

@@ -63,7 +63,6 @@ public class item_description_activity extends Activity {
         addtocart=findViewById(R.id.addtocart);
         mplus=findViewById(R.id.plus_btn_1);
         mminus=findViewById(R.id.minus_btn_1);
-        quantity=findViewById(R.id.quantity_text_view_1);
         parent=findViewById(R.id.parent);
         cart_fill_update_txt=findViewById(R.id.cart_fill_update_txt);
         quantity1=findViewById(R.id.quantity_text_view_1);
@@ -82,6 +81,7 @@ public class item_description_activity extends Activity {
             }
         });
 
+
         mplus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +96,13 @@ public class item_description_activity extends Activity {
             }
         });
 
-        updateCartQuantity();
+
+        try {
+            updateCartQuantity();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void Fetch_Details(String id) {
