@@ -43,21 +43,23 @@ public class item_description_activity extends Activity {
     private SharedPreferences mSharedPreferences;
     private ProgressDialog progressDialog;
     private ImageView cartImage;
-    private TextView name,price, description,cart_fill_update_txt;
-    private Button addtocart,plus,minus, mplus,mminus;
-    private TextView quantity,quantity1;
+    private TextView name, price, description, cart_fill_update_txt;
+    private Button addtocart, plus, minus, mplus, mminus;
+    private TextView quantity, quantity1;
     private RelativeLayout parent;
     private SubItem subItem;
+    private ImageView cartImg;
+    private ImageView backBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_description);
-        i=getIntent();
+        i = getIntent();
         mSubscriptions = new CompositeSubscription();
 
-        name=findViewById(R.id.item_name);
-        price=findViewById(R.id.item_price_txt);
+        name = findViewById(R.id.item_name);
+        price = findViewById(R.id.item_price_txt);
         description=findViewById(R.id.item_description);
         cartImage=findViewById(R.id.imageView);
         addtocart=findViewById(R.id.addtocart);
@@ -78,6 +80,24 @@ public class item_description_activity extends Activity {
             @Override
             public void onClick(View v) {
                 alertBox(subItem);
+            }
+        });
+
+        cartImg = findViewById(R.id.cart_Img);
+
+        cartImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(item_description_activity.this, CartActivity.class);
+                startActivity(i);
+            }
+        });
+
+        backBtn = findViewById(R.id.back_btn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

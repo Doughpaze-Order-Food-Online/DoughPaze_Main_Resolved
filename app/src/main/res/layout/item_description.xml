@@ -135,7 +135,6 @@
                 android:id="@+id/plus_minus_Or_AddContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/dimen_16dp"
                 android:visibility="visible">
 
                 <Button
@@ -143,6 +142,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="@dimen/dimen_8dp"
+                    android:layout_marginBottom="@dimen/dimen_16dp"
                     android:layout_toEndOf="@id/quantity_text_view_1"
                     android:background="@drawable/round_button_shape"
                     android:text="@string/plus"
@@ -152,6 +152,7 @@
                     android:id="@+id/quantity_text_view_1"
                     style="@style/headertext"
                     android:layout_width="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_16dp"
                     android:layout_height="30dp"
                     android:layout_toEndOf="@id/minus_btn_1"
                     android:gravity="center_vertical"
@@ -162,6 +163,7 @@
                     android:id="@+id/minus_btn_1"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_marginBottom="@dimen/dimen_16dp"
                     android:layout_marginEnd="@dimen/dimen_8dp"
                     android:background="@drawable/round_button_shape"
                     android:text="@string/minus"

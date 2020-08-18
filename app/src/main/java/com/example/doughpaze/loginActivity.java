@@ -57,6 +57,8 @@ public class loginActivity extends AppCompatActivity {
     private SharedPreferences mSharedPreferences;
     private ProgressDialog progressDialog;
 
+    private TextView terms;
+
 
     Button forgotPassword_btn;
 
@@ -82,6 +84,15 @@ public class loginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ForgotPasswordOtpBottomsheet bottomsheet = new ForgotPasswordOtpBottomsheet();
                 bottomsheet.show(getSupportFragmentManager(), "TAG");
+            }
+        });
+
+        terms = findViewById(R.id.term_txt);
+        terms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(loginActivity.this, TermsAndPoliciesActivity.class);
+                startActivity(i);
             }
         });
     }

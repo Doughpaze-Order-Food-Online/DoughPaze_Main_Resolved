@@ -60,9 +60,10 @@ public class signUpActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     User user;
 
+    private TextView terms;
+
 
     private CompositeSubscription mSubscriptions;
-
 
 
     @Override
@@ -74,6 +75,15 @@ public class signUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        terms = findViewById(R.id.term_txt);
+        terms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(signUpActivity.this, TermsAndPoliciesActivity.class);
+                startActivity(i);
             }
         });
 

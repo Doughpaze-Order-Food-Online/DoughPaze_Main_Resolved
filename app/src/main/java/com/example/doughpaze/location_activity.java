@@ -140,7 +140,7 @@ public class location_activity extends Activity {
 
         if(radioGroup.getCheckedRadioButtonId()==-1)
         {
-            Toast.makeText(this, "Select the  radio button", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Select the Address Type", Toast.LENGTH_SHORT).show();
             err++;
         }
 

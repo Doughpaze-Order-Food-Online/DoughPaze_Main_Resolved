@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,11 +51,13 @@ public class apply_coupon_activity extends Activity implements finishActivity {
 
     private CompositeSubscription mSubscriptions;
     private ProgressDialog progressDialog;
-    private RecyclerView rvItem,rvitem2;
+    private RecyclerView rvItem, rvitem2;
     private EditText coupon;
     private TextView apply;
     private List<Coupon> coupons;
     private SharedPreferences mSharedPreferences;
+
+    private ImageView backBtn;
 
 
     @Override
@@ -64,9 +67,17 @@ public class apply_coupon_activity extends Activity implements finishActivity {
 
         mSubscriptions = new CompositeSubscription();
         rvItem = findViewById(R.id.coupon_list_view);
-        rvitem2=findViewById(R.id.more_coupons_container);
+        rvitem2 = findViewById(R.id.more_coupons_container);
         coupon = findViewById(R.id.enter_edit_txt);
         apply = findViewById(R.id.apply);
+
+        backBtn = findViewById(R.id.back_btn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
         progressDialog = new ProgressDialog(this);
