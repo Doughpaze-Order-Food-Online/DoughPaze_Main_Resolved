@@ -139,8 +139,8 @@ public class apply_coupon_activity extends Activity implements finishActivity {
 
         CouponAdapter couponAdapter2=new CouponAdapter(others,this,this);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(this);
-        rvItem.setAdapter(couponAdapter2);
-        rvItem.setLayoutManager(layoutManager2);
+        rvitem2.setAdapter(couponAdapter2);
+        rvitem2.setLayoutManager(layoutManager2);
 
 
     }
