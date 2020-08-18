@@ -50,6 +50,14 @@
         <activity
             android:name=".CartActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".profileActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".item_description_activity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".address_activity"
             android:screenOrientation="portrait" />

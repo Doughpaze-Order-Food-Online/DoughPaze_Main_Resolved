@@ -5,10 +5,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,12 +37,19 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.doughpaze.FoodList.Cart_Quantity;
+import com.example.doughpaze.models.FoodCart;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -55,6 +66,9 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     private Button button;
     private CardView cake, pizza,donut,pasta,garlic_bread,mocktail,nachos,brownies;
     private NavigationView navigationView;
+    private TextView quantity;
+    private SharedPreferences mSharedPreferences;
+    private ImageView cart_Img;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -87,6 +101,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         //side navigation bar
         drawer = v.findViewById(R.id.drawer_layout);
         button = v.findViewById(R.id.menu_button);
+        cart_Img=v.findViewById(R.id.cart_Img);
 
 
 
@@ -99,7 +114,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
         sample = new ArrayList<String>();
         sample.add("default");
-        imagePagerAdapter = new ImagePagerAdapter(getActivity().getApplicationContext(), sample);
+        imagePagerAdapter = new ImagePagerAdapter(Objects.requireNonNull(getActivity()).getApplicationContext(), sample);
         viewPager.setAdapter(imagePagerAdapter);
         viewPager2.setAdapter(imagePagerAdapter);
 
@@ -112,7 +127,8 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         garlic_bread=(CardView)v.findViewById(R.id.garlic_btn) ;
         pasta=(CardView)v.findViewById(R.id.pasta_btn) ;
         navigationView=(NavigationView) v.findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
+        navigationView.setNavigationItemSelectedListener(this);
+        quantity=v.findViewById(R.id.cart_fill_update_txt);
 
         //categories
         cake.setOnClickListener(view-> FOOD_LIST_VIEW("Cake") );
@@ -124,7 +140,15 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         garlic_bread.setOnClickListener(view-> FOOD_LIST_VIEW("Garlic Breads") );
         pasta.setOnClickListener(view-> FOOD_LIST_VIEW("Pasta") );
 
+        cart_Img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), CartActivity.class);
+                startActivity(i);
+            }
+        });
 
+        updateCartQuantity();
 
     }
 
@@ -330,4 +354,37 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         return true;
     }
 
+    private void updateCartQuantity()
+    {mSharedPreferences = PreferenceManager
+            .getDefaultSharedPreferences(getContext());
+        Gson gson = new Gson();
+        String cart=mSharedPreferences.getString("cart", null);
+
+        Type type=new TypeToken<ArrayList<FoodCart>>(){}.getType();
+        List<FoodCart> newfoodCarts=new ArrayList<>();
+        newfoodCarts=gson.fromJson(cart,type);
+
+        int qquantity=0;
+        assert newfoodCarts != null;
+        for(FoodCart x:newfoodCarts)
+        {
+            qquantity+=x.getQuantity();
+        }
+        if(qquantity==0)
+        {
+            quantity.setVisibility(View.GONE);
+        }
+        else
+        {
+            quantity.setVisibility(View.VISIBLE);
+            quantity.setText(String.valueOf(qquantity));
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateCartQuantity();
+
+    }
 }

@@ -11,12 +11,13 @@ public class SubItem {
     private String category, subcategory;
 
 
-    public SubItem(String food_image, String food_name, int price,String category,String subcategory) {
+    public SubItem(String id,String food_image, String food_name, int price,String category,String subcategory) {
         this.food_image=food_image;
         this.food_name=food_name;
         this.price=price;
         this.category=category;
         this.subcategory=subcategory;
+        this.id=id;
 
     }
 

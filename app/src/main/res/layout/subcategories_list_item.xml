@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".item_description_activity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/foodImg_card_1"

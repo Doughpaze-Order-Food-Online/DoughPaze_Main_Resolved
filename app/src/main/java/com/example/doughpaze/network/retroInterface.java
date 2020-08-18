@@ -1,5 +1,6 @@
 package com.example.doughpaze.network;
 
+import com.example.doughpaze.FoodList.SubItem;
 import com.example.doughpaze.models.Address;
 import com.example.doughpaze.models.AddressResponse;
 import com.example.doughpaze.models.Coupon;
@@ -98,4 +99,6 @@ public interface retroInterface {
     @POST("coupon_available")
     Observable<Response>  CHECK_COUPON_AVAILIBILITY(@Query("mobile_no") String mobile_no, @Query("coupon") String coupon,@Query("saving") Double saving,@Query("limit") int limit);
 
+    @GET("item_details")
+    Observable<SubItem> GET_ITEM_DETAILS(@Query("id") String id);
 }

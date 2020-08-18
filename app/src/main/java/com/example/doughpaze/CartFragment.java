@@ -100,12 +100,9 @@ private ImageView remove;
                         .getDefaultSharedPreferences(getContext());
                 if(mSharedPreferences.getString("token", null)==null)
                 {
-                    Fragment fragment=new AccountFragment();
-                    assert getFragmentManager() != null;
-                    getFragmentManager().beginTransaction()
-                            .add(android.R.id.content, fragment)
-                            .addToBackStack(HomeFragment.class.getSimpleName())
-                            .commit();
+                    Intent intent=new Intent(getContext(),profileActivity.class);
+                    startActivity(intent);
+
                 }
                 else
                 {

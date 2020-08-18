@@ -75,7 +75,7 @@ public class AccountFragment extends Fragment {
     private CompositeSubscription mSubscriptions;
     private CallbackManager callbackManager;
 
-    private ImageView imageView;
+
 
 
     public AccountFragment() {
@@ -100,15 +100,9 @@ public class AccountFragment extends Fragment {
 
         facebook = rootView.findViewById(R.id.facebook_container);
         google = rootView.findViewById(R.id.google_container);
-        imageView = rootView.findViewById(R.id.back_btn1);
 
-        imageView.setOnClickListener(v -> {
-            Fragment fragment = new HomeFragment();
-            assert getFragmentManager() != null;
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.bottom_navigation_container, fragment)
-                    .commit();
-        });
+
+
 
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override

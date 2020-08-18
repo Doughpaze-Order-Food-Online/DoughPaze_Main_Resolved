@@ -195,7 +195,7 @@ public class Subcategory_main extends Activity implements Cart_Quantity {
             }
             else
             {
-                subItem = new SubItem("http://40.88.123.141:3000"+y.getFood_image(),y.getFood_name(),y.getPrice(),y.getCategory(),y.getSubcategory());
+                subItem = new SubItem(y.getID(),"http://40.88.123.141:3000"+y.getFood_image(),y.getFood_name(),y.getPrice(),y.getCategory(),y.getSubcategory());
             }
                 subItemList.add(subItem);
             }

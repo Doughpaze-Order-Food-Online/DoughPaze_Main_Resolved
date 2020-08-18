@@ -50,6 +50,7 @@
             tools:ignore="UseAppTint" />
 
         <TextView
+
             android:id="@+id/cart_fill_update_txt"
             android:layout_width="20dp"
             android:layout_height="20dp"
