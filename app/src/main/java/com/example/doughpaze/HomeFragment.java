@@ -150,6 +150,8 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
         updateCartQuantity();
 
+
+
     }
 
     private void FOOD_LIST_VIEW(String category)

@@ -26,6 +26,9 @@ public class Food_Details {
     @SerializedName("large_price")
     private int large_price;
 
+    @SerializedName("description")
+    private String description;
+
     public String getID() {
         return _id;
     }
@@ -81,5 +84,17 @@ public class Food_Details {
 
     public void setLarge_price(int large_price) {
         this.large_price = large_price;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

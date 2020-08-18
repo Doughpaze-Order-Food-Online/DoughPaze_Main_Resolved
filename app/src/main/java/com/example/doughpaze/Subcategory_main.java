@@ -191,11 +191,11 @@ public class Subcategory_main extends Activity implements Cart_Quantity {
             if(y.getFood_name().toLowerCase().contains(s))
             {   if(y.getCategory().equals("Pizza"))
             {
-                subItem = new  SubItem(y.getID(),"http://40.88.123.141:3000"+y.getFood_image(),y.getFood_name(),y.getPrice(),y.getLarge_price(),y.getCategory(),y.getSubcategory());
+                subItem = new  SubItem(y.getID(),"http://40.88.123.141:3000"+y.getFood_image(),y.getFood_name(),y.getPrice(),y.getLarge_price(),y.getCategory(),y.getSubcategory(),y.getDescription());
             }
             else
             {
-                subItem = new SubItem(y.getID(),"http://40.88.123.141:3000"+y.getFood_image(),y.getFood_name(),y.getPrice(),y.getCategory(),y.getSubcategory());
+                subItem = new SubItem(y.getID(),"http://40.88.123.141:3000"+y.getFood_image(),y.getFood_name(),y.getPrice(),y.getCategory(),y.getSubcategory(),y.getDescription());
             }
                 subItemList.add(subItem);
             }
@@ -282,6 +282,18 @@ public class Subcategory_main extends Activity implements Cart_Quantity {
         if(mSubscriptions!=null)
         {
             mSubscriptions.unsubscribe();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        try{
+            UpdateNumber(CART());
+        }catch (NullPointerException e)
+        {
+            e.printStackTrace();
         }
     }
 }

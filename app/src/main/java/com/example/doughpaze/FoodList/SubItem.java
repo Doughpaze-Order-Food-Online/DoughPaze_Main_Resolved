@@ -9,19 +9,21 @@ public class SubItem {
     private int price;
     private int large_price;
     private String category, subcategory;
+    private String description;
 
 
-    public SubItem(String id,String food_image, String food_name, int price,String category,String subcategory) {
+    public SubItem(String id,String food_image, String food_name, int price,String category,String subcategory,String description) {
         this.food_image=food_image;
         this.food_name=food_name;
         this.price=price;
         this.category=category;
         this.subcategory=subcategory;
         this.id=id;
+        this.description=description;
 
     }
 
-    public SubItem(String id,String food_image, String food_name, int price,int large_price,String category,String subcategory) {
+    public SubItem(String id,String food_image, String food_name, int price,int large_price,String category,String subcategory,String description) {
         this.food_image=food_image;
         this.food_name=food_name;
         this.price=price;
@@ -29,6 +31,7 @@ public class SubItem {
         this.category=category;
         this.subcategory=subcategory;
         this.id=id;
+        this.description=description;
 
     }
 
@@ -88,5 +91,13 @@ public class SubItem {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
