@@ -81,7 +81,7 @@
     <string name="u25cf">●\ </string>
     <string name="other_t_amp_cs_may_apply"><![CDATA[Other T&Cs may apply]]></string>
     <string name="enter_coupon_code">Enter Coupon Code</string>
-    <string name="available_coupons">AVAILABLE COUPONS</string>
+    <string name="available_coupons">APPLICABLE COUPONS</string>
 
     //
     <string name="_100indusind">\'100INDUSIND\'</string>
@@ -174,6 +174,7 @@
     <string name="smallll">Small</string>
     <string name="add_to_cart2">add to cart</string>
     <string name="copy_to_clipboard">Copy to clipboard</string>
+    <string name="more_coupons">MORE COUPONS</string>
     >>>>>>> fd2a430ea5c89a347bfea37eff252d789e63a659
 
     <string-array name="PizzaSize">

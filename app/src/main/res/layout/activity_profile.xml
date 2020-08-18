@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,132 +11,152 @@
     <LinearLayout
         android:id="@+id/Switch_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="sans-serif-medium"
-            android:text="@string/profile_details"
-            android:textColor="@color/colorPrimary"
-            android:textSize="30sp" />
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/profile_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_centerHorizontal="true"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/profile_details"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp" />
 
-                <TextView
-                    android:id="@+id/name"
+            <RelativeLayout
+                android:id="@+id/detail_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_txt"
+                android:layout_marginTop="16dp">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:maxWidth="260dp"
-                    android:text="@string/siddhant_deepak_khobragade"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="18sp" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/mobile_no"
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxWidth="260dp"
+                        android:text="@string/siddhant_deepak_khobragade"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/mobile_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_16dp"
+                        android:layout_marginBottom="@dimen/dimen_16dp"
+                        android:text="@string/email_id"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dimen_16dp"
+                        android:text="@string/mobile_number"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/date_of_birth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/date_of_birth"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/edit_profile_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_16dp"
-                    android:layout_marginBottom="@dimen/dimen_16dp"
-                    android:text="@string/email_id"
-                    android:textSize="16sp" />
+                    android:layout_alignParentEnd="true"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    tools:ignore="RelativeOverlap" />
 
-                <TextView
-                    android:id="@+id/email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mobile_number"
-                    android:layout_marginBottom="@dimen/dimen_16dp"
-                    android:textSize="16sp" />
+            </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/date_of_birth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/date_of_birth"
-                    android:textSize="16sp" />
+            <View
+                android:id="@+id/dashLine1"
+                android:layout_below="@id/detail_container"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="#e0e0e0" />
 
-            </LinearLayout>
+            <TextView
+                android:layout_below="@id/dashLine1"
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_16dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_vertical"
+                android:text="@string/manage_addresses"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="18sp"
+                app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
+                app:drawableStartCompat="@drawable/ic_baseline_notes_24"
+                app:drawableTint="@color/colorPrimaryText" />
+
+            <View
+                android:id="@+id/dash_line2"
+                android:layout_below="@id/address"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="16dp"
+                android:background="#e0e0e0" />
+
+            <TextView
+                android:layout_below="@id/dash_line2"
+                android:id="@+id/transaction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_vertical"
+                android:text="@string/my_transactions"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="18sp"
+                app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
+                app:drawableStartCompat="@drawable/ic_baseline_payment_24"
+                app:drawableTint="@color/colorPrimaryText" />
 
             <Button
-                android:id="@+id/edit_profile_btn"
-                android:layout_width="wrap_content"
+                android:id="@+id/logout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:background="@android:color/transparent"
-                android:gravity="center"
-                android:text="@string/edit"
-                android:textColor="@color/colorPrimary"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="16dp"
+                android:background="#e0e0e0"
+                android:padding="16dp"
+                android:text="@string/logout"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="18sp"
-                tools:ignore="RelativeOverlap" />
+                app:drawableEndCompat="@drawable/ic_logout" />
 
         </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="#e0e0e0" />
-
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:layout_marginBottom="@dimen/dimen_16dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/colorPrimaryText"
-            android:text="@string/manage_addresses"
-            android:textSize="18sp"
-            app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
-            app:drawableStartCompat="@drawable/ic_baseline_notes_24"
-            app:drawableTint="@color/colorPrimaryText" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="16dp"
-            android:background="#e0e0e0" />
-
-        <TextView
-            android:id="@+id/transaction"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center_vertical"
-            android:text="@string/my_transactions"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="18sp"
-            app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
-            app:drawableStartCompat="@drawable/ic_baseline_payment_24"
-            app:drawableTint="@color/colorPrimaryText" />
-
-        <Button
-            android:id="@+id/logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:background="#e0e0e0"
-            android:padding="16dp"
-            android:text="@string/logout"
-            android:textAlignment="viewStart"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="18sp"
-            app:drawableEndCompat="@drawable/ic_logout" />
-
     </LinearLayout>
 
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
