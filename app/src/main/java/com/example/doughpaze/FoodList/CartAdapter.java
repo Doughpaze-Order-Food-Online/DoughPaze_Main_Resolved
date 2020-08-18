@@ -158,17 +158,32 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
         assert newfoodCarts != null;
 
         try{
-            for(FoodCart x:newfoodCarts)
+            if(!Item.getFood_category().equals("Pizza"))
             {
-                if(x.getFood_name().equals(Item.getFood_name()))
+                for(FoodCart x:newfoodCarts)
                 {
-                    cartViewHolder.quantity.setText(String.valueOf(x.getQuantity()));
+                    if(x.getFood_name().equals(Item.getFood_name()))
+                    {
+                        cartViewHolder.quantity.setText(String.valueOf(x.getQuantity()));
+                    }
                 }
             }
+            else
+            {
+                for(FoodCart x:newfoodCarts)
+                {
+                    if(x.getFood_name().equals(Item.getFood_name()) && cartViewHolder.size.getSelectedItem().toString().equals(x.getSize()))
+                    {
+                        cartViewHolder.quantity.setText(String.valueOf(x.getQuantity()));
+                    }
+                }
+            }
+
         }catch (NullPointerException e)
         {
             e.printStackTrace();
         }
+
 
         cartViewHolder.plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,14 +195,30 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
                 newfoodCarts=gson.fromJson(cart,type);
 
                 assert newfoodCarts != null;
-                for(FoodCart x:newfoodCarts)
+
+                if(!Item.getFood_category().equals("Pizza"))
                 {
-                    if(x.getFood_name().equals(Item.getFood_name()))
+                    for(FoodCart x:newfoodCarts)
                     {
-                        x.increment();
-                        cartViewHolder.quantity.setText(String.valueOf(x.getQuantity()));
+                        if(x.getFood_name().equals(Item.getFood_name()))
+                        {
+                            x.increment();
+                            cartViewHolder.quantity.setText(String.valueOf(x.getQuantity()));
+                        }
                     }
                 }
+                else
+                {
+                    for(FoodCart x:newfoodCarts)
+                    {
+                        if(x.getFood_name().equals(Item.getFood_name()) &&  cartViewHolder.size.getSelectedItem().toString().equals(x.getSize()))
+                        {
+                            x.increment();
+                            cartViewHolder.quantity.setText(String.valueOf(x.getQuantity()));
+                        }
+                    }
+                }
+
 
                 price.TOTAL(newfoodCarts);
 
@@ -217,19 +248,40 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
                 newfoodCarts=gson.fromJson(cart,type);
 
                 assert newfoodCarts != null;
-                for(int i=newfoodCarts.size()-1;i>=0;--i)
-                {
-                    if(newfoodCarts.get(i).getFood_name().equals(Item.getFood_name()))
-                    {
-                        newfoodCarts.get(i).decrement();
-                        cartViewHolder.quantity.setText(String.valueOf(newfoodCarts.get(i).getQuantity()));
-                    }
-                    if(newfoodCarts.get(i).getQuantity()==0)
-                    {   newfoodCarts.remove(i);
-                        update(i);
 
+                if(!Item.getFood_category().equals("Pizza"))
+                {
+                    for(int i=newfoodCarts.size()-1;i>=0;--i)
+                    {
+                        if(newfoodCarts.get(i).getFood_name().equals(Item.getFood_name()))
+                        {
+                            newfoodCarts.get(i).decrement();
+                            cartViewHolder.quantity.setText(String.valueOf(newfoodCarts.get(i).getQuantity()));
+                        }
+                        if(newfoodCarts.get(i).getQuantity()==0)
+                        {   newfoodCarts.remove(i);
+                            update(i);
+
+                        }
                     }
                 }
+                else
+                {
+                    for(int i=newfoodCarts.size()-1;i>=0;--i)
+                    {
+                        if(newfoodCarts.get(i).getFood_name().equals(Item.getFood_name()) && newfoodCarts.get(i).getSize().equals(cartViewHolder.size.getSelectedItem().toString()))
+                        {
+                            newfoodCarts.get(i).decrement();
+                            cartViewHolder.quantity.setText(String.valueOf(newfoodCarts.get(i).getQuantity()));
+                        }
+                        if(newfoodCarts.get(i).getQuantity()==0)
+                        {
+                            newfoodCarts.remove(i);
+                            update(i);
+                        }
+                    }
+                }
+
 
                 price.TOTAL(newfoodCarts);
                 SharedPreferences.Editor editor = mSharedPreferences.edit();

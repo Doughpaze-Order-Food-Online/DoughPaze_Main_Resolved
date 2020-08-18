@@ -50,7 +50,7 @@ public class apply_coupon_activity extends Activity implements finishActivity {
 
     private CompositeSubscription mSubscriptions;
     private ProgressDialog progressDialog;
-    private RecyclerView rvItem;
+    private RecyclerView rvItem,rvitem2;
     private EditText coupon;
     private TextView apply;
     private List<Coupon> coupons;
@@ -64,6 +64,7 @@ public class apply_coupon_activity extends Activity implements finishActivity {
 
         mSubscriptions = new CompositeSubscription();
         rvItem = findViewById(R.id.coupon_list_view);
+        rvitem2=findViewById(R.id.more_coupons_container);
         coupon = findViewById(R.id.enter_edit_txt);
         apply = findViewById(R.id.apply);
 
@@ -97,13 +98,49 @@ public class apply_coupon_activity extends Activity implements finishActivity {
     }
 
     private void handleResponse(List<Coupon> response) {
-
+        List<Coupon> applicable=new ArrayList<>();
+        List<Coupon> others=new ArrayList<>();
         coupons=response;
         progressDialog.dismiss();
-        CouponAdapter couponAdapter=new CouponAdapter(response,this,this);
+        Gson gson = new Gson();
+        mSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        String cart = mSharedPreferences.getString("cart", null);
+        Type type = new TypeToken<ArrayList<FoodCart>>() {
+        }.getType();
+        ArrayList<FoodCart> foodCart;
+        foodCart = gson.fromJson(cart, type);
+
+        assert foodCart != null;
+        for(Coupon x:response)
+        {int flag=0;
+            for(FoodCart y:foodCart)
+            {
+                if(x.getCategory().equals(y.getFood_category()))
+                {   flag=1;
+                    applicable.add(x);
+                }
+            }
+            if(flag==0)
+            {
+                others.add(x);
+            }
+        }
+
+
+
+
+
+        CouponAdapter couponAdapter=new CouponAdapter(applicable,this,this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvItem.setAdapter(couponAdapter);
         rvItem.setLayoutManager(layoutManager);
+
+        CouponAdapter couponAdapter2=new CouponAdapter(others,this,this);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(this);
+        rvItem.setAdapter(couponAdapter2);
+        rvItem.setLayoutManager(layoutManager2);
 
 
     }

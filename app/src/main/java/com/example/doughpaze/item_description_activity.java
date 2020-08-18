@@ -44,8 +44,8 @@ public class item_description_activity extends Activity {
     private ProgressDialog progressDialog;
     private ImageView cartImage;
     private TextView name,price, description,cart_fill_update_txt;
-    private Button addtocart,plus,minus;
-    private TextView quantity;
+    private Button addtocart,plus,minus, mplus,mminus;
+    private TextView quantity,quantity1;
     private RelativeLayout parent;
     private SubItem subItem;
 
@@ -61,11 +61,12 @@ public class item_description_activity extends Activity {
         description=findViewById(R.id.item_description);
         cartImage=findViewById(R.id.imageView);
         addtocart=findViewById(R.id.addtocart);
-        plus=findViewById(R.id.plus_btn_1);
-        minus=findViewById(R.id.minus_btn_1);
+        mplus=findViewById(R.id.plus_btn_1);
+        mminus=findViewById(R.id.minus_btn_1);
         quantity=findViewById(R.id.quantity_text_view_1);
         parent=findViewById(R.id.parent);
         cart_fill_update_txt=findViewById(R.id.cart_fill_update_txt);
+        quantity1=findViewById(R.id.quantity_text_view_1);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
@@ -80,6 +81,21 @@ public class item_description_activity extends Activity {
                 alertBox(subItem);
             }
         });
+
+        mplus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ADD_TO_CART(subItem);
+            }
+        });
+
+        mminus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                REMOVE_FROM_CART(subItem);
+            }
+        });
+
         updateCartQuantity();
     }
 
@@ -112,16 +128,19 @@ public class item_description_activity extends Activity {
         if(response.getCategory().equals("Pizza"))
         {
             addtocart.setVisibility(View.VISIBLE);
-            plus.setVisibility(View.GONE);
-            minus.setVisibility(View.GONE);
-            quantity.setVisibility(View.GONE);
+            mplus.setVisibility(View.GONE);
+            mminus.setVisibility(View.GONE);
+            quantity1.setVisibility(View.GONE);
         }
         else
         {
             addtocart.setVisibility(View.GONE);
-            plus.setVisibility(View.VISIBLE);
-            minus.setVisibility(View.VISIBLE);
-            quantity.setVisibility(View.VISIBLE);
+            mplus.setVisibility(View.VISIBLE);
+            mminus.setVisibility(View.VISIBLE);
+            quantity1.setVisibility(View.VISIBLE);
+            updateCartQuantity();
+
+
         }
 
 
@@ -161,6 +180,17 @@ public class item_description_activity extends Activity {
         plus=offerView.findViewById(R.id.plus_btn_1);
         minus=offerView.findViewById(R.id.minus_btn_1);
         TextView pizzaquantity=offerView.findViewById(R.id.quantity_text_view_1);
+        ImageView close=offerView.findViewById(R.id.close);
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(progressDialog!=null)
+                {
+                    progressDialog.dismiss();
+                }
+            }
+        });
 
         try{
             Gson gson = new Gson();
@@ -372,6 +402,21 @@ public class item_description_activity extends Activity {
             cart_fill_update_txt.setVisibility(View.VISIBLE);
             cart_fill_update_txt.setText(String.valueOf(qquantity));
         }
+
+        try{
+            int q=0;
+            for(FoodCart x:newfoodCarts)
+            {
+                if(x.getFood_name().equals(subItem.getFood_name()))
+                {   q+=x.getQuantity();
+
+                }
+            }
+            quantity1.setText(String.valueOf(q));
+        }catch (NullPointerException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private void updateNumber(List<FoodCart> list)
@@ -393,5 +438,100 @@ public class item_description_activity extends Activity {
         }
     }
 
+private void ADD_TO_CART(SubItem subItem)
+{
+    FoodCart foodCart=new FoodCart();
+    foodCart.setFood_Category(subItem.getCategory());
+    foodCart.setFood_subcategory(subItem.getSubcategory());
+    foodCart.setFood_name(subItem.getFood_name());
+    foodCart.setPrice(subItem.getPrice());
+    foodCart.setQuantity(1);
 
+    quantity1.setText(String.valueOf(foodCart.getQuantity()));
+
+    if(mSharedPreferences.getString("cart", null) == null)
+    {
+
+        List<FoodCart> foodCarts=new ArrayList<>();
+        foodCarts.add(foodCart);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        Gson gson = new Gson();
+        String cart = gson.toJson(foodCarts);
+        editor.putString("cart",cart);
+        editor.apply();
+        updateNumber(foodCarts);
+
+
+    }
+    else
+    {
+        Gson gson = new Gson();
+        String cart=mSharedPreferences.getString("cart", null);
+        Type type=new TypeToken<ArrayList<FoodCart>>(){}.getType();
+        List<FoodCart> newfoodCarts=new ArrayList<>();
+        newfoodCarts=gson.fromJson(cart,type);
+
+        assert newfoodCarts != null;
+        int flag=0;
+        for(FoodCart x:newfoodCarts)
+        {
+            if(x.getFood_name().equals(subItem.getFood_name()))
+            {flag=1;
+                x.increment();
+                quantity1.setText(String.valueOf(x.getQuantity()));
+            }
+        }
+
+        if(flag==0)
+        {
+            newfoodCarts.add(foodCart);
+        }
+
+
+      updateNumber(newfoodCarts);
+
+
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        String newcart = gson.toJson(newfoodCarts);
+        Log.e("error",newcart);
+        editor.putString("cart",newcart);
+        editor.apply();
+
+    }
+}
+
+private void REMOVE_FROM_CART(SubItem subItem)
+{
+    Gson gson = new Gson();
+    String cart=mSharedPreferences.getString("cart", null);
+    Type type=new TypeToken<ArrayList<FoodCart>>(){}.getType();
+    List<FoodCart> newfoodCarts=new ArrayList<>();
+    newfoodCarts=gson.fromJson(cart,type);
+
+    assert newfoodCarts != null;
+
+    for(int i=newfoodCarts.size()-1;i>=0;--i)
+    {
+        if(newfoodCarts.get(i).getFood_name().equals(subItem.getFood_name()))
+        {
+            newfoodCarts.get(i).decrement();
+            quantity1.setText(String.valueOf(newfoodCarts.get(i).getQuantity()));
+        }
+        if(newfoodCarts.get(i).getQuantity()==0)
+        {   newfoodCarts.remove(i);
+
+        }
+    }
+
+    updateNumber(newfoodCarts);
+
+
+
+    SharedPreferences.Editor editor = mSharedPreferences.edit();
+    String newcart = gson.toJson(newfoodCarts);
+    Log.e("error",newcart);
+    editor.putString("cart",newcart);
+    editor.apply();
+
+}
 }

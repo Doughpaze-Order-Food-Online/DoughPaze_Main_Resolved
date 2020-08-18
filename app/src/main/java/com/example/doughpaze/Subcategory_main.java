@@ -288,6 +288,16 @@ public class Subcategory_main extends Activity implements Cart_Quantity {
     @Override
     protected void onResume() {
         super.onResume();
+        try
+        { itemAdapter = new ItemAdapter(buildItemList(list,""),intent.getStringExtra("category"),this);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(Subcategory_main.this);
+            rvItem.setAdapter(itemAdapter);
+            rvItem.setLayoutManager(layoutManager);
+        }catch (NullPointerException e)
+        {
+            e.printStackTrace();
+        }
+
 
         try{
             UpdateNumber(CART());
