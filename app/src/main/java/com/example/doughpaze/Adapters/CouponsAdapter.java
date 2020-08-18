@@ -1,12 +1,18 @@
 package com.example.doughpaze.Adapters;
 
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
@@ -15,11 +21,15 @@ import com.example.doughpaze.R;
 import com.example.doughpaze.models.Coupon;
 import java.util.List;
 
+import static android.content.Context.CLIPBOARD_SERVICE;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class CouponsAdapter extends RecyclerView.Adapter<CouponsAdapter.CouponsItemHolder> {
     private List<Coupon> myOrderResponseList;
     private Context context;
+    private ClipboardManager myClipboard;
+    private ClipData myClip;
 
 
 
@@ -33,7 +43,7 @@ public class CouponsAdapter extends RecyclerView.Adapter<CouponsAdapter.CouponsI
     @NonNull
     @Override
     public CouponsAdapter.CouponsItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_offer_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.coupon_list_item, parent, false);
         return new CouponsAdapter.CouponsItemHolder(view);
     }
 
@@ -41,19 +51,25 @@ public class CouponsAdapter extends RecyclerView.Adapter<CouponsAdapter.CouponsI
     public void onBindViewHolder(@NonNull CouponsAdapter.CouponsItemHolder couponsItemHolder, int i) {
 
         Coupon coupon=myOrderResponseList.get(i);
-        String url="https://doughpaze.ddns.net"+coupon.getCoupon_location();
+        couponsItemHolder.name.setText(coupon.getCoupon_name().toUpperCase());
+        String heading="Get "+coupon.getDiscount()+"% on  "+coupon.getCategory() +" items";
+        couponsItemHolder.description1.setText(heading);
+        String heading2="Use code "+coupon.getCoupon_name() +" & get "+coupon.getDiscount()+"% discount up to Rs."+coupon.getMax_discount()+" on orders above Rs."+coupon.getMin_amount();
+        couponsItemHolder.description2.setText(heading2);
 
-        Glide
-        .with(context)
-        .load(url)
-        .placeholder(R.drawable.image_loading)
-        .fitCenter()
-        .diskCacheStrategy(DiskCacheStrategy.DATA)
-        .into(couponsItemHolder.imageView);
+        couponsItemHolder.apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myClipboard = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
+                String text;
+                text = coupon.getCoupon_name();
 
-        String description="Get "+coupon.getDiscount()+"% off on "+coupon.getCategory()+" Items";
-        couponsItemHolder.offer_head_description_txt.setText(description);
-        couponsItemHolder.category_txt.setText(coupon.getCategory());
+                myClip = ClipData.newPlainText("text", text);
+                myClipboard.setPrimaryClip(myClip);
+
+                Toast.makeText(getApplicationContext(), "Coupon Copied to clipboard",Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -64,15 +80,26 @@ public class CouponsAdapter extends RecyclerView.Adapter<CouponsAdapter.CouponsI
     }
 
     class CouponsItemHolder extends RecyclerView.ViewHolder {
-        private ImageView imageView;
-        private TextView offer_head_description_txt,category_txt;
+        private TextView name, description1, description2,more;
+        private Button apply;
 
 
         CouponsItemHolder(View itemView) {
             super(itemView);
-            imageView=itemView.findViewById(R.id.imageView);
-            offer_head_description_txt=itemView.findViewById(R.id.offer_head_description_txt);
-            category_txt=itemView.findViewById(R.id.category_txt);
+            name=itemView.findViewById(R.id.coupon_name_txt);
+            description1=itemView.findViewById(R.id.coupon_head_description_txt);
+            description2=itemView.findViewById(R.id.description2_txt);
+            more=itemView.findViewById(R.id.more_btn);
+            apply=itemView.findViewById(R.id.apply_btn);
+            apply.setText("Copy to Clipboard");
+        }
+    }
+
+    private void setClipboard(String text)
+    {
+        if(Build.VERSION.SDK_INT< Build.VERSION_CODES.HONEYCOMB)
+        {
+
         }
     }
 
