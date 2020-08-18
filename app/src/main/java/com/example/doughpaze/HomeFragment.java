@@ -128,7 +128,8 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         pasta=(CardView)v.findViewById(R.id.pasta_btn) ;
         navigationView=(NavigationView) v.findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        quantity=v.findViewById(R.id.cart_fill_update_txt);
+        navigationView.setItemIconTintList(null);
+        quantity = v.findViewById(R.id.cart_fill_update_txt);
 
         //categories
         cake.setOnClickListener(view-> FOOD_LIST_VIEW("Cake") );
