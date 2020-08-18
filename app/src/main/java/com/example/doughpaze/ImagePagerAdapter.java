@@ -74,7 +74,6 @@ public class ImagePagerAdapter extends PagerAdapter {
                     .load(arrayList.get(position))
                     .placeholder(R.drawable.image_loading)
                     .fitCenter()
-                    .diskCacheStrategy(DiskCacheStrategy.DATA)
                     .into(imageView);
         }
 

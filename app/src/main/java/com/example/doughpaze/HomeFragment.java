@@ -137,19 +137,21 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         nachos.setOnClickListener(view-> FOOD_LIST_VIEW("Nachos") );
         mocktail.setOnClickListener(view-> FOOD_LIST_VIEW("Mocktail") );
         brownies.setOnClickListener(view-> FOOD_LIST_VIEW("Brownie") );
-        garlic_bread.setOnClickListener(view-> FOOD_LIST_VIEW("Garlic Breads") );
-        pasta.setOnClickListener(view-> FOOD_LIST_VIEW("Pasta") );
+        garlic_bread.setOnClickListener(view -> FOOD_LIST_VIEW("Garlic Breads"));
+        pasta.setOnClickListener(view -> FOOD_LIST_VIEW("Pasta"));
 
         cart_Img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), CartActivity.class);
+                Intent i = new Intent(getActivity(), CartActivity.class);
                 startActivity(i);
             }
         });
-
-        updateCartQuantity();
-
+        try {
+            updateCartQuantity();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
 
     }
@@ -386,7 +388,11 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     @Override
     public void onResume() {
         super.onResume();
-        updateCartQuantity();
+        try {
+            updateCartQuantity();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
     }
 }
