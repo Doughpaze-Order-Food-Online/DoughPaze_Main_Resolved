@@ -1,6 +1,7 @@
 package com.example.doughpaze.FoodList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doughpaze.R;
+import com.example.doughpaze.item_description_activity;
 import com.example.doughpaze.models.FoodCart;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -53,9 +55,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
     public void onBindViewHolder(@NonNull CartAdapter.CartItemHolder cartViewHolder, int i) {
         FoodCart Item  = CartItemList.get(i);
         cartViewHolder.foodname.setText(Item.getFood_name());
-        cartViewHolder.price.setText(String.valueOf(Item.getPrice()));
+        cartViewHolder.price.setText(String.valueOf(Item.getPrice()*Item.getQuantity()));
         cartViewHolder.quantity.setText((String.valueOf(Item.getQuantity())));
         ArrayAdapter<CharSequence> adapter = null;
+
+        cartViewHolder.foodname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(cartViewHolder.itemView.getContext(), item_description_activity.class);
+                i.putExtra("id",Item.get_id());
+                cartViewHolder.itemView.getContext().startActivity(i);
+            }
+        });
 
 
         if(Item.getFood_category().equals("Pizza"))
@@ -88,15 +99,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
                     newfoodCarts=gson.fromJson(cart,type);
                     int flag=0;
                     assert newfoodCarts != null;
-                   // Toast.makeText(cartViewHolder.itemView.getContext(), String.valueOf(newfoodCarts.get(i).getId()!=Item.getId()), Toast.LENGTH_SHORT).show();
 
-                    //Toast.makeText(cartViewHolder.itemView.getContext(),"2//"+ String.valueOf(Item.getId()), Toast.LENGTH_SHORT).show();
+
                     for(int i = newfoodCarts.size()-1; i>=0; --i)
                     {
                         if(newfoodCarts.get(i).getFood_name().equals(Item.getFood_name()) && parent.getItemAtPosition(position).toString().equals(newfoodCarts.get(i).getSize()) && newfoodCarts.get(i).getId()!=Item.getId() )
                         {flag=1;
                             newfoodCarts.get(i).setQuantity(newfoodCarts.get(i).getQuantity()+Item.getQuantity());
                             cartViewHolder.quantity.setText((String.valueOf(newfoodCarts.get(i).getQuantity())));
+                            cartViewHolder.price.setText(String.valueOf(newfoodCarts.get(i).getQuantity()*newfoodCarts.get(i).getPrice()));
 
                         }
                     }
@@ -124,7 +135,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
                                 int price=x.getPrice();
                                 x.setPrice(x.getAlt_price());
                                 x.setAlt_price(price);
-                                cartViewHolder.price.setText(String.valueOf(x.getPrice()));
+                                cartViewHolder.price.setText(String.valueOf(x.getPrice()*x.getQuantity()));
 
 
                             }
@@ -165,6 +176,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
                     if(x.getFood_name().equals(Item.getFood_name()))
                     {
                         cartViewHolder.quantity.setText(String.valueOf(x.getQuantity()));
+                        cartViewHolder.price.setText(String.valueOf(x.getQuantity()*x.getPrice()));
                     }
                 }
             }
@@ -175,6 +187,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
                     if(x.getFood_name().equals(Item.getFood_name()) && cartViewHolder.size.getSelectedItem().toString().equals(x.getSize()))
                     {
                         cartViewHolder.quantity.setText(String.valueOf(x.getQuantity()));
+                        cartViewHolder.price.setText(String.valueOf(x.getQuantity()*x.getPrice()));
                     }
                 }
             }
@@ -204,6 +217,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
                         {
                             x.increment();
                             cartViewHolder.quantity.setText(String.valueOf(x.getQuantity()));
+                            cartViewHolder.price.setText(String.valueOf(x.getPrice()*x.getQuantity()));
                         }
                     }
                 }
@@ -215,6 +229,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
                         {
                             x.increment();
                             cartViewHolder.quantity.setText(String.valueOf(x.getQuantity()));
+                            cartViewHolder.price.setText(String.valueOf(x.getPrice()*x.getQuantity()));
                         }
                     }
                 }
@@ -257,6 +272,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
                         {
                             newfoodCarts.get(i).decrement();
                             cartViewHolder.quantity.setText(String.valueOf(newfoodCarts.get(i).getQuantity()));
+                            cartViewHolder.price.setText(String.valueOf(newfoodCarts.get(i).getQuantity()*newfoodCarts.get(i).getPrice()));
                         }
                         if(newfoodCarts.get(i).getQuantity()==0)
                         {   newfoodCarts.remove(i);
@@ -273,6 +289,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
                         {
                             newfoodCarts.get(i).decrement();
                             cartViewHolder.quantity.setText(String.valueOf(newfoodCarts.get(i).getQuantity()));
+                            cartViewHolder.price.setText(String.valueOf(newfoodCarts.get(i).getQuantity()*newfoodCarts.get(i).getPrice()));
                         }
                         if(newfoodCarts.get(i).getQuantity()==0)
                         {

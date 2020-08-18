@@ -33,6 +33,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
@@ -71,7 +72,6 @@ public class location_activity extends Activity {
 
 
 
-            resultReceiver=new AddressResultReceiver(new Handler());
             mSubscriptions = new CompositeSubscription();
 
 
@@ -84,7 +84,7 @@ public class location_activity extends Activity {
         save_for_future=(CheckBox)findViewById(R.id.save_for_future);
         radioGroup=(RadioGroup)findViewById(R.id.type);
 
-        //PLACE_API_INIT();
+
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,7 +194,7 @@ public class location_activity extends Activity {
     private void handleResponse(Response response) {
         progressDialog.dismiss();
 
-        Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Address Saved!", Toast.LENGTH_SHORT).show();
 
         GO_TO_CONFIRM_PAGE();
     }
@@ -228,6 +228,12 @@ public class location_activity extends Activity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) {
+
+            progressDialog=new ProgressDialog(this);
+            progressDialog.show();
+            progressDialog.setContentView(R.layout.progress_loading);
+            Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
             getCurrentLocation();
         } else {
             Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
@@ -269,7 +275,8 @@ public class location_activity extends Activity {
                             Location location=new Location("providerNA");
                             location.setLatitude(latitude);
                             location.setLongitude(longitude);
-                            fetchAddressFromLocation(location);
+                            LatLng latLng=new LatLng(latitude,longitude);
+                            getAddressFromLatLng(latLng);
                         }
                         else
                         {
@@ -282,119 +289,35 @@ public class location_activity extends Activity {
 
     }
 
-    private  void fetchAddressFromLocation(Location location)
-    {
-        Intent intent=new Intent(this,AddressFetchIntent.class);
-        intent.putExtra(constants.RECEIVER,resultReceiver);
-        intent.putExtra(constants.LOCATION_DATA_EXTRA,location);
-        startService(intent);
-        finish();
 
-    }
 
-    private class AddressResultReceiver extends ResultReceiver
-    {
-        public  AddressResultReceiver(Handler handler)
-        {
-            super(handler);
-        }
 
-        @Override
-        protected void onReceiveResult(int resultCode, Bundle resultData) {
-            super.onReceiveResult(resultCode, resultData);
 
-            if(resultCode== constants.SUCCESS_RESULT)
-            {
-                user_landmark.setText(resultData.getString(constants.RESULT_DATA_KEY));
+//
+    private void getAddressFromLatLng(LatLng latLng){
+        Geocoder geocoder=new Geocoder(this);
+        List<Address> addresses;
+        try {
+            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 5);
+            if(addresses!=null){
+                Address address=addresses.get(0);
+                String fulladdress=address.getAddressLine(0);
+                user_landmark.setText(fulladdress);
 
                 if(progressDialog!=null)
                 {
                     progressDialog.dismiss();
                 }
+            }
+            else{
 
-            }else
-            {
-                Toast.makeText(location_activity.this, resultData.getString(constants.RESULT_DATA_KEY), Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
             }
         }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
-
-//    private void PLACE_API_INIT()
-//    {
-//        user_house.setAdapter(new PlaceAutoSuggestAdapter(this,android.R.layout.simple_list_item_1));
-//
-//        user_house.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Log.d("Address : ",user_house.getText().toString());
-//                LatLng latLng=getLatLngFromAddress(user_house.getText().toString());
-//                if(latLng!=null) {
-//                    Log.d("Lat Lng : ", " " + latLng.latitude + " " + latLng.longitude);
-//                    Address address=getAddressFromLatLng(latLng);
-//                    if(address!=null) {
-//                        Log.d("Address : ", "" + address.toString());
-//                        Log.d("Address Line : ",""+address.getAddressLine(0));
-//                        Log.d("Phone : ",""+address.getPhone());
-//                        Log.d("Pin Code : ",""+address.getPostalCode());
-//                        Log.d("Feature : ",""+address.getFeatureName());
-//                        Log.d("More : ",""+address.getLocality());
-//                    }
-//                    else {
-//                        Log.d("Adddress","Address Not Found");
-//                    }
-//                }
-//                else {
-//                    Log.d("Lat Lng","Lat Lng Not Found");
-//                }
-//
-//            }
-//        });
-//    }
-
-
-//    private LatLng getLatLngFromAddress(String address){
-//
-//        Geocoder geocoder=new Geocoder(this);
-//        List<Address> addressList;
-//
-//        try {
-//            addressList = geocoder.getFromLocationName(address, 1);
-//            if(addressList!=null){
-//                Address singleaddress=addressList.get(0);
-//                LatLng latLng=new LatLng(singleaddress.getLatitude(),singleaddress.getLongitude());
-//                return latLng;
-//            }
-//            else{
-//                return null;
-//            }
-//        }
-//        catch (Exception e){
-//            e.printStackTrace();
-//            return null;
-//        }
-//
-//    }
-//
-//    private Address getAddressFromLatLng(LatLng latLng){
-//        Geocoder geocoder=new Geocoder(this);
-//        List<Address> addresses;
-//        try {
-//            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 5);
-//            if(addresses!=null){
-//                Address address=addresses.get(0);
-//                return address;
-//            }
-//            else{
-//                return null;
-//            }
-//        }
-//        catch (Exception e){
-//            e.printStackTrace();
-//            return null;
-//        }
-//
-//    }
 
     private void GO_TO_CONFIRM_PAGE() {
         Intent intent=new Intent(location_activity.this,order_confirm_activity.class);

@@ -38,7 +38,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-public class address_activity extends Activity implements finishActivity {
+public class address_activity extends Activity {
     private TextView addnew;
     private CompositeSubscription mSubscriptions;
     private SharedPreferences mSharedPreferences;
@@ -70,7 +70,7 @@ public class address_activity extends Activity implements finishActivity {
             }
         });
 
-        progressDialog=new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
         progressDialog.show();
         progressDialog.setContentView(R.layout.progress_loading);
         Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
@@ -80,6 +80,7 @@ public class address_activity extends Activity implements finishActivity {
 
 
     private void FetchAddress() {
+
         mSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
 
@@ -93,22 +94,22 @@ public class address_activity extends Activity implements finishActivity {
 
     private void handleResponse(AddressResponse response) {
 
+        progressDialog.dismiss();
         List<Address> list=new ArrayList<>();
         list=response.getAddress();
 
-        Log.e("address",list.toString());
-        addressAdapter = new addressAdapter(list,this);
+        addressAdapter = new addressAdapter(list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(address_activity.this);
         rvItem.setAdapter(addressAdapter);
         rvItem.setLayoutManager(layoutManager);
-        progressDialog.dismiss();
+
 
 
     }
 
     private void handleError(Throwable error) {
 
-        progressDialog.dismiss();
+
 
         if (error instanceof HttpException) {
 
@@ -130,8 +131,14 @@ public class address_activity extends Activity implements finishActivity {
         }
     }
 
+
+
     @Override
-    public void ActivityFinish() {
-        this.finish();
+    protected void onResume() {
+        super.onResume();
+
+
+        FetchAddress();
+
     }
 }

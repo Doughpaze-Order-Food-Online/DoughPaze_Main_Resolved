@@ -13,10 +13,13 @@ public class order_sucess_activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_success);
+        Intent intent=getIntent();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(order_sucess_activity.this, my_transaction_activity.class);
+                Intent i = new Intent(order_sucess_activity.this,order_details.class);
+                i.putExtra("id",intent.getStringExtra("id"));
                 startActivity(i);
                 finish();
             }

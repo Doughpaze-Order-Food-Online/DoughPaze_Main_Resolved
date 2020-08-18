@@ -140,6 +140,8 @@ public class MyOrderResponse {
     public void setPaymentDetails(PaymentDetails paymentDetails) {
         this.paymentDetails = paymentDetails;
     }
+
+
 }
 
 

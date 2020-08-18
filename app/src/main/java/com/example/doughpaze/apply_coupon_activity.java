@@ -128,9 +128,10 @@ public class apply_coupon_activity extends Activity implements finishActivity {
         {int flag=0;
             for(FoodCart y:foodCart)
             {
-                if(x.getCategory().equals(y.getFood_category()))
+                if(x.getCategory().equals(y.getFood_category()) && !applicable.contains(x))
                 {   flag=1;
                     applicable.add(x);
+
                 }
             }
             if(x.getCategory().equals("all"))

@@ -55,14 +55,12 @@ public class addressAdapter extends RecyclerView.Adapter<addressAdapter.AddressI
 
     private CompositeSubscription mSubscriptions;
     private List<Address> list;
-    private finishActivity finishActivity;
     private SharedPreferences mSharedPreferences;
     private ProgressDialog progressDialog;
     Context context;
 
-    public addressAdapter(List<Address> list, finishActivity finishActivity) {
+    public addressAdapter(List<Address> list) {
         this.list=list;
-        this.finishActivity=finishActivity;
     }
 
 
@@ -98,7 +96,6 @@ public class addressAdapter extends RecyclerView.Adapter<addressAdapter.AddressI
 
                 Intent intent=new Intent(addressItemHolder.itemView.getContext(), order_confirm_activity.class);
                 addressItemHolder.itemView.getContext().startActivity(intent);
-                finishActivity.ActivityFinish();
                 //addressItemHolder.itemView.getContext().finish();
 
             }

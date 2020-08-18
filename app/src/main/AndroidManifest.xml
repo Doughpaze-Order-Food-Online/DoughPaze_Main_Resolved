@@ -17,7 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ItemDescriptionActivity"></activity>
         <activity
             android:name=".HelpAndSupportActivity"
             android:screenOrientation="portrait" />
@@ -47,6 +46,12 @@
         <activity
             android:name=".Subcategory_main"
             android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".order_details"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".CartActivity"
             android:screenOrientation="portrait" />
@@ -98,7 +103,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".AddressFetchIntent" />
+
     </application>
 
 </manifest>

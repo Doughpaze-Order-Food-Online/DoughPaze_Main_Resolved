@@ -146,6 +146,7 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
                     foodCart.setFood_name(subItem.getFood_name());
                     foodCart.setPrice(subItem.getPrice());
                     foodCart.setQuantity(1);
+                    foodCart.set_id(subItem.getId());
 
                     subItemViewHolder.quantity.setText(String.valueOf(foodCart.getQuantity()));
 
@@ -346,6 +347,7 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
                         foodCart.setFood_name(subItem.getFood_name());
                         foodCart.setQuantity(1);
                         foodCart.setId(String.valueOf(subItem.getId()));
+                        foodCart.set_id(subItem.getId());
 
                         foodCart.setSize(radioButton.getText().toString());
                         foodCart.setPrice(radioButton.getText().toString().equals("Small")?subItem.getPrice():subItem.getLarge_price());

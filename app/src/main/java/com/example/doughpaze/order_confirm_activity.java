@@ -507,7 +507,7 @@ public class order_confirm_activity extends Activity {
         {
             progressDialog.dismiss();
         }
-        GO_TO_PROFILE();
+        GO_TO_PROFILE(response.getToken());
     }
 
     private void handleError_COD(Throwable error) {
@@ -534,7 +534,7 @@ public class order_confirm_activity extends Activity {
     }
 
 
-    private void GO_TO_PROFILE(){
+    private void GO_TO_PROFILE(String id){
         mSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
 
@@ -546,6 +546,7 @@ public class order_confirm_activity extends Activity {
         editor.apply();
 
         Intent intent=new Intent(order_confirm_activity.this,order_sucess_activity.class);
+        intent.putExtra("id",id);
         startActivity(intent);
         finish();
     }

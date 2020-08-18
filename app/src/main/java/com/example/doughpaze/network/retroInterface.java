@@ -101,4 +101,7 @@ public interface retroInterface {
 
     @GET("item_details")
     Observable<SubItem> GET_ITEM_DETAILS(@Query("id") String id);
+
+    @GET("order_details")
+    Observable<MyOrderResponse> GET_ORDER_DETAILS(@Query("id") String id);
 }

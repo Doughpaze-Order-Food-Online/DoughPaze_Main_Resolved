@@ -261,6 +261,7 @@ public class item_description_activity extends Activity {
                     foodCart.setFood_name(subItem.getFood_name());
                     foodCart.setQuantity(1);
                     foodCart.setId(String.valueOf(subItem.getId()));
+                    foodCart.set_id(subItem.getId());
 
                     foodCart.setSize(radioButton.getText().toString());
                     foodCart.setPrice(radioButton.getText().toString().equals("Small")?subItem.getPrice():subItem.getLarge_price());
@@ -472,6 +473,7 @@ private void ADD_TO_CART(SubItem subItem)
     foodCart.setFood_name(subItem.getFood_name());
     foodCart.setPrice(subItem.getPrice());
     foodCart.setQuantity(1);
+    foodCart.set_id(subItem.getId());
 
     quantity1.setText(String.valueOf(foodCart.getQuantity()));
 

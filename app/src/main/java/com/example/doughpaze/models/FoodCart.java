@@ -10,6 +10,7 @@ public class FoodCart {
     private int quantity;
     private String size;
     double id;
+    String _id;
 
     public FoodCart(){
         this.quantity=0;
@@ -95,5 +96,17 @@ public class FoodCart {
         Random random=new Random();
         rand=random.nextDouble();
         this.id=rand;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void setFood_category(String food_category) {
+        this.food_category = food_category;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 }

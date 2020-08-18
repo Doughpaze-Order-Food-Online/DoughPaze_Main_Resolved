@@ -44,7 +44,7 @@ public class CartFragment extends Fragment implements ChangePrice {
 private RecyclerView recyclerView;
 private CartAdapter cartAdapter;
 List<FoodCart> Cartlist;
-private TextView Itemtotal,tax,delivery,topay,empty, t1,t2,t3,t4,t5,t6,t7;
+private TextView Itemtotal,tax,delivery,topay,empty, t1,t2,t3,t4,t5,t6,t7,t8;
 private ScrollView scrollView;
 private Button proceed;
 private RelativeLayout apply_coupon;
@@ -81,6 +81,7 @@ private ImageView remove;
         t6=view.findViewById(R.id.applied_txt);
         t7=view.findViewById(R.id.coupon_applied);
         remove=view.findViewById(R.id.remove_coupon);
+        t8=view.findViewById(R.id.dash_line3);
 
 
         Cartlist = CART();
@@ -209,6 +210,7 @@ private ImageView remove;
                     t5.setVisibility(View.GONE);
                     t6.setVisibility(View.GONE);
                     t7.setVisibility(View.GONE);
+                    t8.setVisibility(View.GONE);
                     remove.setVisibility(View.GONE);
 
 
@@ -226,6 +228,7 @@ private ImageView remove;
                     t5.setVisibility(View.VISIBLE);
                     t6.setVisibility(View.VISIBLE);
                     t7.setVisibility(View.VISIBLE);
+                    t8.setVisibility(View.VISIBLE);
                     remove.setVisibility(View.VISIBLE);
                 }
 
