@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingTop="16dp"
     android:paddingBottom="16dp">
@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/order_ID_txt"
             android:gravity="center_vertical"
-            android:text="123456789"
+            android:maxLength="15"
+            android:text="123456789895322"
             android:textColor="@color/colorPrimaryText"
             android:textSize="18sp" />
 
@@ -34,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/order_ID_txt"
+            android:layout_marginTop="@dimen/dimen_8dp"
             android:gravity="center_vertical"
             android:text="@string/amount_paid"
             android:textColor="@color/colorPrimaryText"
@@ -44,6 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/order_ID_txt"
+            android:layout_marginTop="@dimen/dimen_8dp"
             android:layout_marginStart="4dp"
             android:layout_toEndOf="@id/amount_paid_txt"
             android:gravity="center_vertical"
@@ -56,6 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/order_ID_txt"
+            android:layout_marginTop="@dimen/dimen_8dp"
             android:layout_toEndOf="@id/Rupees_txt_"
             android:gravity="center_vertical"
             android:text="500.00"
@@ -68,16 +72,17 @@
             android:layout_height="30dp"
             android:layout_below="@id/total"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="@dimen/dimen_8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/login_bordershape"
             android:text="@string/reorder"
+            android:visibility="gone"
             android:textColor="@color/colorPrimaryText" />
 
         <Button
             android:id="@+id/cancel_btn"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_below="@id/order_ID_txt"
+            android:layout_marginBottom="@dimen/dimen_4dp"
             android:layout_alignParentEnd="true"
             android:background="@drawable/login_bordershape"
             android:text="@string/cancel"
@@ -87,10 +92,8 @@
             android:id="@+id/date_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cancel_btn"
-            android:layout_marginTop="@dimen/dimen_8dp"
             android:layout_marginBottom="@dimen/dimen_8dp"
-            android:layout_toStartOf="@id/order_date"
+            android:layout_below="@id/reorder_btn"
             android:text="@string/date"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/dimen_18sp" />
@@ -99,9 +102,8 @@
             android:id="@+id/order_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cancel_btn"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_below="@id/reorder_btn"
+            android:layout_toEndOf="@id/date_txt"
             android:layout_marginBottom="@dimen/dimen_8dp"
             android:text="15/08/2001"
             android:textColor="@color/colorPrimaryText"
@@ -110,8 +112,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_16dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/status"
@@ -179,8 +180,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/items"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp" />
+        android:layout_height="match_parent"
+        android:nestedScrollingEnabled="true" />
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
