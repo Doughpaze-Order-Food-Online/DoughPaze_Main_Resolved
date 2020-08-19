@@ -20,7 +20,7 @@
             tools:text="AXIS200"
             android:fontFamily="sans-serif-medium"
             android:layout_gravity="center_vertical"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textColor="@color/colorPrimaryText"/>
 
     </LinearLayout>
