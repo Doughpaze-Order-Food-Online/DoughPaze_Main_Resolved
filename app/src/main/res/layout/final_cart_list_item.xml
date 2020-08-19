@@ -15,8 +15,15 @@
         android:textSize="16sp"
         tools:text="Choco Vanilla Moussee Cake" />
 
-
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/dimen_32dp"
+        android:layout_toEndOf="@id/item_name_txt"
+        android:text="Size"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/dimen_16sp" />
 
 
     <TextView
