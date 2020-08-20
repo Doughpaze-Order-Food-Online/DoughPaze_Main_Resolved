@@ -39,6 +39,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -111,7 +112,18 @@ public class apply_coupon_activity extends Activity implements finishActivity {
     private void handleResponse(List<Coupon> response) {
         List<Coupon> applicable=new ArrayList<>();
         List<Coupon> others=new ArrayList<>();
-        coupons=response;
+        List<Coupon> newresponse=new ArrayList<>();
+
+        Date d1=new Date();
+
+        for(Coupon x:response)
+        { long diff= (d1.getTime()-x.getExpiry().getTime())/1000;
+            if(diff<0)
+            {
+                newresponse.add(x);
+            }
+        }
+        coupons= newresponse;
         progressDialog.dismiss();
         Gson gson = new Gson();
         mSharedPreferences = PreferenceManager
@@ -124,7 +136,7 @@ public class apply_coupon_activity extends Activity implements finishActivity {
         foodCart = gson.fromJson(cart, type);
 
         assert foodCart != null;
-        for(Coupon x:response)
+        for(Coupon x: newresponse)
         {int flag=0;
             for(FoodCart y:foodCart)
             {

@@ -118,7 +118,7 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
 
         Date d1=new Date();
         long diff= (d1.getTime()-myOrderResponse.getDate().getTime())/1000;
-        Log.w("time",String.valueOf(diff));
+
         if(diff>1800 || !myOrderResponse.getOrder_status().equals("Ordered"))
         {
             transactionItemHolder.reorder.setVisibility(View.VISIBLE);

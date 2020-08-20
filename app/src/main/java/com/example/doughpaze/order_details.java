@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
@@ -38,6 +39,7 @@ public class order_details extends Activity {
     private TextView orderId,total,paymentMode_txt,transaction_ID_txt,date,address,couponText,coupon;
     private RecyclerView rvItem;
     private Button proceed;
+    private RelativeLayout parent;
 
 
     @Override
@@ -57,6 +59,7 @@ public class order_details extends Activity {
         address=findViewById(R.id.Delivery_address);
         coupon=findViewById(R.id.coupon_name);
         couponText=findViewById(R.id.couponText);
+        parent=findViewById(R.id.parent);
 
         Fetch_Details( intent.getStringExtra("id"));
 
@@ -94,6 +97,7 @@ public class order_details extends Activity {
             progressDialog.dismiss();
         }
 
+        parent.setVisibility(View.VISIBLE);
         orderId.setText(response.getOrderId());
         date.setText(response.getDate().toString());
         total.setText(String.valueOf(response.getTotalAmount()));

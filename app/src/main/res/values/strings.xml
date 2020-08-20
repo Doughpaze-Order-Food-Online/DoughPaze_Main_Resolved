@@ -96,7 +96,7 @@
     <string name="address">address</string>
     <string name="saved_addresses">Saved Addresses</string>
     <string name="add_address">Add New Address</string>
-    <string name="landmark">LANDMARK</string>
+    <string name="landmark">ADDRESS</string>
     <string name="house_flat_block_no">HOUSE / FLAT / BLOCK NO.</string>
     <string name="add_new">Add New +</string>
     <string name="work">" "Work</string>

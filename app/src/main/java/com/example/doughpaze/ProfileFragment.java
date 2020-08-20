@@ -101,7 +101,7 @@ public class ProfileFragment extends Fragment {
         address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),address_activity.class);
+                Intent intent=new Intent(getContext(),myaddress.class);
                 startActivity(intent);
             }
         });

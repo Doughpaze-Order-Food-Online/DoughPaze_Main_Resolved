@@ -178,7 +178,8 @@
                 android:padding="8dp"
                 android:text="@string/save_address"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:visibility="gone"/>
 
 
         </LinearLayout>

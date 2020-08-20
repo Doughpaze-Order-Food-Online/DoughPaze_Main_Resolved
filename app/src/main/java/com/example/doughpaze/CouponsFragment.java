@@ -22,6 +22,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -67,11 +69,21 @@ public class CouponsFragment extends Fragment {
 
 
     private void handleResponse(List<Coupon> response) {
-
-        coupons=response;
+        List<Coupon> newresponse=new ArrayList<>();
         progressDialog.dismiss();
 
-        CouponsAdapter couponsAdapter=new CouponsAdapter(response,getContext());
+        Date d1=new Date();
+
+        for(Coupon x:response)
+        { long diff= (d1.getTime()-x.getExpiry().getTime())/1000;
+            if(diff<0)
+            {
+                newresponse.add(x);
+            }
+        }
+
+        coupons=newresponse;
+        CouponsAdapter couponsAdapter=new CouponsAdapter(newresponse,getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvitem.setAdapter(couponsAdapter);
         rvitem.setLayoutManager(layoutManager);

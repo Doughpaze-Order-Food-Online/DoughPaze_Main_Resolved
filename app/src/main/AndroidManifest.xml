@@ -87,6 +87,14 @@
         <activity
             android:name=".loginActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".myaddress"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".saveaddress"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />

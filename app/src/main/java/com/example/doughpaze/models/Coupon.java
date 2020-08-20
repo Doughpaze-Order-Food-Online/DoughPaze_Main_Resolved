@@ -2,6 +2,8 @@ package com.example.doughpaze.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class Coupon {
 
     @SerializedName("coupon_name")
@@ -24,6 +26,9 @@ public class Coupon {
 
     @SerializedName("coupon_location")
     String coupon_location;
+
+    @SerializedName("expiry")
+    Date expiry;
 
 
     public String getCategory() {
@@ -80,5 +85,13 @@ public class Coupon {
 
     public void setCoupon_location(String coupon_location) {
         this.coupon_location = coupon_location;
+    }
+
+    public Date getExpiry() {
+        return expiry;
+    }
+
+    public void setExpiry(Date expiry) {
+        this.expiry = expiry;
     }
 }
