@@ -108,7 +108,7 @@ public class address_activity extends Activity {
     }
 
     private void handleError(Throwable error) {
-
+        progressDialog.dismiss();
 
 
         if (error instanceof HttpException) {

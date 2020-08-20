@@ -1,7 +1,5 @@
 package com.example.doughpaze.models;
 
-import com.example.doughpaze.FoodList.PaymentDetails;
-
 import java.util.Date;
 import java.util.List;
 

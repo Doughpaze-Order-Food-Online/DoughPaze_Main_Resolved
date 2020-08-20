@@ -85,6 +85,37 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
         transactionItemHolder.rvItem.setAdapter(confirmOrderAdapter);
         transactionItemHolder.rvItem.setLayoutManager(layoutManager);
 
+        String address=myOrderResponse.getAddress().getHouse_details()+" " +myOrderResponse.getAddress().getAddress();
+        transactionItemHolder.address.setText(address);
+        transactionItemHolder.status.setText(myOrderResponse.getOrder_status());
+        transactionItemHolder.payment_mode.setText(myOrderResponse.getPayment_mode());
+        transactionItemHolder.orderId.setText(myOrderResponse.getOrderId());
+        transactionItemHolder.date.setText(myOrderResponse.getDate().toString());
+
+        if(myOrderResponse.getPayment_mode().equals("Online"))
+        {
+            transactionItemHolder.tid.setVisibility(View.VISIBLE);
+            transactionItemHolder.tid.setText(myOrderResponse.getPaymentDetails().getTransactionId());
+            transactionItemHolder.tidtext.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            transactionItemHolder.tid.setVisibility(View.GONE);
+            transactionItemHolder.tidtext.setVisibility(View.GONE);
+        }
+
+        if(myOrderResponse.getCoupon_applied())
+        {
+            transactionItemHolder.coupon.setText(myOrderResponse.getCoupon_name());
+        }
+        else
+        {
+            transactionItemHolder.coupon.setVisibility(View.GONE);
+            transactionItemHolder.couponText.setVisibility(View.GONE);
+        }
+
+
+
         Date d1=new Date();
         long diff= (d1.getTime()-myOrderResponse.getDate().getTime())/1000;
         Log.w("time",String.valueOf(diff));
@@ -164,7 +195,7 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
 
     class transactionItemHolder extends RecyclerView.ViewHolder {
         private Button reorder;
-        private TextView total;
+        private TextView total,orderId,date,status,payment_mode,tid,address,coupon,tidtext,couponText;
         private RecyclerView rvItem;
         private Button cancel;
 
@@ -176,7 +207,16 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
             total = itemView.findViewById(R.id.total);
             rvItem=itemView.findViewById(R.id.items);
             cancel=itemView.findViewById(R.id.cancel_btn) ;
+            orderId=itemView.findViewById(R.id.id_num);
+            date=itemView.findViewById(R.id.order_date);
+            status=itemView.findViewById(R.id.status_value_txt);
+            payment_mode=itemView.findViewById(R.id.paymentMode_txt);
+            tid=itemView.findViewById(R.id.transaction_ID_txt);
+            coupon=itemView.findViewById(R.id.coupon_name);
+            address=itemView.findViewById(R.id.delivery);
             mSubscriptions = new CompositeSubscription();
+            tidtext=itemView.findViewById(R.id.transaction_txt);
+            couponText=itemView.findViewById(R.id.couponText);
 
         }
     }

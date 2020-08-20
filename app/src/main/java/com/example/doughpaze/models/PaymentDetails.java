@@ -1,4 +1,4 @@
-package com.example.doughpaze.FoodList;
+package com.example.doughpaze.models;
 
 public class PaymentDetails {
     private String status,bankname, date, transactionId, paymentType, bankTransactionId;

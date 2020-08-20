@@ -1,6 +1,5 @@
 package com.example.doughpaze.models;
 
-import com.example.doughpaze.FoodList.PaymentDetails;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -43,6 +42,12 @@ public class MyOrderResponse {
 
     @SerializedName("payment_details")
     PaymentDetails paymentDetails;
+
+    @SerializedName("coupon_applied")
+    Boolean coupon_applied;
+
+    @SerializedName("coupon_name")
+    String coupon_name;
 
 
     public String getOrderId() {
@@ -141,7 +146,21 @@ public class MyOrderResponse {
         this.paymentDetails = paymentDetails;
     }
 
+    public Boolean getCoupon_applied() {
+        return coupon_applied;
+    }
 
+    public String getCoupon_name() {
+        return coupon_name;
+    }
+
+    public void setCoupon_applied(Boolean coupon_applied) {
+        this.coupon_applied = coupon_applied;
+    }
+
+    public void setCoupon_name(String coupon_name) {
+        this.coupon_name = coupon_name;
+    }
 }
 
 

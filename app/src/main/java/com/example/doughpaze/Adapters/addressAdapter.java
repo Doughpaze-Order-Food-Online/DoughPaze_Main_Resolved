@@ -59,6 +59,7 @@ public class addressAdapter extends RecyclerView.Adapter<addressAdapter.AddressI
     private ProgressDialog progressDialog;
     Context context;
 
+
     public addressAdapter(List<Address> list) {
         this.list=list;
     }
@@ -76,10 +77,21 @@ public class addressAdapter extends RecyclerView.Adapter<addressAdapter.AddressI
         Address newaddress=list.get(i);
         addressItemHolder.address.setText(newaddress.getAddress());
         addressItemHolder.type.setText(newaddress.getType());
+        if(newaddress.getType().trim().toLowerCase().equals("home"))
+        {
+            addressItemHolder.image.setImageResource(R.drawable.ic_home_black_24dp);
+        }
+        else if(newaddress.getType().trim().toLowerCase().equals("work"))
+        {
+            addressItemHolder.image.setImageResource(R.drawable.ic_work);
+        }
+        else
+        {
+            addressItemHolder.image.setImageResource(R.drawable.ic_other_location);
+        }
+
         addressItemHolder.house_details.setText(newaddress.getHouse_details());
 
-
-        //addressItemHolder.type.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_home_black_24dp,null,null,null);
 
         addressItemHolder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +166,7 @@ public class addressAdapter extends RecyclerView.Adapter<addressAdapter.AddressI
         private TextView type,address,house_details;
         private LinearLayout parent;
         private ImageView delete;
+        private ImageView image;
 
         AddressItemHolder (View itemView) {
             super(itemView);
@@ -164,6 +177,7 @@ public class addressAdapter extends RecyclerView.Adapter<addressAdapter.AddressI
             parent=itemView.findViewById(R.id.address_container);
             delete=itemView.findViewById(R.id.delete_button);
             mSubscriptions = new CompositeSubscription();
+            image=itemView.findViewById(R.id.address_type_img);
         }
     }
 

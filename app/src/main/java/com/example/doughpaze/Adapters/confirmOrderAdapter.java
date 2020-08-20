@@ -42,7 +42,8 @@ public class confirmOrderAdapter extends RecyclerView.Adapter<confirmOrderAdapte
     public void onBindViewHolder(@NonNull OrderItemHolder orderItemHolder, int i) {
         FoodCart Item  = list.get(i);
         orderItemHolder.foodname.setText(Item.getFood_name());
-        orderItemHolder.price.setText(String.valueOf(Item.getQuantity()));
+        orderItemHolder.quantity.setText(String.valueOf(Item.getQuantity()));
+        orderItemHolder.size.setText(Item.getSize());
 
     }
 
@@ -53,13 +54,14 @@ public class confirmOrderAdapter extends RecyclerView.Adapter<confirmOrderAdapte
     }
 
     class OrderItemHolder extends RecyclerView.ViewHolder {
-        TextView foodname, price, quantity;
+        TextView foodname,size, quantity;
 
         OrderItemHolder(View itemView) {
             super(itemView);
 
             foodname=(TextView)itemView.findViewById(R.id.item_name_txt);
-            price=(TextView)itemView.findViewById(R.id.quantity_txt);
+            quantity=(TextView)itemView.findViewById(R.id.quantity_txt);
+            size=(TextView)itemView.findViewById(R.id.size);
 
 
 
