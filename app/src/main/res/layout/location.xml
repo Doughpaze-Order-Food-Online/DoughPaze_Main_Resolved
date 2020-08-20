@@ -147,6 +147,7 @@
                 android:id="@+id/save_for_future"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="visible"
                 android:text="@string/save_for_future" />
 
 
@@ -161,6 +162,21 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="@string/proceed"
+                android:visibility="visible"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/Save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/login_bordershape"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/save_address"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="24sp" />
 

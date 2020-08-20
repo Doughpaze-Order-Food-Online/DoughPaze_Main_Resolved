@@ -2,6 +2,7 @@ package com.example.doughpaze;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,7 +11,9 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -27,6 +30,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 
 import retrofit2.adapter.rxjava.HttpException;
@@ -58,6 +64,9 @@ public class signUpActivity extends AppCompatActivity {
     private TextInputLayout mTiDob;
     private ProgressBar mProgressbar;
     private ProgressDialog progressDialog;
+    private EditText DobEditText;
+    private Calendar myCalendar;
+    private TextInputLayout textInputLayout;
     User user;
 
     private TextView terms;
@@ -77,7 +86,7 @@ public class signUpActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        textInputLayout = findViewById(R.id.user_Details2);
         terms = findViewById(R.id.term_txt);
         terms.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +99,40 @@ public class signUpActivity extends AppCompatActivity {
         mSubscriptions = new CompositeSubscription();
         initViews();
 
+        myCalendar = Calendar.getInstance();
+
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+
+        mEtDob.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(signUpActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+    }
+
+    private void updateLabel() {
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        mEtDob.setText(sdf.format(myCalendar.getTime()));
     }
 
     private void initViews() {
@@ -100,7 +143,7 @@ public class signUpActivity extends AppCompatActivity {
         mEtPassword = findViewById(R.id.login_password_editText);
         mEtPassword2 = findViewById(R.id.retype_login_password_editText);
         mEtMobile = findViewById(R.id.user_MobileNumber);
-        mEtDob = findViewById(R.id.user_lastName);
+        mEtDob = findViewById(R.id.user_Dob);
         mBtRegister = findViewById(R.id.signup_txt);
         mTvLogin = findViewById(R.id.login_txt);
         mTiName = findViewById(R.id.user_Details1);

@@ -23,26 +23,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/name"
-        android:textColor="@color/colorPrimaryText"
-        android:textSize="14sp" />
+            android:text="@string/name"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="14sp" />
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textCapWords"
-        android:textSize="16sp" />
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:textSize="16sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/mobile_number"
-        android:textColor="@color/colorPrimaryText"
-        android:textSize="14sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/date_of_birth"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="14sp" />
 
-    <EditText
+        <EditText
+            android:id="@+id/dob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/dd_mm_yyyy"
+            android:inputType="none"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/mobile_number"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="14sp" />
+
+        <EditText
         android:id="@+id/mobile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,21 +81,7 @@
         android:inputType="text"
         android:textSize="16sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/date_of_birth"
-        android:textColor="@color/colorPrimaryText"
-        android:textSize="14sp" />
 
-    <EditText
-        android:id="@+id/dob"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/dd_mm_yyyy"
-        android:inputType="text"
-        android:textSize="16sp" />
 
     <Button
         android:id="@+id/update"

@@ -70,12 +70,11 @@
             android:id="@+id/reorder_btn"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_below="@id/total"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:layout_alignParentEnd="true"
             android:background="@drawable/login_bordershape"
             android:text="@string/reorder"
-            android:visibility="gone"
+            android:visibility="visible"
             android:textColor="@color/colorPrimaryText" />
 
         <Button
@@ -92,8 +91,9 @@
             android:id="@+id/date_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/total"
             android:layout_marginBottom="@dimen/dimen_8dp"
-            android:layout_below="@id/reorder_btn"
+            android:layout_marginTop="@dimen/dimen_8dp"
             android:text="@string/date"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/dimen_18sp" />
@@ -102,7 +102,8 @@
             android:id="@+id/order_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/reorder_btn"
+            android:layout_below="@id/amount_paid_txt"
+            android:layout_marginTop="@dimen/dimen_8dp"
             android:layout_toEndOf="@id/date_txt"
             android:layout_marginBottom="@dimen/dimen_8dp"
             android:text="15/08/2001"

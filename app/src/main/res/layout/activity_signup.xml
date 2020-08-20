@@ -149,10 +149,11 @@
 
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/user_lastName"
+                    android:id="@+id/user_Dob"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="date"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none"
                     android:textColor="@color/colorPrimaryText"
                     android:textCursorDrawable="@null" />
 

@@ -42,7 +42,7 @@
     <string name="already_have_an_account">Already have an Account ?</string>
     <string name="retype_password">Confirm Password</string>
     <string name="date_of_birth">Date of Birth</string>
-    <string name="dd_mm_yyyy">Date of Birth(dd-mm-yyyy)</string>
+    <string name="dd_mm_yyyy">Date of Birth</string>
     <string name="log_in_with_otp">Login with OTP</string>
     <string name="google">Google</string>
     <string name="facebook">facebook</string>
@@ -177,6 +177,7 @@
     <string name="more_coupons">MORE COUPONS</string>
     <string name="please_describe_your_query_regarding_the_help_or_support_required">Please describe your query regarding the help or support required.</string>
     <string name="enter_your_query_here">Enter your query here</string>
+    <string name="save_address">Save Address</string>
     >>>>>>> fd2a430ea5c89a347bfea37eff252d789e63a659
 
     <string-array name="PizzaSize">
