@@ -175,6 +175,8 @@
     <string name="add_to_cart2">add to cart</string>
     <string name="copy_to_clipboard">Copy to clipboard</string>
     <string name="more_coupons">MORE COUPONS</string>
+    <string name="please_describe_your_query_regarding_the_help_or_support_required">Please describe your query regarding the help or support required.</string>
+    <string name="enter_your_query_here">Enter your query here</string>
     >>>>>>> fd2a430ea5c89a347bfea37eff252d789e63a659
 
     <string-array name="PizzaSize">

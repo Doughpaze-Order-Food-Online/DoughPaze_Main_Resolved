@@ -50,15 +50,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Please describe your query regarding the help or support required."
+                android:text="@string/please_describe_your_query_regarding_the_help_or_support_required"
                 android:textColor="@color/colorPrimaryText" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Enter your query here"
-                android:textSize="20sp" />
+                android:hint="@string/enter_your_query_here"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
