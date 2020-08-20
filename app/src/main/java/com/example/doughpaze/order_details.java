@@ -35,7 +35,7 @@ public class order_details extends Activity {
     private CompositeSubscription mSubscriptions;
     private SharedPreferences mSharedPreferences;
     private ProgressDialog progressDialog;
-    private TextView orderId,total,paymentMode_txt,transaction_ID_txt,date;
+    private TextView orderId,total,paymentMode_txt,transaction_ID_txt,date,address,couponText,coupon;
     private RecyclerView rvItem;
     private Button proceed;
 
@@ -54,6 +54,9 @@ public class order_details extends Activity {
         transaction_ID_txt=findViewById(R.id.transaction_ID_txt);
         rvItem=findViewById(R.id.recycler_item_container);
         proceed=findViewById(R.id.proceed);
+        address=findViewById(R.id.Delivery_address);
+        coupon=findViewById(R.id.coupon_name);
+        couponText=findViewById(R.id.couponText);
 
         Fetch_Details( intent.getStringExtra("id"));
 
@@ -96,10 +99,24 @@ public class order_details extends Activity {
         total.setText(String.valueOf(response.getTotalAmount()));
         paymentMode_txt.setText(response.getPayment_mode());
         transaction_ID_txt.setVisibility(View.GONE);
+        String addres=response.getAddress().getHouse_details()+" "+response.getAddress().getAddress();
+        address.setText(addres);
         if(response.getPayment_mode().equals("Online"))
         {
             transaction_ID_txt.setText(response.getPaymentDetails().getTransactionId());
             transaction_ID_txt.setVisibility(View.VISIBLE);
+        }
+
+        if(response.getCoupon_applied())
+        {
+            couponText.setVisibility(View.VISIBLE);
+            coupon.setVisibility(View.VISIBLE);
+            coupon.setText(response.getCoupon_name());
+        }
+        else
+        {
+            couponText.setVisibility(View.GONE);
+            coupon.setVisibility(View.GONE);
         }
 
 
