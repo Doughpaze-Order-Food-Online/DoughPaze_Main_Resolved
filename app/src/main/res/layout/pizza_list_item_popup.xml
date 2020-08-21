@@ -26,6 +26,7 @@
                 android:id="@+id/close"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
+                android:layout_gravity="end"
                 android:layout_marginBottom="@dimen/dimen_16dp"
                 android:contentDescription="@string/todo"
                 android:src="@drawable/crosscircle" />
