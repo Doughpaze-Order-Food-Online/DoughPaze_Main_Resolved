@@ -38,7 +38,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-public class address_activity extends Activity {
+public class address_activity extends Activity implements finishActivity{
     private TextView addnew;
     private CompositeSubscription mSubscriptions;
     private SharedPreferences mSharedPreferences;
@@ -98,7 +98,7 @@ public class address_activity extends Activity {
         List<Address> list=new ArrayList<>();
         list=response.getAddress();
 
-        addressAdapter = new addressAdapter(list);
+        addressAdapter = new addressAdapter(list,this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(address_activity.this);
         rvItem.setAdapter(addressAdapter);
         rvItem.setLayoutManager(layoutManager);
@@ -140,5 +140,10 @@ public class address_activity extends Activity {
 
         FetchAddress();
 
+    }
+
+    @Override
+    public void ActivityFinish() {
+        finish();
     }
 }

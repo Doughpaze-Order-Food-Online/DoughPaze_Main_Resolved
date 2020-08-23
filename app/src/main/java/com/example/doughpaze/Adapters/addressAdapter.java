@@ -58,10 +58,12 @@ public class addressAdapter extends RecyclerView.Adapter<addressAdapter.AddressI
     private SharedPreferences mSharedPreferences;
     private ProgressDialog progressDialog;
     Context context;
+    private finishActivity finishActivity;
 
 
-    public addressAdapter(List<Address> list) {
+    public addressAdapter(List<Address> list,finishActivity finishActivity1) {
         this.list=list;
+        this.finishActivity=finishActivity1;
     }
 
 
@@ -108,6 +110,7 @@ public class addressAdapter extends RecyclerView.Adapter<addressAdapter.AddressI
 
                 Intent intent=new Intent(addressItemHolder.itemView.getContext(), order_confirm_activity.class);
                 addressItemHolder.itemView.getContext().startActivity(intent);
+                finishActivity.ActivityFinish();
                 //addressItemHolder.itemView.getContext().finish();
 
             }
