@@ -152,13 +152,13 @@
     <string name="feedback">Feedback</string>
     <string name="order_placed_nsuccessfully">Order Placed\nSuccessfully !!</string>
     <string name="cancel">Cancel</string>
-    <string name="order_id">Order ID:\ </string>
-    <string name="payment_mode">Payment Mode:\ </string>
+    <string name="order_id">Order ID :\ </string>
+    <string name="payment_mode">Payment Mode :\ </string>
     <string name="online">Online</string>
-    <string name="transaction_id">Transaction ID:\ </string>
-    <string name="status">Status:\ </string>
+    <string name="transaction_id">Transaction ID :\ </string>
+    <string name="status">Status :\ </string>
     <string name="received">Received</string>
-    <string name="date">Date:\ </string>
+    <string name="date">Date :\ </string>
     <string name="discount">Discount</string>
     <string name="send_feedback">Send Feedback</string>
     <string name="tell_us_what_you_love_about_the_app_or_what_could_be_we_doing_better">Tell us what you love about the app or what could be we doing better?</string>
@@ -178,6 +178,8 @@
     <string name="please_describe_your_query_regarding_the_help_or_support_required">Please describe your query regarding the help or support required.</string>
     <string name="enter_your_query_here">Enter your query here</string>
     <string name="save_address">Save Address</string>
+    <string name="coupon_name">Coupon Name :\ </string>
+    <string name="delivery_address2">Delivery Address :\ </string>
     >>>>>>> fd2a430ea5c89a347bfea37eff252d789e63a659
 
     <string-array name="PizzaSize">

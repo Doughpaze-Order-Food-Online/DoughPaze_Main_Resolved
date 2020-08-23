@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen_16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="gone">
+            android:visibility="visible">
 
 
             <TextView
@@ -48,7 +48,7 @@
 
             <TextView
                 android:id="@+id/id_num"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/order_ID_txt"
                 android:gravity="center_vertical"
@@ -84,21 +84,19 @@
                 android:id="@+id/delivery_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/total"
-                android:layout_marginTop="@dimen/dimen_8dp"
+                android:layout_below="@id/coupon_name"
+                android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
-                android:text="@string/delivery_address"
+                android:text="@string/delivery_address2"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/Delivery_address"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/amount_paid_txt"
+                android:layout_below="@id/delivery_txt"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="@dimen/dimen_8dp"
-                android:layout_toEndOf="@id/delivery_txt"
                 android:gravity="center_vertical"
                 android:text="@string/address"
                 android:textColor="@color/colorPrimaryText"
@@ -106,7 +104,7 @@
 
             <TextView
                 android:id="@+id/total"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/date_txt"
                 android:layout_marginTop="@dimen/dimen_8dp"
@@ -128,7 +126,7 @@
 
             <TextView
                 android:id="@+id/order_date"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/order_ID_txt"
                 android:layout_marginTop="8dp"
@@ -142,7 +140,7 @@
                 android:id="@+id/payment_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/Delivery_address"
+                android:layout_below="@id/total"
                 android:layout_marginTop="@dimen/dimen_8dp"
                 android:layout_marginBottom="@dimen/dimen_8dp"
                 android:text="@string/payment_mode"
@@ -151,9 +149,9 @@
 
             <TextView
                 android:id="@+id/paymentMode_txt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/Delivery_address"
+                android:layout_below="@id/amount_paid_txt"
                 android:layout_marginTop="@dimen/dimen_8dp"
                 android:layout_marginBottom="@dimen/dimen_8dp"
                 android:layout_toEndOf="@id/payment_txt"
@@ -173,7 +171,7 @@
 
             <TextView
                 android:id="@+id/transaction_ID_txt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/payment_txt"
                 android:layout_marginBottom="@dimen/dimen_8dp"
@@ -187,17 +185,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/transaction_ID_txt"
-                android:layout_marginBottom="@dimen/dimen_8dp"
-                android:text="Coupon Name :"
+                android:text="@string/coupon_name"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/dimen_18sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/coupon_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/transaction_ID_txt"
-                android:layout_marginBottom="@dimen/dimen_8dp"
                 android:layout_toEndOf="@id/couponText"
                 android:text="11111111222333012"
                 android:textColor="@color/colorPrimaryText"
@@ -207,7 +203,7 @@
                 android:id="@+id/recycler_item_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/couponText"
+                android:layout_below="@id/Delivery_address"
                 android:layout_marginTop="16dp" />
 
 
