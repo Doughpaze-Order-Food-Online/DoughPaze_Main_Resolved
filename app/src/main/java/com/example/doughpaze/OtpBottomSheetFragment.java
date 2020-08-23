@@ -32,6 +32,7 @@ import rx.subscriptions.CompositeSubscription;
 
 import static com.example.doughpaze.utils.validation.validateEmail;
 import static com.example.doughpaze.utils.validation.validateFields;
+import static com.example.doughpaze.utils.validation.validatePhone;
 
 public class OtpBottomSheetFragment extends BottomSheetDialogFragment {
     private EditText Number;
@@ -89,6 +90,13 @@ public class OtpBottomSheetFragment extends BottomSheetDialogFragment {
 
             err++;
             textView.setText("Phone Number is required");
+            textView.setVisibility(View.VISIBLE);
+        }
+
+        if(!validatePhone(number) && validateFields(number))
+        {
+            err++;
+            textView.setError("Enter Valid Phone Number!");
             textView.setVisibility(View.VISIBLE);
         }
 

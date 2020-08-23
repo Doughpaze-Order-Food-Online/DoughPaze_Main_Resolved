@@ -43,6 +43,7 @@ import rx.subscriptions.CompositeSubscription;
 import static com.example.doughpaze.utils.validation.validateEmail;
 import static com.example.doughpaze.utils.validation.validateFields;
 import static com.example.doughpaze.utils.validation.validatePassword;
+import static com.example.doughpaze.utils.validation.validatePhone;
 
 public class signUpActivity extends AppCompatActivity {
     private ImageView back_btn;
@@ -205,6 +206,13 @@ public class signUpActivity extends AppCompatActivity {
             err++;
             mTiMobile.setError("Phone Number should not be empty !");
         }
+
+        if(validateFields(mobile_no) && !validatePhone(mobile_no))
+        {
+            err++;
+            mTiMobile.setError("Enter Valid Phone Number!");
+        }
+
 
         if (!validateFields(dob)) {
 

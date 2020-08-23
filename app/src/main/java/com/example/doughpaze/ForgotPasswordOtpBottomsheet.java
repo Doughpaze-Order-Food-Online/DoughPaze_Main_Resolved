@@ -32,6 +32,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 import static com.example.doughpaze.utils.validation.validateFields;
+import static com.example.doughpaze.utils.validation.validatePhone;
 
 public class ForgotPasswordOtpBottomsheet extends BottomSheetDialogFragment {
 
@@ -83,6 +84,13 @@ public class ForgotPasswordOtpBottomsheet extends BottomSheetDialogFragment {
 
             err++;
             textView.setText("Phone Number is required");
+            textView.setVisibility(View.VISIBLE);
+        }
+
+        if(!validatePhone(number) && validateFields(number))
+        {
+            err++;
+            textView.setError("Enter Valid Phone Number!");
             textView.setVisibility(View.VISIBLE);
         }
 

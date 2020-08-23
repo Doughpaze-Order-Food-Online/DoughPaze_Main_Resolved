@@ -69,6 +69,8 @@ public class order_confirm_activity extends Activity {
     private RadioButton mode;
     private ImageView back;
     private TextView confirm_address;
+    private int sum,deliveryfees;
+    private double taxamount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -200,6 +202,9 @@ public class order_confirm_activity extends Activity {
         final_order.setOrderId(GENERATE_ID());
         Date date=new Date();
         final_order.setDate(date);
+        final_order.setItemtotal(sum);
+        final_order.setTax(taxamount);
+        final_order.setDelivery(deliveryfees);
 
         if(mSharedPreferences.getString("discount", null)!=null && !Objects.equals(mSharedPreferences.getString("reorder", null), "yes"))
         {
@@ -290,13 +295,13 @@ public class order_confirm_activity extends Activity {
             if (!list.isEmpty()) {
 
 
-                int sum = 0;
+                sum = 0;
                 for (FoodCart x : list) {
                     sum += x.getPrice() * x.getQuantity();
                 }
 
-                double taxamount = 0.05 * sum;
-                int deliveryfees = sum > 1000 ? 0 : 40;
+                taxamount = 0.05 * sum;
+                deliveryfees = sum > 1000 ? 0 : 40;
 
                 if(mSharedPreferences.getString("discount", null)!=null  && !Objects.equals(mSharedPreferences.getString("reorder", null), "yes") )
                 {
@@ -473,6 +478,9 @@ public class order_confirm_activity extends Activity {
         final_order.setCoupon_applied(false);
         Date date=new Date();
         final_order.setDate(date);
+        final_order.setItemtotal(sum);
+        final_order.setTax(taxamount);
+        final_order.setDelivery(deliveryfees);
 
         if(mSharedPreferences.getString("discount", null)!=null  && !Objects.equals(mSharedPreferences.getString("reorder", null), "yes"))
         {

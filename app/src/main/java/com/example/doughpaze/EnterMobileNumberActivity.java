@@ -28,6 +28,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 import static com.example.doughpaze.utils.validation.validateFields;
+import static com.example.doughpaze.utils.validation.validatePhone;
 
 public class EnterMobileNumberActivity extends AppCompatActivity {
     private EditText Number;
@@ -80,6 +81,13 @@ public class EnterMobileNumberActivity extends AppCompatActivity {
 
             err++;
             error.setText("Phone Number is required");
+            error.setVisibility(View.VISIBLE);
+        }
+
+        if(!validatePhone(number) && validateFields(number))
+        {
+            err++;
+            error.setError("Enter Valid Phone Number!");
             error.setVisibility(View.VISIBLE);
         }
 

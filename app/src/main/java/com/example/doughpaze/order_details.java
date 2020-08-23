@@ -36,7 +36,7 @@ public class order_details extends Activity {
     private CompositeSubscription mSubscriptions;
     private SharedPreferences mSharedPreferences;
     private ProgressDialog progressDialog;
-    private TextView orderId,total,paymentMode_txt,transaction_ID_txt,date,address,couponText,coupon;
+    private TextView orderId,total,paymentMode_txt,transaction_ID_txt,date,address,couponText,coupon,transaction_txt;
     private RecyclerView rvItem;
     private Button proceed;
     private RelativeLayout parent;
@@ -55,11 +55,12 @@ public class order_details extends Activity {
         paymentMode_txt=findViewById(R.id.paymentMode_txt);
         transaction_ID_txt=findViewById(R.id.transaction_ID_txt);
         rvItem=findViewById(R.id.recycler_item_container);
-        proceed=findViewById(R.id.proceed);
+        proceed=findViewById(R.id.back_to_home);
         address=findViewById(R.id.Delivery_address);
         coupon=findViewById(R.id.coupon_name);
         couponText=findViewById(R.id.couponText);
         parent=findViewById(R.id.parent);
+        transaction_txt=findViewById(R.id.transaction_txt);
 
         Fetch_Details( intent.getStringExtra("id"));
 
@@ -109,6 +110,10 @@ public class order_details extends Activity {
         {
             transaction_ID_txt.setText(response.getPaymentDetails().getTransactionId());
             transaction_ID_txt.setVisibility(View.VISIBLE);
+        }
+        else {
+            transaction_ID_txt.setVisibility(View.GONE);
+            transaction_txt.setVisibility(View.GONE);
         }
 
         if(response.getCoupon_applied())

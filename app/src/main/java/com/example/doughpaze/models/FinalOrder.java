@@ -8,11 +8,12 @@ public class FinalOrder {
     private Address address;
     private User user;
     private PaymentDetails paymentDetails;
-    private Double total;
+    private Double total,tax;
     private boolean coupon_applied;
     private String coupon_name, orderId;
     private Double discount;
     private Date date;
+    private int delivery,itemtotal;
 
 
     public Address getAddress() {
@@ -81,5 +82,18 @@ public class FinalOrder {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+
+    public void setTax(Double tax) {
+        this.tax = tax;
+    }
+
+    public void setItemtotal(int itemtotal) {
+        this.itemtotal = itemtotal;
+    }
+
+    public void setDelivery(int delivery) {
+        this.delivery = delivery;
     }
 }

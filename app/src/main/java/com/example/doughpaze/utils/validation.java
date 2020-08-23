@@ -19,4 +19,12 @@ public class validation {
     {
         return !p1.equals(p2);
     }
+
+    public static boolean validatePhone(String string)
+    {
+        return !TextUtils.isEmpty(string) && Patterns.PHONE.matcher(string).matches();
+    }
+
+
+
 }

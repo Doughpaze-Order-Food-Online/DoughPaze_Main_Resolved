@@ -309,6 +309,19 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
             minus = offerView.findViewById(R.id.minus_btn_1);
             TextView pizzaquantity = offerView.findViewById(R.id.quantity_text_view_1);
 
+            ImageView close=offerView.findViewById(R.id.close);
+
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(progressDialog!=null)
+                    {
+                        progressDialog.dismiss();
+                    }
+                }
+            });
+
+
             try {
                 Gson gson = new Gson();
                 String cart = mSharedPreferences.getString("cart", null);
