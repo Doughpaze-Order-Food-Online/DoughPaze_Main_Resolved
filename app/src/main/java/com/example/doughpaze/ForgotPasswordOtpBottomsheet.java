@@ -90,7 +90,7 @@ public class ForgotPasswordOtpBottomsheet extends BottomSheetDialogFragment {
         if(!validatePhone(number) && validateFields(number))
         {
             err++;
-            textView.setError("Enter Valid Phone Number!");
+            textView.setText("Enter Valid Phone Number!");
             textView.setVisibility(View.VISIBLE);
         }
 

@@ -3,6 +3,9 @@ package com.example.doughpaze.utils;
 import android.text.TextUtils;
 import android.util.Patterns;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class validation {
 
     public static boolean validateFields(String name){
@@ -20,11 +23,34 @@ public class validation {
         return !p1.equals(p2);
     }
 
-    public static boolean validatePhone(String string)
+
+    public static boolean validatePhone(String s)
     {
-        return !TextUtils.isEmpty(string) && Patterns.PHONE.matcher(string).matches();
+        // The given argument to compile() method
+        // is regular expression. With the help of
+        // regular expression we can validate mobile
+        // number.
+        // 1) Begins with 0 or 91
+        // 2) Then contains 7 or 8 or 9.
+        // 3) Then contains 9 digits
+
+        Pattern p = Pattern.compile("(0/91)?[6-9][0-9]{9}");
+
+        Matcher m = p.matcher(s);
+        return (m.find() && m.group().equals(s));
     }
 
+    public static boolean VALIDATE_PASSWORD(String s)
+
+    {String regex = "^(?=.*[0-9])"
+            + "(?=.*[a-z])(?=.*[A-Z])"
+            + "(?=.*[@#$%^&+=])"
+            + "(?=\\S+$).{6,20}$";
+        Pattern p=Pattern.compile(regex);
+        Matcher m=p.matcher(s);
+        return (m.find() && m.group().equals(s));
+
+    }
 
 
 }

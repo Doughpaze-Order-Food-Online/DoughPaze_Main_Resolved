@@ -33,6 +33,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
+import static com.example.doughpaze.utils.validation.VALIDATE_PASSWORD;
 import static com.example.doughpaze.utils.validation.validateFields;
 
 public class NewPasswordActivity extends AppCompatActivity {
@@ -105,6 +106,11 @@ public class NewPasswordActivity extends AppCompatActivity {
 
             err++;
             mTiPassword.setError("Password should not be empty !");
+        }
+        else if(!VALIDATE_PASSWORD(password))
+        {
+            err++;
+            mTiPassword.setError("Password should have atleast 6 characters with 1 uppercase, 1 special character and 1 number");
         }
 
         if (!validateFields(password2)) {

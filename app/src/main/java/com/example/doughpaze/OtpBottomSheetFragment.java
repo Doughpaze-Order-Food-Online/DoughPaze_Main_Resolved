@@ -92,13 +92,14 @@ public class OtpBottomSheetFragment extends BottomSheetDialogFragment {
             textView.setText("Phone Number is required");
             textView.setVisibility(View.VISIBLE);
         }
-
-        if(!validatePhone(number) && validateFields(number))
+        else if(!validatePhone(number))
         {
             err++;
-            textView.setError("Enter Valid Phone Number!");
+            textView.setText("Enter Valid Phone Number!");
             textView.setVisibility(View.VISIBLE);
         }
+
+
 
 
 

@@ -87,7 +87,7 @@ public class EnterMobileNumberActivity extends AppCompatActivity {
         if(!validatePhone(number) && validateFields(number))
         {
             err++;
-            error.setError("Enter Valid Phone Number!");
+            error.setText("Enter Valid Phone Number!");
             error.setVisibility(View.VISIBLE);
         }
 
