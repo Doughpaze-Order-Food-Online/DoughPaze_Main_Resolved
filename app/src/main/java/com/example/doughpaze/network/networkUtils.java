@@ -57,7 +57,7 @@ public class networkUtils {
 
             Request original = chain.request();
             Request.Builder builder = original.newBuilder()
-                    .addHeader("x-access-token", token)
+                    .addHeader("token", token)
                     .method(original.method(),original.body());
             return  chain.proceed(builder.build());
 

@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -189,7 +190,9 @@ private ImageView remove;
                 Itemtotal.setText(String.valueOf(sum));
 
                 double taxamount = 0.05 * sum;
-                tax.setText(String.format(Locale.ENGLISH, "%.2f", taxamount));
+                DecimalFormat df=new DecimalFormat("#.##");
+                taxamount=Double.parseDouble(df.format(taxamount));
+                tax.setText(String.valueOf(taxamount));
 
                 int deliveryfees = sum > 1000 ? 0 : 40;
                 delivery.setText(String.valueOf(deliveryfees));

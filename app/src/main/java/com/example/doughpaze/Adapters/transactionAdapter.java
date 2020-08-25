@@ -92,10 +92,12 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
         transactionItemHolder.orderId.setText(myOrderResponse.getOrderId());
         transactionItemHolder.date.setText(myOrderResponse.getDate().toString());
 
-        if(myOrderResponse.getPayment_mode().equals("Online"))
+        if(myOrderResponse.getPayment_mode().equals("Online") && myOrderResponse.getPaymentDetails()!=null)
         {
             transactionItemHolder.tid.setVisibility(View.VISIBLE);
-            transactionItemHolder.tid.setText(myOrderResponse.getPaymentDetails().getTransactionId());
+
+                transactionItemHolder.tid.setText(myOrderResponse.getPaymentDetails().getTransactionId());
+
             transactionItemHolder.tidtext.setVisibility(View.VISIBLE);
         }
         else
@@ -119,7 +121,7 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
         Date d1=new Date();
         long diff= (d1.getTime()-myOrderResponse.getDate().getTime())/1000;
 
-        if(diff>1800 || !myOrderResponse.getOrder_status().equals("Ordered"))
+        if(diff>1800 || !myOrderResponse.getOrder_status().equals("Ordered") || myOrderResponse.getOrder_status().equals("Payment Initiated"))
         {
             transactionItemHolder.reorder.setVisibility(View.VISIBLE);
             transactionItemHolder.cancel.setVisibility(View.GONE);

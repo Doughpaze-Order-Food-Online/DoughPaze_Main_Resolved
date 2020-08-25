@@ -41,9 +41,11 @@ import com.paytm.pgsdk.TransactionManager;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -223,11 +225,53 @@ public class order_confirm_activity extends Activity {
     }
 
     private void GET_TOKEN() {
+
+        Gson gson = new Gson();
+        List<FoodCart> Final_Order=new ArrayList<>();
+        Final_Order=CART();
+        for(FoodCart x:Final_Order)
+        {
+            x.setAlt_price(0);
+
+
+        }
+
         mSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
 
+        FinalOrder final_order=new FinalOrder();
+
+        //final order
+        final_order.setFoodCarts(Final_Order);
+        Type type=new TypeToken<Address>(){}.getType();
+        String address=mSharedPreferences.getString("address", null);
+
+        //address
+        final_order.setAddress(gson.fromJson(address, type));
+
+        //user
+        User user=new User();
+        user.setEmail(mSharedPreferences.getString(constants.EMAIL, null));
+        user.setMobile_no(mSharedPreferences.getString(constants.PHONE, null));
+        user.setName(mSharedPreferences.getString(constants.NAME, null));
+        final_order.setUser(user);
+        final_order.setCoupon_applied(false);
+        final_order.setTotal(Double.parseDouble(total.getText().toString()));
+        Date date=new Date();
+        final_order.setDate(date);
+        final_order.setItemtotal(sum);
+        final_order.setTax(taxamount);
+        final_order.setDelivery(deliveryfees);
+
+        if(mSharedPreferences.getString("discount", null)!=null  && !Objects.equals(mSharedPreferences.getString("reorder", null), "yes"))
+        {
+            final_order.setCoupon_applied(true);
+            final_order.setCoupon_name(mSharedPreferences.getString("coupon_name", null));
+            final_order.setDiscount(Double.parseDouble(Objects.requireNonNull(mSharedPreferences.getString("discount", null))));
+        }
+
         String token = mSharedPreferences.getString(constants.TOKEN, null);
-        mSubscriptions.add(networkUtils.getRetrofit(token).GET_TOKEN(constants.MID,GENERATE_ID(),total.getText().toString())
+        mSubscriptions.add(networkUtils.getRetrofit(token).GET_TOKEN(constants.MID,GENERATE_ID(),total.getText().toString(),final_order)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse,this::handleError));
@@ -301,6 +345,8 @@ public class order_confirm_activity extends Activity {
                 }
 
                 taxamount = 0.05 * sum;
+                DecimalFormat df=new DecimalFormat("#.##");
+                taxamount=Double.parseDouble(df.format(taxamount));
                 deliveryfees = sum > 1000 ? 0 : 40;
 
                 if(mSharedPreferences.getString("discount", null)!=null  && !Objects.equals(mSharedPreferences.getString("reorder", null), "yes") )
@@ -359,6 +405,7 @@ public class order_confirm_activity extends Activity {
                     paymentDetails.setTransactionId(bundle.getString("TXNID"));
                     paymentDetails.setPaymentType(bundle.getString("PAYMENTMODE"));
                     paymentDetails.setBankTransactionId(bundle.getString("BANKTXNID"));
+                    paymentDetails.setPayment_status(true);
 
                     progressDialog=new ProgressDialog(order_confirm_activity.this);
                     progressDialog.show();
@@ -369,7 +416,21 @@ public class order_confirm_activity extends Activity {
                 }
                 else
                 {
-                    Toast.makeText(order_confirm_activity.this, "Payment Failed,Try again Later", Toast.LENGTH_SHORT).show();
+                    paymentDetails.setBankname(bundle.getString("BANKNAME"));
+                    paymentDetails.setOrderId(bundle.getString("ORDERID"));
+                    paymentDetails.setAmountpaid(Double.parseDouble(bundle.getString("TXNAMOUNT")));
+                    paymentDetails.setDate(bundle.getString("TXNDATE"));
+                    paymentDetails.setTransactionId(bundle.getString("TXNID"));
+                    paymentDetails.setPaymentType(bundle.getString("PAYMENTMODE"));
+                    paymentDetails.setBankTransactionId(bundle.getString("BANKTXNID"));
+                    paymentDetails.setPayment_status(false);
+
+                    progressDialog=new ProgressDialog(order_confirm_activity.this);
+                    progressDialog.show();
+                    progressDialog.setContentView(R.layout.progress_loading);
+                    Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+                    PLACE_ORDER(paymentDetails);
                 }
 
 
@@ -409,6 +470,11 @@ public class order_confirm_activity extends Activity {
             @Override
             public void onTransactionCancel(String s, Bundle bundle) {
                 Log.e(TAG, " transaction cancel "+s);
+                PaymentDetails paymentDetails=new PaymentDetails();
+                paymentDetails.setPayment_status(false);
+                paymentDetails.setStatus("Payment Transaction Cancelled");
+                paymentDetails.setOrderId(bundle.getString("ORDERID"));
+                PLACE_ORDER(paymentDetails);
             }
         });
 
@@ -426,13 +492,7 @@ public class order_confirm_activity extends Activity {
 
             Log.e(TAG, " data "+  data.getStringExtra("nativeSdkForMerchantMessage"));
             Log.e(TAG, " data response - "+data.getStringExtra("response"));
-/*
- data response - {"BANKNAME":"WALLET","BANKTXNID":"1395841115",
- "CHECKSUMHASH":"7jRCFIk6mrep+IhnmQrlrL43KSCSXrmM+VHP5pH0hekXaaxjt3MEgd1N9mLtWyu4VwpWexHOILCTAhybOo5EVDmAEV33rg2VAS/p0PXdk\u003d",
- "CURRENCY":"INR","GATEWAYNAME":"WALLET","MID":"EAc0553138556","ORDERID":"100620202152",
- "PAYMENTMODE":"PPI","RESPCODE":"01","RESPMSG":"Txn Success","STATUS":"TXN_SUCCESS",
- "TXNAMOUNT":"2.00","TXNDATE":"2020-06-10 16:57:45.0","TXNID":"20200610111212800110168328631290118"}
-  */
+
             Toast.makeText(this, data.getStringExtra("nativeSdkForMerchantMessage")
                     + data.getStringExtra("response"), Toast.LENGTH_SHORT).show();
         }else{
@@ -441,53 +501,22 @@ public class order_confirm_activity extends Activity {
     }
 
     private void PLACE_ORDER(PaymentDetails paymentDetails) {
-        Gson gson = new Gson();
-        List<FoodCart> Final_Order=new ArrayList<>();
-        Final_Order=CART();
-        for(FoodCart x:Final_Order)
-        {
-            x.setAlt_price(0);
-
-
-        }
 
         mSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
 
+
+
+
         FinalOrder final_order=new FinalOrder();
-
-        //final order
-        final_order.setFoodCarts(Final_Order);
-        Type type=new TypeToken<Address>(){}.getType();
-        String address=mSharedPreferences.getString("address", null);
-
-        //address
-        final_order.setAddress(gson.fromJson(address, type));
-
+        final_order.setPaymentDetails(paymentDetails);
+        final_order.setOrderId(paymentDetails.getOrderId());
         //user
         User user=new User();
         user.setEmail(mSharedPreferences.getString(constants.EMAIL, null));
         user.setMobile_no(mSharedPreferences.getString(constants.PHONE, null));
         user.setName(mSharedPreferences.getString(constants.NAME, null));
         final_order.setUser(user);
-
-        final_order.setPaymentDetails(paymentDetails);
-
-        final_order.setOrderId(paymentDetails.getOrderId());
-        final_order.setTotal(paymentDetails.getAmountpaid());
-        final_order.setCoupon_applied(false);
-        Date date=new Date();
-        final_order.setDate(date);
-        final_order.setItemtotal(sum);
-        final_order.setTax(taxamount);
-        final_order.setDelivery(deliveryfees);
-
-        if(mSharedPreferences.getString("discount", null)!=null  && !Objects.equals(mSharedPreferences.getString("reorder", null), "yes"))
-        {
-            final_order.setCoupon_applied(true);
-            final_order.setCoupon_name(mSharedPreferences.getString("coupon_name", null));
-            final_order.setDiscount(Double.parseDouble(Objects.requireNonNull(mSharedPreferences.getString("discount", null))));
-        }
 
 
         String token = mSharedPreferences.getString(constants.TOKEN, null);
@@ -504,7 +533,16 @@ public class order_confirm_activity extends Activity {
         {
             progressDialog.dismiss();
         }
-        GO_TO_PROFILE(response.getToken());
+
+        if(!response.getOtp().equals("-1"))
+        {
+            GO_TO_PROFILE(response.getToken());
+        }
+        else
+        {
+            Toast.makeText(this, "Error Occurred! Contact the Doughpaze team!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void handleError_COD(Throwable error) {

@@ -71,8 +71,8 @@ public interface retroInterface {
     @POST("address")
     Observable<Response> SAVE_ADDRESS(@Body Address address);
 
-    @GET("get_payment_token")
-    Observable<Token> GET_TOKEN(@Query("mid") String mid, @Query("orderId") String orderId, @Query("amount") String amount);
+    @POST("get_payment_token")
+    Observable<Token> GET_TOKEN(@Query("mid") String mid, @Query("orderId") String orderId, @Query("amount") String amount,@Body FinalOrder finalOrder);
 
     @POST("offline_order")
     Observable<Response> PLACE_OFFLINE_ORDER(@Body FinalOrder finalOrder);

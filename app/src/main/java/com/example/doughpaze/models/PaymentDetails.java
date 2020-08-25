@@ -4,6 +4,7 @@ public class PaymentDetails {
     private String status,bankname, date, transactionId, paymentType, bankTransactionId;
     private Double amountpaid;
     String orderId;
+    private Boolean payment_status;
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
@@ -52,6 +53,14 @@ public class PaymentDetails {
 
     public String getTransactionId() {
         return transactionId;
+    }
+
+    public void setPayment_status(Boolean payment_status) {
+        this.payment_status = payment_status;
+    }
+
+    public Boolean getPayment_status() {
+        return payment_status;
     }
 }
 
