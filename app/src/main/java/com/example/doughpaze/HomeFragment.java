@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
@@ -25,14 +28,25 @@ import com.example.doughpaze.Adapters.BannerAdapter;
 import com.example.doughpaze.Adapters.CouponImageAdpter;
 import com.example.doughpaze.models.Coupon;
 import com.example.doughpaze.models.FoodCart;
+import com.example.doughpaze.models.Images;
+import com.example.doughpaze.models.Response;
 import com.example.doughpaze.models.banners;
+import com.example.doughpaze.network.networkUtils;
+import com.example.doughpaze.utils.constants;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import retrofit2.adapter.rxjava.HttpException;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +67,8 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     private TextView quantity;
     private SharedPreferences mSharedPreferences;
     private ImageView cart_Img;
+
+    private CompositeSubscription mSubscriptions;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -75,11 +91,13 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
 
 
+
         return view;
 
     }
 
     private void initView(View v){
+        mSubscriptions = new CompositeSubscription();
         viewPager = (ViewPager) v.findViewById(R.id.banners_container);
         viewPager2 = (ViewPager) v.findViewById(R.id.offers_container);
 
@@ -97,11 +115,38 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             }
         });
 
+        if(bannersList!=null)
+        {
+            bannerAdapter=new BannerAdapter(Objects.requireNonNull(getContext()),bannersList);
+            bannerAdapter.setTimer(viewPager,5,5,1);
+            couponImageAdpter=new CouponImageAdpter(getContext(),CouponsList);
+            couponImageAdpter.setTimer(viewPager2,5,5,0);
+            viewPager.setAdapter(bannerAdapter);
+            viewPager2.setAdapter(couponImageAdpter);
+        }
+        else
+        {
+            SharedPreferences sharedPreferences = PreferenceManager
+                    .getDefaultSharedPreferences(getContext());
 
-        bannerAdapter=new BannerAdapter(Objects.requireNonNull(getContext()),bannersList);
-        couponImageAdpter=new CouponImageAdpter(getContext(),CouponsList);
-        viewPager.setAdapter(bannerAdapter);
-        viewPager2.setAdapter(couponImageAdpter);
+            Gson gson = new Gson();
+            String cart=sharedPreferences.getString("banner", null);
+            Type type=new TypeToken<List<banners>>(){}.getType();
+            bannersList=gson.fromJson(cart,type);
+
+            String c=sharedPreferences.getString("coupon", null);
+            Type type2=new TypeToken<List<Coupon>>(){}.getType();
+            CouponsList=gson.fromJson(c,type2);
+
+            bannerAdapter=new BannerAdapter(Objects.requireNonNull(getContext()),bannersList);
+            bannerAdapter.setTimer(viewPager,5,5,1);
+            couponImageAdpter=new CouponImageAdpter(getContext(),CouponsList);
+            couponImageAdpter.setTimer(viewPager2,5,5,0);
+            viewPager.setAdapter(bannerAdapter);
+            viewPager2.setAdapter(couponImageAdpter);
+
+
+        }
 
         cake=(CardView)v.findViewById(R.id.cakes_btn) ;
         pizza=(CardView)v.findViewById(R.id.pizza_btn) ;
