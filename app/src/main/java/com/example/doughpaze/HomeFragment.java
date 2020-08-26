@@ -120,9 +120,9 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         if(bannersList!=null)
         {
             bannerAdapter=new BannerAdapter(Objects.requireNonNull(getContext()),bannersList);
-            bannerAdapter.setTimer(viewPager,5,5,1);
+//            bannerAdapter.setTimer(viewPager,5,5,1);
             couponImageAdpter=new CouponImageAdpter(getContext(),CouponsList);
-            couponImageAdpter.setTimer(viewPager2,5,5,0);
+//            couponImageAdpter.setTimer(viewPager2,5,5,0);
             viewPager.setAdapter(bannerAdapter);
             viewPager2.setAdapter(couponImageAdpter);
         }
