@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -69,6 +70,7 @@ public class signUpActivity extends AppCompatActivity {
     private EditText DobEditText;
     private Calendar myCalendar;
     private TextInputLayout textInputLayout;
+    private ImageButton DatePickerBtn;
     User user;
 
     private TextView terms;
@@ -82,6 +84,7 @@ public class signUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         back_btn = findViewById(R.id.back_btn);
+        DatePickerBtn = findViewById(R.id.date_Picker_Button);
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +120,7 @@ public class signUpActivity extends AppCompatActivity {
 
         };
 
-        mEtDob.setOnClickListener(new View.OnClickListener() {
+        DatePickerBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
