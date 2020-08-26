@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -60,6 +61,8 @@ public class EditProfileDetailsBottomsheet extends BottomSheetDialogFragment {
     private ProgressDialog progressDialog;
     private EditText name, email, phone, dob;
 
+    private ImageButton DatePickerBtn;
+
     public EditProfileDetailsBottomsheet() {
 
     }
@@ -73,13 +76,15 @@ public class EditProfileDetailsBottomsheet extends BottomSheetDialogFragment {
         View rootView = inflater.inflate(R.layout.profile_bottom_sheet, container, false);
         Objects.requireNonNull(Objects.requireNonNull(getDialog()).getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        name=rootView.findViewById(R.id.name);
-        phone=rootView.findViewById(R.id.mobile);
-        email=rootView.findViewById(R.id.email);
-        dob=rootView.findViewById(R.id.dob);
+        name = rootView.findViewById(R.id.name);
+        phone = rootView.findViewById(R.id.mobile);
+        email = rootView.findViewById(R.id.email);
+        dob = rootView.findViewById(R.id.dob);
+
+        DatePickerBtn = rootView.findViewById(R.id.date_Picker_Button);
 
 
-        update=rootView.findViewById(R.id.update);
+        update = rootView.findViewById(R.id.update);
 
         mSubscriptions = new CompositeSubscription();
 
@@ -110,7 +115,7 @@ public class EditProfileDetailsBottomsheet extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        dob.setOnClickListener(new View.OnClickListener() {
+        DatePickerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
