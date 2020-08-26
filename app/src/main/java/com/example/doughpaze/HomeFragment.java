@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
@@ -114,6 +115,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
                 drawer.openDrawer(Gravity.LEFT);
             }
         });
+        back();
 
         if(bannersList!=null)
         {
@@ -257,5 +259,26 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             e.printStackTrace();
         }
 
+    }
+
+
+
+    private void back()
+    {
+        OnBackPressedCallback callback=new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if(drawer.isDrawerOpen(GravityCompat.START))
+                {
+                    drawer.closeDrawer(GravityCompat.START);
+                }
+                else
+                {
+                    getActivity().finish();
+                }
+            }
+        };
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(this,callback);
     }
 }
