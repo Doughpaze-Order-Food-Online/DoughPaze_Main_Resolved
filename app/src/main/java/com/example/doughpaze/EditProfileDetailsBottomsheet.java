@@ -49,8 +49,8 @@ public class EditProfileDetailsBottomsheet extends BottomSheetDialogFragment {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
 
-            dob.setText(String.valueOf(dayOfMonth) + "-" + String.valueOf(monthOfYear + 1)
-                    + "-" + String.valueOf(year));
+            dob.setText(String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear + 1)
+                    + "/" + String.valueOf(year));
         }
     };
     private Button update;
