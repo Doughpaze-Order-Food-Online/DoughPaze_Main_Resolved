@@ -7,9 +7,11 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
-    <style name="customRatingBar"
-        parent="android:style/Widget.Material.RatingBar.Small">
+    <style name="MineCustomTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">11sp</item>
     </style>
+
+    <style name="customRatingBar" parent="android:style/Widget.Material.RatingBar.Small"></style>
 
     <style name="headertext">
         <item name="android:layout_height">48dp</item>

@@ -46,6 +46,7 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/offers_tabs"
+            app:tabTextAppearance="@style/MineCustomTabText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
