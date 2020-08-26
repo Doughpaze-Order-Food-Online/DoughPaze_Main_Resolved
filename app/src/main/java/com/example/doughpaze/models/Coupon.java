@@ -2,9 +2,10 @@ package com.example.doughpaze.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Coupon {
+public class Coupon implements Serializable {
 
     @SerializedName("coupon_name")
     private String coupon_name;

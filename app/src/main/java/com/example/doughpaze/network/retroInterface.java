@@ -6,6 +6,7 @@ import com.example.doughpaze.models.AddressResponse;
 import com.example.doughpaze.models.Coupon;
 import com.example.doughpaze.models.FinalOrder;
 import com.example.doughpaze.models.Food_Response;
+import com.example.doughpaze.models.Images;
 import com.example.doughpaze.models.MyOrderResponse;
 import com.example.doughpaze.models.Response;
 import com.example.doughpaze.models.Token;
@@ -25,6 +26,9 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 public interface retroInterface {
+
+    @GET("banner")
+    Observable<Images> IMAGES();
 
     @POST("auth/register")
     Observable<Response> register(@Body User user);

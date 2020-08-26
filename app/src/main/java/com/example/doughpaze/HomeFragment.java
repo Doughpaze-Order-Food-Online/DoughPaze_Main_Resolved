@@ -1,17 +1,11 @@
 package com.example.doughpaze;
 
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
+
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -20,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
@@ -29,24 +21,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.doughpaze.FoodList.Cart_Quantity;
+import com.example.doughpaze.Adapters.BannerAdapter;
+import com.example.doughpaze.Adapters.CouponImageAdpter;
+import com.example.doughpaze.models.Coupon;
 import com.example.doughpaze.models.FoodCart;
+import com.example.doughpaze.models.banners;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +42,10 @@ import java.util.Objects;
 public class HomeFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
 
     private ViewPager viewPager, viewPager2;
-    private ImagePagerAdapter imagePagerAdapter, imagePagerAdapter2;
-    private ArrayList<String> banners, coupons, sample;
+    private BannerAdapter bannerAdapter;
+    private CouponImageAdpter couponImageAdpter;
+    private List<banners> bannersList;
+    private List<Coupon> CouponsList;
     private DrawerLayout drawer;
     private Button button;
     private CardView cake, pizza,donut,pasta,garlic_bread,mocktail,nachos,brownies;
@@ -78,16 +62,17 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Objects.requireNonNull(getActivity()).registerReceiver(this.mConnReceiver,
-                new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        Intent intent= Objects.requireNonNull(getActivity()).getIntent();
 
-
-
+        bannersList= (List<banners>) intent.getSerializableExtra("banner");
+        CouponsList= (List<Coupon>) intent.getSerializableExtra("coupons");
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_main, container, false);
 
         initView(view);
+
+
 
 
         return view;
@@ -112,11 +97,11 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             }
         });
 
-        sample = new ArrayList<String>();
-        sample.add("default");
-        imagePagerAdapter = new ImagePagerAdapter(Objects.requireNonNull(getActivity()).getApplicationContext(), sample);
-        viewPager.setAdapter(imagePagerAdapter);
-        viewPager2.setAdapter(imagePagerAdapter);
+
+        bannerAdapter=new BannerAdapter(Objects.requireNonNull(getContext()),bannersList);
+        couponImageAdpter=new CouponImageAdpter(getContext(),CouponsList);
+        viewPager.setAdapter(bannerAdapter);
+        viewPager2.setAdapter(couponImageAdpter);
 
         cake=(CardView)v.findViewById(R.id.cakes_btn) ;
         pizza=(CardView)v.findViewById(R.id.pizza_btn) ;
@@ -165,178 +150,10 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     }
 
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        if(this.mConnReceiver!=null)
-        {
-            Objects.requireNonNull(getActivity()).unregisterReceiver(this.mConnReceiver);
-            this.mConnReceiver=null;
-        }
-
-    }
-
-    private BroadcastReceiver mConnReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-
-            if (activeNetwork != null) {
-                try {
-                    fetchImage fetchImage = new fetchImage();
-                    fetchImage.execute();
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                Toast.makeText(getActivity(), "oops! something went wrong, check internet connectivity :)", Toast.LENGTH_LONG).show();
-            }
-        }
-    };
-
-    public class fetchImage extends AsyncTask<String, Integer, Void> {
-
-        //api for banners
-        String Banner_URL = "https://doughpaze.ddns.net/api/banner";
-
-        //api for coupons
-        String coupons_URL = "https://doughpaze.ddns.net/api/coupons";
-
-        //creating new volley request instance
-
-        RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getActivity()).getApplicationContext());
-
-
-        //jsonobject request for banners
-        final JsonObjectRequest objectRequest=new JsonObjectRequest(
-                Request.Method.GET,
-                Banner_URL,
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try{
-
-                            banners=new ArrayList<>();
-                            JSONArray array = response.getJSONArray("result");
-                            for(int i = 0 ; i < array.length() ; i++){
-                                banners.add("https://doughpaze.ddns.net"+array.getJSONObject(i).getString("banner_location"));
-                            }
-
-                            try {
-                                // code runs in a thread
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        //banner container
-                                        imagePagerAdapter=new ImagePagerAdapter(getActivity().getApplicationContext(),banners);
-                                        viewPager.setAdapter(imagePagerAdapter);
-                                        viewPager.setCurrentItem(0);
-                                        imagePagerAdapter.setTimer(viewPager,5,banners.size(),0);
-
-                                    }
-                                });
-                            } catch (final Exception ex) {
-                                Log.i("---","Exception in thread");
-                            }
-
-
-                        }
-                        catch (JSONException e)
-                        {
-                            Log.e("Rest Response",e.toString());
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Rest error",error.toString());
-
-                    }
-                }
-
-
-        );
 
 
 
 
-        //jsonobject request for offers
-        final JsonObjectRequest objectRequest2 = new JsonObjectRequest(
-                Request.Method.GET,
-                coupons_URL,
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-
-                            coupons = new ArrayList<>();
-                            JSONArray array = response.getJSONArray("result");
-
-                            for (int i = 0; i < array.length(); i++) {
-                                coupons.add("https://doughpaze.ddns.net" + array.getJSONObject(i).getString("coupon_location"));
-                            }
-
-
-
-                        } catch (JSONException e) {
-                            Log.e("Rest Response", e.toString());
-                        }
-
-                        try {
-                            // code runs in a thread
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //offers container
-                                    imagePagerAdapter2 = new ImagePagerAdapter(getActivity().getApplicationContext(), coupons);
-                                    viewPager2.setAdapter(imagePagerAdapter2);
-                                    viewPager2.setCurrentItem(0);
-                                    imagePagerAdapter2.setTimer(viewPager2, 5, coupons.size(), 0);
-
-                                }
-                            });
-                        } catch (final Exception ex) {
-
-                            Log.i("---","Exception in thread");
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Rest error", error.toString());
-
-                    }
-                }
-
-
-        );
-
-
-
-        @Override
-        protected Void doInBackground(String... strings) {
-            requestQueue.add(objectRequest);
-            requestQueue.add(objectRequest2);
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-
-            super.onPostExecute(aVoid);
-        }
-    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
