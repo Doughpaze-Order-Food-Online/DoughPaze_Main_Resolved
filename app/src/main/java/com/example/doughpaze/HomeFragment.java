@@ -135,6 +135,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             couponImageAdpter.setTimer(viewPager2,5,5,0);
             viewPager.setAdapter(bannerAdapter);
             viewPager2.setAdapter(couponImageAdpter);
+
         }
         else
         {
@@ -180,18 +181,18 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             e.printStackTrace();
         }
 
-        List<String> categoryList=new ArrayList<>();
-        categoryList.add("Pizzas");
-        categoryList.add("Donuts");
-        categoryList.add("Garlic Breads");
-        categoryList.add("Nachos");
-        categoryList.add("Cakes");
-        categoryList.add("Pastas");
-        categoryList.add("Mocktails");
-        categoryList.add("Brownies");
+        List<Category> categoryList=new ArrayList<>();
+        categoryList.add(new Category("Pizzas",R.drawable.asiafood1));
+        categoryList.add(new Category("Cakes",R.drawable.cakes));
+        categoryList.add(new Category("Donuts",R.drawable.donuts));
+        categoryList.add(new Category("Pastas",R.drawable.pasta));
+        categoryList.add(new Category("Garlic Breads",R.drawable.garlicbread));
+        categoryList.add(new Category("Mocktails",R.drawable.mocktails));
+        categoryList.add(new Category("Nachos",R.drawable.nachos));
+        categoryList.add(new Category("Brownies",R.drawable.brownies));
+
 
         CategoryAdapter categoryAdapter=new CategoryAdapter(categoryList);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),2,GridLayoutManager.HORIZONTAL,false);
         rvitem.setLayoutManager(gridLayoutManager);
         rvitem.setAdapter(categoryAdapter);

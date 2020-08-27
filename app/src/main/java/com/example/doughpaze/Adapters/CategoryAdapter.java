@@ -15,15 +15,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.doughpaze.R;
+import com.example.doughpaze.models.Category;
 
 import java.util.List;
 
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryItemHolder>  {
 
-    private List<String> list;
+    private List<Category> list;
 
-    public CategoryAdapter(List<String> list) {
+    public CategoryAdapter(List<Category> list) {
             this.list=list;
     }
 
@@ -37,21 +38,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.CategoryItemHolder couponItemHolder, int i) {
-        String category=list.get(i);
-        couponItemHolder.name.setText(category);
-
-        Glide
-                .with(couponItemHolder.itemView.getContext())
-                .load(R.drawable.loading2)
-                .thumbnail(Glide.with(couponItemHolder.itemView.getContext()).load(R.drawable.loading2))
-                .centerInside()
-                .into(couponItemHolder.image);
-
-
-
-
-
-
+        Category category=list.get(i);
+        couponItemHolder.name.setText(category.getName());
+        couponItemHolder.image.setImageResource(category.getDrawable());
     }
 
     @Override
