@@ -16,27 +16,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <Button
+            android:id="@+id/menu_button"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="@dimen/dimen_16dp"
+            android:layout_marginTop="42dp"
+            android:background="@drawable/ic_baseline_menu_24" />
 
-        <RelativeLayout
-            android:id="@+id/logo_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
-
-            <Button
-                android:id="@+id/menu_button"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_centerVertical="true"
-                android:layout_margin="10dp"
-                android:background="@drawable/ic_baseline_menu_24" />
-
-            <ImageView
-                android:layout_width="176dp"
+        <ImageView
+            android:id="@+id/logo_img"
+            android:layout_width="176dp"
                 android:layout_height="80dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_marginBottom="16dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:layout_marginBottom="16dp"
                 android:contentDescription="@string/todo"
                 android:scaleType="fitXY"
                 android:src="@drawable/logo_doughpaze" />
@@ -46,7 +40,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
+                android:layout_marginTop="42dp"
                 android:layout_marginEnd="@dimen/dimen_16dp"
                 android:contentDescription="@string/todo"
                 android:src="@drawable/ic_baseline_add_shopping_cart_24"
@@ -54,27 +48,25 @@
                 app:tint="@color/colorPrimaryText"
                 tools:ignore="UseAppTint" />
 
-            <TextView
+        <TextView
 
-                android:id="@+id/cart_fill_update_txt"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="48dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/round_button_shape"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:text="@string/_1"
-                android:textColor="@color/colorPrimaryText"
-                android:visibility="gone" />
-        </RelativeLayout>
+            android:id="@+id/cart_fill_update_txt"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="58dp"
+            android:layout_marginEnd="14dp"
+            android:background="@drawable/round_button_shape"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="@string/_1"
+            android:textColor="@color/colorPrimaryText" />
 
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/logo_container"
+            android:layout_below="@id/logo_img"
             android:background="@drawable/homepage_view_shape"
             android:elevation="15dp">
 
@@ -90,20 +82,6 @@
                     android:layout_marginTop="48dp"
                     android:background="@android:color/transparent" />
 
-                <ImageView
-                    android:id="@+id/categories_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/banners_container"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:contentDescription="@string/todo"
-                    android:paddingStart="16dp"
-                    android:paddingTop="16dp"
-                    android:paddingEnd="0dp"
-                    android:paddingBottom="16dp"
-                    android:src="@drawable/ic_baseline_account_tree_24"
-                    app:tint="@android:color/black" />
 
                 <TextView
                     android:id="@+id/categories_txt"
@@ -111,331 +89,40 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/banners_container"
                     android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_toEndOf="@id/categories_img"
-                    android:padding="16dp"
+                    android:layout_margin="@dimen/dimen_16dp"
+                    android:drawableTint="@color/colorPrimaryText"
+                    android:gravity="center_vertical"
                     android:text="@string/categories"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:drawableStartCompat="@drawable/ic_baseline_account_tree_24"
+                    app:drawableTint="@color/colorPrimaryText" />
 
-                <HorizontalScrollView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/categories_container"
+                    android:padding="@dimen/dimen_8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/categories_txt"
-                    android:fadeScrollbars="true"
                     android:scrollbarSize="2dp">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/dimen_8dp"
-                        tools:ignore="ScrollViewSize">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp">
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/pizza_btn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:clickable="true"
-                                android:elevation="15dp"
-                                android:focusable="true"
-                                android:foreground="?attr/selectableItemBackgroundBorderless"
-                                app:cardCornerRadius="8dp">
-
-                                <ImageView
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:contentDescription="@string/todo"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/asiafood1" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="@string/pizza"
-                                android:textAlignment="center"
-                                android:textColor="@color/colorPrimaryText"
-                                android:textSize="13sp" />
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/cakes_btn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:clickable="true"
-                                android:elevation="15dp"
-                                android:focusable="true"
-                                android:foreground="?attr/selectableItemBackgroundBorderless"
-                                app:cardCornerRadius="8dp">
-
-                                <ImageView
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:contentDescription="@string/todo"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/cakes" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="@string/cakes"
-                                android:textAlignment="center"
-                                android:textColor="@color/colorPrimaryText"
-                                android:textSize="13sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp">
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/donuts_btn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:clickable="true"
-                                android:elevation="15dp"
-                                android:focusable="true"
-                                android:foreground="?attr/selectableItemBackgroundBorderless"
-                                app:cardCornerRadius="8dp">
-
-                                <ImageView
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:contentDescription="@string/todo"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/donuts" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="@string/donuts"
-                                android:textAlignment="center"
-                                android:textColor="@color/colorPrimaryText"
-                                android:textSize="13sp" />
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/pasta_btn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:clickable="true"
-                                android:elevation="15dp"
-                                android:focusable="true"
-                                android:foreground="?attr/selectableItemBackgroundBorderless"
-                                app:cardCornerRadius="8dp">
-
-                                <ImageView
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:contentDescription="@string/todo"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/pasta" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="@string/pastas"
-                                android:textAlignment="center"
-                                android:textColor="@color/colorPrimaryText"
-                                android:textSize="13sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp">
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/garlic_btn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:clickable="true"
-                                android:elevation="15dp"
-                                android:focusable="true"
-                                android:foreground="?attr/selectableItemBackgroundBorderless"
-                                app:cardCornerRadius="8dp">
-
-                                <ImageView
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:contentDescription="@string/todo"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/garlicbread" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="@string/garlic_breads"
-                                android:textAlignment="center"
-                                android:textColor="@color/colorPrimaryText"
-                                android:textSize="13sp" />
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/mocktail_btn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:clickable="true"
-                                android:elevation="15dp"
-                                android:focusable="true"
-                                android:foreground="?attr/selectableItemBackgroundBorderless"
-                                app:cardCornerRadius="8dp">
-
-                                <ImageView
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:contentDescription="@string/todo"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/mocktails" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="@string/mocktails"
-                                android:textAlignment="center"
-                                android:textColor="@color/colorPrimaryText"
-                                android:textSize="13sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp">
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/nachos_btn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:clickable="true"
-                                android:elevation="15dp"
-                                android:focusable="true"
-                                android:foreground="?attr/selectableItemBackgroundBorderless"
-                                app:cardCornerRadius="8dp">
-
-                                <ImageView
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:contentDescription="@string/todo"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/nachos" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="@string/nachos"
-                                android:textAlignment="center"
-                                android:textColor="@color/colorPrimaryText"
-                                android:textSize="13sp" />
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/brownie_btn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:clickable="true"
-                                android:elevation="15dp"
-                                android:focusable="true"
-                                android:foreground="?attr/selectableItemBackgroundBorderless"
-                                app:cardCornerRadius="8dp">
-
-                                <ImageView
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:contentDescription="@string/todo"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/brownies" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="@string/brownies"
-                                android:textAlignment="center"
-                                android:textColor="@color/colorPrimaryText"
-                                android:textSize="13sp" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </HorizontalScrollView>
-
-                <ImageView
-                    android:id="@+id/offers_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/categories_container"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:contentDescription="@string/todo"
-                    android:paddingStart="16dp"
-                    android:paddingTop="16dp"
-                    android:paddingEnd="0dp"
-                    android:paddingBottom="16dp"
-                    android:src="@drawable/ic_baseline_stars_24"
-                    app:tint="@android:color/black" />
+                </androidx.recyclerview.widget.RecyclerView>
 
                 <TextView
                     android:id="@+id/topOffers_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/categories_container"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:layout_toEndOf="@id/offers_img"
-                    android:padding="16dp"
+                    android:layout_margin="@dimen/dimen_16dp"
+                    android:drawableTint="@color/colorPrimaryText"
                     android:text="@string/topOffers"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:drawableStartCompat="@drawable/ic_baseline_stars_24"
+                    app:drawableTint="@color/colorPrimaryText" />
 
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/offers_container"

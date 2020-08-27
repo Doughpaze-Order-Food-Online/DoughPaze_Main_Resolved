@@ -2,8 +2,8 @@
     <string name="app_name">Doughpaze</string>
     <string name="todo">TODO</string>
     <string name="topPicks">Top Picks For You</string>
-    <string name="categories">Categories</string>
-    <string name="topOffers">Top Offers</string>
+    <string name="categories">\   Categories</string>
+    <string name="topOffers">\   Top Offers</string>
     <string name="homepage">Home</string>
     <string name="offers">Offers</string>
     <string name="account">Account</string>

@@ -140,38 +140,38 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             Type type2=new TypeToken<List<Coupon>>(){}.getType();
             CouponsList=gson.fromJson(c,type2);
 
-            bannerAdapter=new BannerAdapter(Objects.requireNonNull(getContext()),bannersList);
-            bannerAdapter.setTimer(viewPager,5,5,1);
-            couponImageAdpter=new CouponImageAdpter(getContext(),CouponsList);
-            couponImageAdpter.setTimer(viewPager2,5,5,0);
+            bannerAdapter = new BannerAdapter(Objects.requireNonNull(getContext()), bannersList);
+//            bannerAdapter.setTimer(viewPager,5,5,1);
+            couponImageAdpter = new CouponImageAdpter(getContext(), CouponsList);
+//            couponImageAdpter.setTimer(viewPager2,5,5,0);
             viewPager.setAdapter(bannerAdapter);
             viewPager2.setAdapter(couponImageAdpter);
 
 
         }
 
-        cake=(CardView)v.findViewById(R.id.cakes_btn) ;
-        pizza=(CardView)v.findViewById(R.id.pizza_btn) ;
-        donut=(CardView)v.findViewById(R.id.donuts_btn) ;
-        nachos=(CardView)v.findViewById(R.id.nachos_btn) ;;
-        mocktail=(CardView)v.findViewById(R.id.mocktail_btn) ;
-        brownies=(CardView)v.findViewById(R.id.brownie_btn) ;
-        garlic_bread=(CardView)v.findViewById(R.id.garlic_btn) ;
-        pasta=(CardView)v.findViewById(R.id.pasta_btn) ;
-        navigationView=(NavigationView) v.findViewById(R.id.nav_view);
+//        cake=(CardView)v.findViewById(R.id.cakes_btn) ;
+//        pizza=(CardView)v.findViewById(R.id.pizza_btn) ;
+//        donut=(CardView)v.findViewById(R.id.donuts_btn) ;
+//        nachos=(CardView)v.findViewById(R.id.nachos_btn) ;;
+//        mocktail=(CardView)v.findViewById(R.id.mocktail_btn) ;
+//        brownies=(CardView)v.findViewById(R.id.brownie_btn) ;
+//        garlic_bread=(CardView)v.findViewById(R.id.garlic_btn) ;
+//        pasta=(CardView)v.findViewById(R.id.pasta_btn) ;
+        navigationView = (NavigationView) v.findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
         quantity = v.findViewById(R.id.cart_fill_update_txt);
 
         //categories
-        cake.setOnClickListener(view-> FOOD_LIST_VIEW("Cake") );
-        pizza.setOnClickListener(view-> FOOD_LIST_VIEW("Pizza") );
-        donut.setOnClickListener(view-> FOOD_LIST_VIEW("Donut") );
-        nachos.setOnClickListener(view-> FOOD_LIST_VIEW("Nachos") );
-        mocktail.setOnClickListener(view-> FOOD_LIST_VIEW("Mocktail") );
-        brownies.setOnClickListener(view-> FOOD_LIST_VIEW("Brownie") );
-        garlic_bread.setOnClickListener(view -> FOOD_LIST_VIEW("Garlic Breads"));
-        pasta.setOnClickListener(view -> FOOD_LIST_VIEW("Pasta"));
+//        cake.setOnClickListener(view-> FOOD_LIST_VIEW("Cake") );
+//        pizza.setOnClickListener(view-> FOOD_LIST_VIEW("Pizza") );
+//        donut.setOnClickListener(view-> FOOD_LIST_VIEW("Donut") );
+//        nachos.setOnClickListener(view-> FOOD_LIST_VIEW("Nachos") );
+//        mocktail.setOnClickListener(view-> FOOD_LIST_VIEW("Mocktail") );
+//        brownies.setOnClickListener(view-> FOOD_LIST_VIEW("Brownie") );
+//        garlic_bread.setOnClickListener(view -> FOOD_LIST_VIEW("Garlic Breads"));
+//        pasta.setOnClickListener(view -> FOOD_LIST_VIEW("Pasta"));
 
         cart_Img.setOnClickListener(new View.OnClickListener() {
             @Override
