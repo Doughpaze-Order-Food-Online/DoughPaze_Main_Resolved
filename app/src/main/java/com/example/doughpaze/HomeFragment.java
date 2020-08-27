@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +24,15 @@ import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.doughpaze.Adapters.BannerAdapter;
+import com.example.doughpaze.Adapters.CategoryAdapter;
 import com.example.doughpaze.Adapters.CouponImageAdpter;
+import com.example.doughpaze.models.Category;
 import com.example.doughpaze.models.Coupon;
 import com.example.doughpaze.models.FoodCart;
 import com.example.doughpaze.models.Images;
@@ -68,6 +74,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     private TextView quantity;
     private SharedPreferences mSharedPreferences;
     private ImageView cart_Img;
+    private RecyclerView rvitem;
 
     private CompositeSubscription mSubscriptions;
 
@@ -107,6 +114,9 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         button = v.findViewById(R.id.menu_button);
         cart_Img=v.findViewById(R.id.cart_Img);
 
+        rvitem=v.findViewById(R.id.categories_container);
+
+
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -120,9 +130,9 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         if(bannersList!=null)
         {
             bannerAdapter=new BannerAdapter(Objects.requireNonNull(getContext()),bannersList);
-//            bannerAdapter.setTimer(viewPager,5,5,1);
+            bannerAdapter.setTimer(viewPager,5,5,1);
             couponImageAdpter=new CouponImageAdpter(getContext(),CouponsList);
-//            couponImageAdpter.setTimer(viewPager2,5,5,0);
+            couponImageAdpter.setTimer(viewPager2,5,5,0);
             viewPager.setAdapter(bannerAdapter);
             viewPager2.setAdapter(couponImageAdpter);
         }
@@ -141,37 +151,21 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             CouponsList=gson.fromJson(c,type2);
 
             bannerAdapter = new BannerAdapter(Objects.requireNonNull(getContext()), bannersList);
-//            bannerAdapter.setTimer(viewPager,5,5,1);
+            bannerAdapter.setTimer(viewPager,5,5,1);
             couponImageAdpter = new CouponImageAdpter(getContext(), CouponsList);
-//            couponImageAdpter.setTimer(viewPager2,5,5,0);
+            couponImageAdpter.setTimer(viewPager2,5,5,0);
             viewPager.setAdapter(bannerAdapter);
             viewPager2.setAdapter(couponImageAdpter);
 
 
         }
 
-//        cake=(CardView)v.findViewById(R.id.cakes_btn) ;
-//        pizza=(CardView)v.findViewById(R.id.pizza_btn) ;
-//        donut=(CardView)v.findViewById(R.id.donuts_btn) ;
-//        nachos=(CardView)v.findViewById(R.id.nachos_btn) ;;
-//        mocktail=(CardView)v.findViewById(R.id.mocktail_btn) ;
-//        brownies=(CardView)v.findViewById(R.id.brownie_btn) ;
-//        garlic_bread=(CardView)v.findViewById(R.id.garlic_btn) ;
-//        pasta=(CardView)v.findViewById(R.id.pasta_btn) ;
+
         navigationView = (NavigationView) v.findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
         quantity = v.findViewById(R.id.cart_fill_update_txt);
 
-        //categories
-//        cake.setOnClickListener(view-> FOOD_LIST_VIEW("Cake") );
-//        pizza.setOnClickListener(view-> FOOD_LIST_VIEW("Pizza") );
-//        donut.setOnClickListener(view-> FOOD_LIST_VIEW("Donut") );
-//        nachos.setOnClickListener(view-> FOOD_LIST_VIEW("Nachos") );
-//        mocktail.setOnClickListener(view-> FOOD_LIST_VIEW("Mocktail") );
-//        brownies.setOnClickListener(view-> FOOD_LIST_VIEW("Brownie") );
-//        garlic_bread.setOnClickListener(view -> FOOD_LIST_VIEW("Garlic Breads"));
-//        pasta.setOnClickListener(view -> FOOD_LIST_VIEW("Pasta"));
 
         cart_Img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,6 +179,23 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+
+        List<String> categoryList=new ArrayList<>();
+        categoryList.add("Pizzas");
+        categoryList.add("Donuts");
+        categoryList.add("Garlic Breads");
+        categoryList.add("Nachos");
+        categoryList.add("Cakes");
+        categoryList.add("Pastas");
+        categoryList.add("Mocktails");
+        categoryList.add("Brownies");
+
+        CategoryAdapter categoryAdapter=new CategoryAdapter(categoryList);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
+        GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),2,GridLayoutManager.HORIZONTAL,false);
+        rvitem.setLayoutManager(gridLayoutManager);
+        rvitem.setAdapter(categoryAdapter);
+
 
 
     }

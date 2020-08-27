@@ -25,6 +25,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
+import static android.net.sip.SipErrorCode.TIME_OUT;
+
 public class logo_splash extends AppCompatActivity {
 
     private CompositeSubscription mSubscriptions;
@@ -53,6 +55,7 @@ public class logo_splash extends AppCompatActivity {
         Intent intent=new Intent(logo_splash.this,MainActivity.class);
         intent.putExtra("banner",(Serializable)response.getBannersList());
         intent.putExtra("coupons",(Serializable)response.getCouponsList());
+        startActivity(intent);
 
         mSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
