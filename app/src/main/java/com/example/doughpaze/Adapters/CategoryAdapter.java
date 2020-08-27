@@ -40,7 +40,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public void onBindViewHolder(@NonNull CategoryAdapter.CategoryItemHolder couponItemHolder, int i) {
         Category category=list.get(i);
         couponItemHolder.name.setText(category.getName());
-        couponItemHolder.image.setImageResource(category.getDrawable());
+
+                Glide
+                .with(couponItemHolder.itemView.getContext())
+                .load(category.getDrawable())
+                .thumbnail(Glide.with(couponItemHolder.itemView.getContext()).load(R.drawable.loading2))
+                .centerInside()
+                .into(couponItemHolder.image);
+
+
+
+
+
+
     }
 
     @Override
