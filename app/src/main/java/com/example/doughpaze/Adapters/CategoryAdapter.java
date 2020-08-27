@@ -1,6 +1,7 @@
 package com.example.doughpaze.Adapters;
 
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.doughpaze.R;
+import com.example.doughpaze.Subcategory_main;
 import com.example.doughpaze.models.Category;
 
 import java.util.List;
@@ -49,6 +51,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 .into(couponItemHolder.image);
 
 
+
+          couponItemHolder.image.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent=new Intent(couponItemHolder.itemView.getContext(), Subcategory_main.class);
+                  intent.putExtra("category",category.getName());
+                  couponItemHolder.itemView.getContext().startActivity(intent);
+              }
+          });
 
 
 

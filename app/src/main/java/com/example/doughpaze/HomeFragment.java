@@ -109,6 +109,15 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         viewPager = (ViewPager) v.findViewById(R.id.banners_container);
         viewPager2 = (ViewPager) v.findViewById(R.id.offers_container);
 
+        viewPager.setClipToPadding(false);
+        viewPager.setPadding(50,0,50,0);
+        viewPager.setPageMargin(-30);
+
+        viewPager2.setClipToPadding(false);
+        viewPager2.setPadding(50,0,50,0);
+        viewPager2.setPageMargin(-30);
+
+
         //side navigation bar
         drawer = v.findViewById(R.id.drawer_layout);
         button = v.findViewById(R.id.menu_button);
@@ -135,6 +144,8 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             couponImageAdpter.setTimer(viewPager2,5,5,0);
             viewPager.setAdapter(bannerAdapter);
             viewPager2.setAdapter(couponImageAdpter);
+
+
 
         }
         else
@@ -201,12 +212,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
     }
 
-    private void FOOD_LIST_VIEW(String category)
-    {
-        Intent intent=new Intent(getActivity(),Subcategory_main.class);
-        intent.putExtra("category",category);
-        startActivity(intent);
-    }
+
 
 
 
