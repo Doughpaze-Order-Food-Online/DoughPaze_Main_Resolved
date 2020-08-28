@@ -225,13 +225,16 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         Intent intent = null;
         switch (item.getItemId()){
             case R.id.feedback:
-                intent=new Intent(getContext(),feedBack_Activity.class);
+                intent = new Intent(getContext(), feedBack_Activity.class);
+                Objects.requireNonNull(getActivity()).finish();
                 break;
             case R.id.terms_policies:
-                intent=new Intent(getContext(),TermsAndPoliciesActivity.class);
+                intent = new Intent(getContext(), TermsAndPoliciesActivity.class);
+                Objects.requireNonNull(getActivity()).finish();
                 break;
             case R.id.help_support:
-                intent=new Intent(getContext(),HelpAndSupportActivity.class);
+                intent = new Intent(getContext(), HelpAndSupportActivity.class);
+                Objects.requireNonNull(getActivity()).finish();
                 break;
         }
 
