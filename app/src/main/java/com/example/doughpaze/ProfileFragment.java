@@ -79,6 +79,10 @@ public class ProfileFragment extends Fragment {
         name.setText(sharedPreferences.getString(constants.NAME,null));
         email.setText(sharedPreferences.getString(constants.EMAIL,null));
         mobile_no.setText(sharedPreferences.getString(constants.PHONE,null));
+        if((sharedPreferences.getString(constants.DOB,null)==null))
+        {
+            dob.setVisibility(View.GONE);
+        }
         dob.setText(sharedPreferences.getString(constants.DOB,null));
         type=sharedPreferences.getString("type",null);
         EditProfileDetailsBottomsheet editProfileDetailsBottomsheet = new EditProfileDetailsBottomsheet();
