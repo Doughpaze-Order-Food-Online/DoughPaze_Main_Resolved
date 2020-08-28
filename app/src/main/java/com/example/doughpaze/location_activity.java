@@ -1,7 +1,6 @@
 package com.example.doughpaze;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -11,8 +10,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.ResultReceiver;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -22,26 +19,27 @@ import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+
 import com.example.doughpaze.models.Response;
 import com.example.doughpaze.network.networkUtils;
-import com.example.doughpaze.utils.addressServiceIntent;
 import com.example.doughpaze.utils.constants;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
+import java.security.Timestamp;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import retrofit2.adapter.rxjava.HttpException;
@@ -52,11 +50,10 @@ import rx.subscriptions.CompositeSubscription;
 import static com.example.doughpaze.utils.validation.validateFields;
 
 public class location_activity extends Activity {
-    private Button location,proceed;
-    private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
-    private TextInputEditText user_landmark,user_house;
+    private Button location, proceed;
+    private TextInputEditText user_landmark, user_house;
     private ResultReceiver resultReceiver;
-    private TextInputLayout user_house_layout,user_landmark_layout ;
+    private TextInputLayout user_house_layout, user_landmark_layout;
     private double latitude, longitude;
     private CompositeSubscription mSubscriptions;
     private SharedPreferences mSharedPreferences;
@@ -64,12 +61,13 @@ public class location_activity extends Activity {
     private CheckBox save_for_future;
     private RadioGroup radioGroup;
     private RadioButton radioButton;
-    private LocationAddressResultReceiver addressResultReceiver;
-    private Location currentLocation;
-    private LocationCallback locationCallback;
-    private FusedLocationProviderClient fusedLocationClient;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 2;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private Location mylocation;
+    private static final String TAG = location_activity.class.getSimpleName();
 
+    // Constants
+    private static final int REQUEST_LOCATION_PERMISSION = 1;
+    private static final String TRACKING_LOCATION_KEY = "tracking_location";
 
 
     @Override
@@ -78,87 +76,37 @@ public class location_activity extends Activity {
         setContentView(R.layout.location);
 
 
-
-            mSubscriptions = new CompositeSubscription();
+        mSubscriptions = new CompositeSubscription();
 
 
         location = (Button) findViewById(R.id.location);
-        user_house=(TextInputEditText) findViewById(R.id.user_house);
-        user_landmark=(TextInputEditText)findViewById(R.id.user_land);
-        proceed=(Button)findViewById(R.id.proceed);
-        user_house_layout=(TextInputLayout) findViewById(R.id.house_flat_input);
-        user_landmark_layout=(TextInputLayout)findViewById(R.id.user_landmark);
-        save_for_future=(CheckBox)findViewById(R.id.save_for_future);
-        radioGroup=(RadioGroup)findViewById(R.id.type);
-
-        addressResultReceiver = new LocationAddressResultReceiver(new Handler());
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                currentLocation = locationResult.getLocations().get(0);
-                getAddress();
-            }
-        };
-
+        user_house = (TextInputEditText) findViewById(R.id.user_house);
+        user_landmark = (TextInputEditText) findViewById(R.id.user_land);
+        proceed = (Button) findViewById(R.id.proceed);
+        user_house_layout = (TextInputLayout) findViewById(R.id.house_flat_input);
+        user_landmark_layout = (TextInputLayout) findViewById(R.id.user_landmark);
+        save_for_future = (CheckBox) findViewById(R.id.save_for_future);
+        radioGroup = (RadioGroup) findViewById(R.id.type);
 
 
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startLocationUpdates();
+                getLocation();
+                progressDialog=new ProgressDialog(location_activity.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_loading);
+                Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
             }
         });
 
+
         proceed.setOnClickListener(view->DETAILS());
 
-
-
-
     }
 
-    @SuppressWarnings("MissingPermission")
-    private void startLocationUpdates() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new
-                            String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    LOCATION_PERMISSION_REQUEST_CODE);
-        }
-        else {
-            LocationRequest locationRequest = new LocationRequest();
-            locationRequest.setInterval(2000);
-            locationRequest.setFastestInterval(1000);
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
-        }
-    }
-    @SuppressWarnings("MissingPermission")
-    private void getAddress() {
-        if (!Geocoder.isPresent()) {
-            Toast.makeText(location_activity.this, "Can't find current address, ",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-        Intent intent = new Intent(this, addressServiceIntent.class);
-        intent.putExtra("add_receiver", addressResultReceiver);
-        intent.putExtra("add_location", currentLocation);
-        startService(intent);
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull
-            int[] grantResults) {
-        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startLocationUpdates();
-            }
-            else {
-                Toast.makeText(this, "Location permission not granted, " + "restart the app if you want the " +
-                        "feature", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+
+
 
     private void DETAILS() {
         user_landmark_layout.setError(null);
@@ -273,36 +221,94 @@ public class location_activity extends Activity {
 
     }
 
-    private class LocationAddressResultReceiver extends ResultReceiver {
-        LocationAddressResultReceiver(Handler handler) {
-            super(handler);
-        }
-        @Override
-        protected void onReceiveResult(int resultCode, Bundle resultData) {
-            if (resultCode == 0) {
-                Log.d("Address", "Location null retrying");
-                getAddress();
-            }
-            if (resultCode == 1) {
-                Toast.makeText(location_activity.this, "Address not found, ", Toast.LENGTH_SHORT).show();
-            }
-            String currentAdd = resultData.getString("address_result");
-            showResults(currentAdd);
-        }
-    }
-    private void showResults(String currentAdd) {
-       user_landmark.setText(currentAdd);
-    }
+
     @Override
-    protected void onResume() {
-        super.onResume();
-        startLocationUpdates();
-    }
-    @Override
-    protected void onPause() {
-        super.onPause();
-        fusedLocationClient.removeLocationUpdates(locationCallback);
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_LOCATION_PERMISSION:
+                // If the permission is granted, get the location,
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getLocation();
+                } else {
+                    Toast.makeText(this,
+                          "Permission Denied",
+                            Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
     }
 
 
+    private void getLocation() {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]
+                            {Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_LOCATION_PERMISSION);
+        } else {
+            Log.d(TAG, "getLocation: permissions granted");
+        }
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    mylocation= location;
+
+                    latitude=location.getLatitude();
+                   longitude=location.getLongitude();
+
+
+                    setAddress(location);
+                } else {
+                    Toast.makeText(location_activity.this,
+                            "Permisson denied",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void setAddress(Location location) {
+        Geocoder geocoder = new Geocoder(location_activity.this,
+                Locale.getDefault());
+        List<Address> addresses = null;
+        String resultMessage = "";
+
+        try {
+            addresses = geocoder.getFromLocation(
+                    location.getLatitude(),
+                    location.getLongitude(),
+                    // In this sample, get just a single address
+                    1);
+        } catch (IOException ioException) {
+            // Catch network or other I/O problems
+            resultMessage = location_activity.this
+                    .getString(R.string.service_not_available);
+            Log.e(TAG, resultMessage, ioException);
+        }
+
+        if (addresses == null || addresses.size() == 0) {
+            if (resultMessage.isEmpty()) {
+                resultMessage =location_activity.this
+                        .getString(R.string.no_address_found);
+                Log.e(TAG, resultMessage);
+            }
+        } else {
+            Address address = addresses.get(0);
+            StringBuilder out = new StringBuilder();
+            // Fetch the address lines using getAddressLine,
+            // join them, and send them to the thread
+            for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+                out.append(address.getAddressLine(i));
+            }
+
+            resultMessage = out.toString();
+        }
+        user_landmark.setText(resultMessage);
+        progressDialog.dismiss();
+    }
 }

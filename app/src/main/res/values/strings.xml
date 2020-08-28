@@ -187,5 +187,8 @@
         <item>Large</item>
     </string-array>
 
+    <string name="service_not_available">Error</string>
+    <string name="no_address_found">Address Not Foubd</string>
+
 
 </resources>

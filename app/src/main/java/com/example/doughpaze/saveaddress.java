@@ -29,17 +29,19 @@ import androidx.core.content.ContextCompat;
 import com.example.doughpaze.models.Response;
 import com.example.doughpaze.network.networkUtils;
 import com.example.doughpaze.utils.constants;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import retrofit2.adapter.rxjava.HttpException;
@@ -62,6 +64,12 @@ public class saveaddress extends Activity {
     private CheckBox save_for_future;
     private RadioGroup radioGroup;
     private RadioButton radioButton;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private Location mylocation;
+    private static final String TAG = location_activity.class.getSimpleName();
+    // Constants
+    private static final int REQUEST_LOCATION_PERMISSION = 1;
+    private static final String TRACKING_LOCATION_KEY = "tracking_location";
 
 
 
@@ -91,23 +99,7 @@ public class saveaddress extends Activity {
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(
-                        getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(
-                            saveaddress.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                            REQUEST_CODE_LOCATION_PERMISSION
-                    );
-
-
-                } else {
-
-                    progressDialog=new ProgressDialog(saveaddress.this);
-                    progressDialog.show();
-                    progressDialog.setContentView(R.layout.progress_loading);
-                    Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
-                    getCurrentLocation();
-                }
+              getLocation();
             }
         });
 
@@ -214,105 +206,76 @@ public class saveaddress extends Activity {
     }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) {
-
-            progressDialog=new ProgressDialog(this);
-            progressDialog.show();
-            progressDialog.setContentView(R.layout.progress_loading);
-            Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
-
-            getCurrentLocation();
+    private void getLocation() {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]
+                            {Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_LOCATION_PERMISSION);
         } else {
-            Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "getLocation: permissions granted");
         }
-    }
 
-    private void getCurrentLocation() {
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    mylocation = location;
 
-        LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(3000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        LocationServices.getFusedLocationProviderClient(saveaddress.this).
-                requestLocationUpdates(locationRequest, new LocationCallback() {
-                    @Override
-                    public void onLocationResult(LocationResult locationResult) {
-                        super.onLocationResult(locationResult);
-                        LocationServices.getFusedLocationProviderClient(saveaddress.this)
-                                .removeLocationUpdates(this);
-
-                        if(locationResult!=null && locationResult.getLocations().size()>0)
-                        {
-                            int latestLocationIndex=locationResult.getLocations().size()-1;
-                            latitude=
-                                    locationResult.getLocations().get(latestLocationIndex).getLatitude();
-                            longitude=
-                                    locationResult.getLocations().get(latestLocationIndex).getLongitude();
-                            Location location=new Location("providerNA");
-                            location.setLatitude(latitude);
-                            location.setLongitude(longitude);
-                            LatLng latLng=new LatLng(latitude,longitude);
-                            getAddressFromLatLng(latLng);
-                        }
-                        else
-                        {
-                            progressDialog.dismiss();
-                        }
-
-                    }
-                }, Looper.getMainLooper());
+                    latitude=location.getLatitude();
+                    longitude=location.getLongitude();
 
 
-    }
-
-
-
-
-
-    //
-    private void getAddressFromLatLng(LatLng latLng){
-        Geocoder geocoder=new Geocoder(this);
-        List<Address> addresses;
-        try {
-            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 5);
-            if(addresses!=null){
-                Address address=addresses.get(0);
-                String fulladdress=address.getAddressLine(0);
-                user_landmark.setText(fulladdress);
-
-                if(progressDialog!=null)
-                {
-                    progressDialog.dismiss();
+                    setAddress(location);
+                } else {
+                    Toast.makeText(saveaddress.this,
+                            "Permisson denied",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
-            else{
-
-            }
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-
+        });
     }
 
+    private void setAddress(Location location) {
+        Geocoder geocoder = new Geocoder(saveaddress.this,
+                Locale.getDefault());
+        List<Address> addresses = null;
+        String resultMessage = "";
 
+        try {
+            addresses = geocoder.getFromLocation(
+                    location.getLatitude(),
+                    location.getLongitude(),
+                    // In this sample, get just a single address
+                    1);
+        } catch (IOException ioException) {
+            // Catch network or other I/O problems
+            resultMessage = saveaddress.this
+                    .getString(R.string.service_not_available);
+            Log.e(TAG, resultMessage, ioException);
+        }
 
+        if (addresses == null || addresses.size() == 0) {
+            if (resultMessage.isEmpty()) {
+                resultMessage =saveaddress.this
+                        .getString(R.string.no_address_found);
+                Log.e(TAG, resultMessage);
+            }
+        } else {
+            Address address = addresses.get(0);
+            StringBuilder out = new StringBuilder();
+            // Fetch the address lines using getAddressLine,
+            // join them, and send them to the thread
+            for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+                out.append(address.getAddressLine(i));
+            }
 
-
+            resultMessage = out.toString();
+        }
+        user_landmark.setText(resultMessage);
+        progressDialog.dismiss();
+    }
 
 }

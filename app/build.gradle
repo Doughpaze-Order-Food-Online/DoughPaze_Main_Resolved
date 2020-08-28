@@ -40,8 +40,8 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.3.72'
     //viewpager
     implementation 'com.squareup.picasso:picasso:2.71828'
-    //send api request
-    implementation 'com.android.volley:volley:1.1.1'
+
+
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
@@ -58,8 +58,9 @@ dependencies {
 
     //google signin
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    compile 'com.google.android.gms:play-services-location:17.0.0'
+
+
 
     //facbook login
     implementation 'com.facebook.android:facebook-login:5.15.3'

@@ -8,6 +8,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
+import android.widget.Toast;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -46,11 +48,13 @@ public class addressServiceIntent  extends IntentService {
         }
         else {
             Address address = addresses.get(0);
+
             String addressDetails = address.getFeatureName() + "\n" + address.getThoroughfare() + "\n" +
                     "Locality: " + address.getLocality() + "\n" + "County: " + address.getSubAdminArea() + "\n" +
                     "State: " + address.getAdminArea() + "\n" + "Country: " + address.getCountryName() + "\n" +
                     "Postal Code: " + address.getPostalCode() + "\n";
-            sendResultsToReceiver(2, addressDetails);
+            sendResultsToReceiver(2, address.toString());
+            Toast.makeText(this, address.toString(), Toast.LENGTH_SHORT).show();
         }
     }
     private void sendResultsToReceiver(int resultCode, String message) {
