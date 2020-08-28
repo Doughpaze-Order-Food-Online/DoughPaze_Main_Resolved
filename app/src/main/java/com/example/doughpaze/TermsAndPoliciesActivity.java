@@ -2,6 +2,7 @@ package com.example.doughpaze;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +20,8 @@ public class TermsAndPoliciesActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Intent intent=new Intent(TermsAndPoliciesActivity.this, MainActivity.class);
+//                startActivity(intent);
                 finish();
             }
         });

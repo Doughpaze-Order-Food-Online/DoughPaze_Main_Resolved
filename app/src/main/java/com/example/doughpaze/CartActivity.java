@@ -24,14 +24,15 @@ public class CartActivity extends AppCompatActivity {
         bottomMenu();
     }
 
-    @Override
+//    @Override
     public void onBackPressed() {
         int menuItemId = chipNavigationBar.getSelectedItemId();
-        if (menuItemId != R.id.dashboard_icon) {
-            chipNavigationBar.setItemSelected(R.id.dashboard_icon, true);
-            getSupportFragmentManager().beginTransaction().add(R.id.bottom_navigation_container, new HomeFragment()).addToBackStack("HomeFragment").commit();
+        if (menuItemId == R.id.dashboard_icon) {
+//            chipNavigationBar.setItemSelected(R.id.dashboard_icon, true);
+//            getSupportFragmentManager().beginTransaction().replace(R.id.bottom_navigation_container, new HomeFragment()).commit();
 //            Intent intent=new Intent(MainActivity.this, MainActivity.class);
 //            startActivity(intent);
+            this.finishAffinity();
         }
         super.onBackPressed();
     }

@@ -26,7 +26,7 @@ public class profileActivity extends AppCompatActivity {
                 new ProfileFragment();
         chipNavigationBar = findViewById(R.id.bottom_nav_menu);
         chipNavigationBar.setItemSelected(R.id.account_icon, true);
-        getSupportFragmentManager().beginTransaction().add(R.id.bottom_navigation_container, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_navigation_container, fragment).commit();
         bottomMenu();
 
 
@@ -35,11 +35,9 @@ public class profileActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         int menuItemId = chipNavigationBar.getSelectedItemId();
-
-
         if (menuItemId != R.id.dashboard_icon) {
             chipNavigationBar.setItemSelected(R.id.dashboard_icon, true);
-            getSupportFragmentManager().beginTransaction().add(R.id.bottom_navigation_container, new Fragment()).addToBackStack("HomeFragment").commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.bottom_navigation_container, new Fragment()).commit();
 //            Intent intent=new Intent(MainActivity.this, MainActivity.class);
 //            startActivity(intent);
         }

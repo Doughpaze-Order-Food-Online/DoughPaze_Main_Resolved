@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         int menuItemId = chipNavigationBar.getSelectedItemId();
         if (menuItemId != R.id.dashboard_icon) {
             chipNavigationBar.setItemSelected(R.id.dashboard_icon, true);
-            getSupportFragmentManager().beginTransaction().add(R.id.bottom_navigation_container, new HomeFragment()).addToBackStack("HomeFragment").commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.bottom_navigation_container, new HomeFragment()).addToBackStack("HomeFragment").commit();
 //            Intent intent=new Intent(MainActivity.this, MainActivity.class);
 //            startActivity(intent);
         }
