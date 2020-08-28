@@ -28,7 +28,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.example.doughpaze.models.Response;
 import com.example.doughpaze.network.networkUtils;
+import com.example.doughpaze.utils.addressServiceIntent;
 import com.example.doughpaze.utils.constants;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -62,6 +64,11 @@ public class location_activity extends Activity {
     private CheckBox save_for_future;
     private RadioGroup radioGroup;
     private RadioButton radioButton;
+    private LocationAddressResultReceiver addressResultReceiver;
+    private Location currentLocation;
+    private LocationCallback locationCallback;
+    private FusedLocationProviderClient fusedLocationClient;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 2;
 
 
 
@@ -84,27 +91,23 @@ public class location_activity extends Activity {
         save_for_future=(CheckBox)findViewById(R.id.save_for_future);
         radioGroup=(RadioGroup)findViewById(R.id.type);
 
+        addressResultReceiver = new LocationAddressResultReceiver(new Handler());
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                currentLocation = locationResult.getLocations().get(0);
+                getAddress();
+            }
+        };
+
+
 
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(
-                        getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(
-                            location_activity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                            REQUEST_CODE_LOCATION_PERMISSION
-                    );
-
-
-                } else {
-
-                    progressDialog=new ProgressDialog(location_activity.this);
-                    progressDialog.show();
-                    progressDialog.setContentView(R.layout.progress_loading);
-                    Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
-                    getCurrentLocation();
-                }
+                startLocationUpdates();
             }
         });
 
@@ -115,7 +118,47 @@ public class location_activity extends Activity {
 
     }
 
-
+    @SuppressWarnings("MissingPermission")
+    private void startLocationUpdates() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new
+                            String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        }
+        else {
+            LocationRequest locationRequest = new LocationRequest();
+            locationRequest.setInterval(2000);
+            locationRequest.setFastestInterval(1000);
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
+        }
+    }
+    @SuppressWarnings("MissingPermission")
+    private void getAddress() {
+        if (!Geocoder.isPresent()) {
+            Toast.makeText(location_activity.this, "Can't find current address, ",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Intent intent = new Intent(this, addressServiceIntent.class);
+        intent.putExtra("add_receiver", addressResultReceiver);
+        intent.putExtra("add_location", currentLocation);
+        startService(intent);
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull
+            int[] grantResults) {
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startLocationUpdates();
+            }
+            else {
+                Toast.makeText(this, "Location permission not granted, " + "restart the app if you want the " +
+                        "feature", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     private void DETAILS() {
         user_landmark_layout.setError(null);
@@ -223,22 +266,7 @@ public class location_activity extends Activity {
     }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) {
-
-            progressDialog=new ProgressDialog(this);
-            progressDialog.show();
-            progressDialog.setContentView(R.layout.progress_loading);
-            Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
-
-            getCurrentLocation();
-        } else {
-            Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private void getCurrentLocation() {
 
@@ -320,7 +348,36 @@ public class location_activity extends Activity {
 
     }
 
-
+    private class LocationAddressResultReceiver extends ResultReceiver {
+        LocationAddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            if (resultCode == 0) {
+                Log.d("Address", "Location null retrying");
+                getAddress();
+            }
+            if (resultCode == 1) {
+                Toast.makeText(location_activity.this, "Address not found, ", Toast.LENGTH_SHORT).show();
+            }
+            String currentAdd = resultData.getString("address_result");
+            showResults(currentAdd);
+        }
+    }
+    private void showResults(String currentAdd) {
+       user_landmark.setText(currentAdd);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startLocationUpdates();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        fusedLocationClient.removeLocationUpdates(locationCallback);
+    }
 
 
 }
