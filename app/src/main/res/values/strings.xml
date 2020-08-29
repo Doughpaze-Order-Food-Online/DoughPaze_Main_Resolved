@@ -189,6 +189,8 @@
 
     <string name="service_not_available">Error</string>
     <string name="no_address_found">Address Not Foubd</string>
+    <string name="oh_no">Oh No!!</string>
+    <string name="no_internet_found_nplease_check_your_connection">No internet found.\nPlease check your connection.</string>
 
 
 </resources>
