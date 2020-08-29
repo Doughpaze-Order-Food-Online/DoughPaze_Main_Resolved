@@ -67,6 +67,7 @@ public class saveaddress extends Activity {
     private FusedLocationProviderClient mFusedLocationClient;
     private Location mylocation;
     private static final String TAG = location_activity.class.getSimpleName();
+
     // Constants
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private static final String TRACKING_LOCATION_KEY = "tracking_location";
@@ -81,8 +82,6 @@ public class saveaddress extends Activity {
 
 
         mSubscriptions = new CompositeSubscription();
-
-
         location = (Button) findViewById(R.id.location);
         user_house=(TextInputEditText) findViewById(R.id.user_house);
         user_landmark=(TextInputEditText)findViewById(R.id.user_land);
@@ -99,7 +98,12 @@ public class saveaddress extends Activity {
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              getLocation();
+                getLocation();
+
+                progressDialog=new ProgressDialog(saveaddress.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_loading);
+                Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
             }
         });
 
@@ -158,12 +162,12 @@ public class saveaddress extends Activity {
             mSharedPreferences = PreferenceManager
                     .getDefaultSharedPreferences(this);
 
-                newaddress.setMobile_no(mSharedPreferences.getString(constants.PHONE, null));
-                String token = mSharedPreferences.getString(constants.TOKEN, null);
-                mSubscriptions.add(networkUtils.getRetrofit(token).SAVE_ADDRESS(newaddress)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
-                        .subscribe(this::handleResponse,this::handleError));
+            newaddress.setMobile_no(mSharedPreferences.getString(constants.PHONE, null));
+            String token = mSharedPreferences.getString(constants.TOKEN, null);
+            mSubscriptions.add(networkUtils.getRetrofit(token).SAVE_ADDRESS(newaddress)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(this::handleResponse,this::handleError));
 
         }
 
@@ -205,6 +209,23 @@ public class saveaddress extends Activity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_LOCATION_PERMISSION:
+                // If the permission is granted, get the location,
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getLocation();
+                } else {
+                    Toast.makeText(this,
+                            "Permission Denied",
+                            Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
 
     private void getLocation() {
         if (ActivityCompat.checkSelfPermission(this,
@@ -222,7 +243,7 @@ public class saveaddress extends Activity {
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                    mylocation = location;
+                    mylocation= location;
 
                     latitude=location.getLatitude();
                     longitude=location.getLongitude();
@@ -277,5 +298,4 @@ public class saveaddress extends Activity {
         user_landmark.setText(resultMessage);
         progressDialog.dismiss();
     }
-
 }
