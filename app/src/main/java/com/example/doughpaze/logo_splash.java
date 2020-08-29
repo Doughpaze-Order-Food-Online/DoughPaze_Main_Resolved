@@ -55,7 +55,7 @@ public class logo_splash extends AppCompatActivity {
         Intent intent=new Intent(logo_splash.this,MainActivity.class);
         intent.putExtra("banner",(Serializable)response.getBannersList());
         intent.putExtra("coupons",(Serializable)response.getCouponsList());
-        startActivity(intent);
+//        startActivity(intent);
 
         mSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);

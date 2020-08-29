@@ -184,6 +184,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), CartActivity.class);
                 startActivity(i);
+//                Objects.requireNonNull(getActivity()).finish();
             }
         });
         try {
@@ -226,15 +227,15 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         switch (item.getItemId()){
             case R.id.feedback:
                 intent = new Intent(getContext(), feedBack_Activity.class);
-                Objects.requireNonNull(getActivity()).finish();
+//                Objects.requireNonNull(getActivity()).finish();
                 break;
             case R.id.terms_policies:
                 intent = new Intent(getContext(), TermsAndPoliciesActivity.class);
-                Objects.requireNonNull(getActivity()).finish();
+//                Objects.requireNonNull(getActivity()).finish();
                 break;
             case R.id.help_support:
                 intent = new Intent(getContext(), HelpAndSupportActivity.class);
-                Objects.requireNonNull(getActivity()).finish();
+//                Objects.requireNonNull(getActivity()).finish();
                 break;
         }
 
