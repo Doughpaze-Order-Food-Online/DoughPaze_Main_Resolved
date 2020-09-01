@@ -36,7 +36,7 @@ public class logo_splash extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.logo_splash);
+//        setContentView(R.layout.logo_splash);
         mSubscriptions = new CompositeSubscription();
 
 
