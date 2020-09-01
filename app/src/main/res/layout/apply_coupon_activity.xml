@@ -86,15 +86,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginBottom="16dp"
                 android:layout_marginTop="@dimen/dimen_16dp"
                 android:text="@string/available_coupons"
+                android:fontFamily="sans-serif-medium"
                 android:textColor="@color/colorPrimary" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/coupon_list_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/more_coupons_button"
