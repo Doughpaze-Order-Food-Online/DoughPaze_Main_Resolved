@@ -69,7 +69,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
         });
 
 
-        if(Item.getFood_category().equals("Pizza"))
+        if(Item.getFood_category().equals("Pizzas"))
         {
 
             cartViewHolder.size.setVisibility(View.VISIBLE);
@@ -84,7 +84,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
             cartViewHolder.size.setSelection(spinerposition);
         }
 
-        if(Item.getFood_category().equals("Pizza"))
+        if(Item.getFood_category().equals("Pizzas"))
         {
             cartViewHolder.size.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -169,7 +169,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
         assert newfoodCarts != null;
 
         try{
-            if(!Item.getFood_category().equals("Pizza"))
+            if(!Item.getFood_category().equals("Pizzas"))
             {
                 for(FoodCart x:newfoodCarts)
                 {
@@ -209,7 +209,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
 
                 assert newfoodCarts != null;
 
-                if(!Item.getFood_category().equals("Pizza"))
+                if(!Item.getFood_category().equals("Pizzas"))
                 {
                     for(FoodCart x:newfoodCarts)
                     {
@@ -264,7 +264,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemHolder
 
                 assert newfoodCarts != null;
 
-                if(!Item.getFood_category().equals("Pizza"))
+                if(!Item.getFood_category().equals("Pizzas"))
                 {
                     for(int i=newfoodCarts.size()-1;i>=0;--i)
                     {

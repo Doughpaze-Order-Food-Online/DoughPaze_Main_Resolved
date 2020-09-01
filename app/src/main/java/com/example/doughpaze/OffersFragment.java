@@ -25,6 +25,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -87,9 +89,20 @@ public class OffersFragment extends Fragment {
     private void handleResponse(List<Coupon> response) {
 
         progressDialog.dismiss();
+        List<Coupon> newresponse=new ArrayList<>();
+
+        Date d1=new Date();
+
+        for(Coupon x:response)
+        { long diff= (d1.getTime()-x.getExpiry().getTime())/1000;
+            if(diff<0)
+            {
+                newresponse.add(x);
+            }
+        }
         viewPager2.setVisibility(View.VISIBLE);
         internet.setVisibility(View.GONE);
-        viewPager2.setAdapter(new OfferFragmentStateAdapter(this,response));
+        viewPager2.setAdapter(new OfferFragmentStateAdapter(this,newresponse));
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(
                 offers_tabs, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override

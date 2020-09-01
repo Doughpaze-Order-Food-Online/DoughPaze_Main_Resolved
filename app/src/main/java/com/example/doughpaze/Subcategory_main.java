@@ -192,7 +192,7 @@ public class Subcategory_main extends Activity implements Cart_Quantity {
         for (Food_Details y:list) {
             SubItem subItem;
             if(y.getFood_name().toLowerCase().contains(s))
-            {   if(y.getCategory().equals("Pizza"))
+            {   if(y.getCategory().equals("Pizzas"))
             {
                 subItem = new  SubItem(y.getID(),"http://40.88.123.141:3000"+y.getFood_image(),y.getFood_name(),y.getPrice(),y.getLarge_price(),y.getCategory(),y.getSubcategory(),y.getDescription());
             }

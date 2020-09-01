@@ -151,7 +151,7 @@ public class item_description_activity extends Activity {
         .centerInside()
         .into(cartImage);
 
-        if(response.getCategory().equals("Pizza"))
+        if(response.getCategory().equals("Pizzas"))
         {
             addtocart.setVisibility(View.VISIBLE);
             mplus.setVisibility(View.GONE);

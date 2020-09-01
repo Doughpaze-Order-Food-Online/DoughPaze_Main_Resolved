@@ -60,7 +60,7 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
     @NonNull
     @Override
     public SubItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(category.equals("Pizza") ?R.layout.pizza_list_item:R.layout.subcategories_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(category.equals("Pizzas") ?R.layout.pizza_list_item:R.layout.subcategories_list_item, parent, false);
         return new SubItemViewHolder(view);
     }
 
@@ -73,9 +73,9 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
 
         subItemViewHolder.add.setVisibility(View.VISIBLE);
 
-       if(!category.equals("Pizza")) { subItemViewHolder.plus_minus.setVisibility(View.GONE); }
+       if(!category.equals("Pizzas")) { subItemViewHolder.plus_minus.setVisibility(View.GONE); }
 
-        if(category.equals("Pizza"))
+        if(category.equals("Pizzas"))
         {
             subItemViewHolder.large.setText(String.valueOf(subItem.getLarge_price()));
         }
@@ -107,7 +107,7 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
         newfoodCarts=gson.fromJson(cart,type);
         assert newfoodCarts != null;
 
-       if(!category.equals("Pizza"))
+       if(!category.equals("Pizzas"))
        {
            try{
                int q=0;
@@ -134,7 +134,7 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
         subItemViewHolder.add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(category.equals("Pizza"))
+                if(category.equals("Pizzas"))
                 {
                         alertBox(subItem,subItemViewHolder.itemView.getContext());
                 }
