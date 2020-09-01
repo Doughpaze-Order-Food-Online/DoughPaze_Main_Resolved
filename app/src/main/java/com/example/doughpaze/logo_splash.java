@@ -31,6 +31,7 @@ public class logo_splash extends AppCompatActivity {
 
     private CompositeSubscription mSubscriptions;
     private SharedPreferences mSharedPreferences;
+    private static int TIME_OUT = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +76,16 @@ public class logo_splash extends AppCompatActivity {
 
     private void handleError(Throwable error) {
 
-        Intent intent=new Intent(logo_splash.this,MainActivity.class);
-        startActivity(intent);
-        finish();
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent=new Intent(logo_splash.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, TIME_OUT);
 
         if (error instanceof HttpException) {
 
