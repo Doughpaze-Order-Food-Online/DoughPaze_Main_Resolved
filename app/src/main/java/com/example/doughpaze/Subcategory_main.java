@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -68,6 +69,7 @@ public class Subcategory_main extends Activity implements Cart_Quantity {
     private SharedPreferences mSharedPreferences;
     private ImageView cart_btn;
     private LinearLayout internet;
+    private Button retry;
 
 
     @Override
@@ -85,6 +87,7 @@ public class Subcategory_main extends Activity implements Cart_Quantity {
         back_img_btn = findViewById(R.id.back_btn);
         update = findViewById(R.id.cart_fill_update_txt);
         internet=findViewById(R.id.no_internet_container);
+        retry=findViewById(R.id.retry_btn);
 
         search = (TextInputEditText) findViewById(R.id.search_edit_text);
 
@@ -95,6 +98,18 @@ public class Subcategory_main extends Activity implements Cart_Quantity {
             public void onClick(View v) {
                 Intent i = new Intent(Subcategory_main.this, CartActivity.class);
                 startActivity(i);
+            }
+        });
+
+        retry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog = new ProgressDialog(Subcategory_main.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_loading);
+                Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+                FETCH_ITEMS(intent.getStringExtra("category"));
             }
         });
 
@@ -169,7 +184,7 @@ public class Subcategory_main extends Activity implements Cart_Quantity {
         } else {
             rvItem.setVisibility(View.GONE);
             internet.setVisibility(View.VISIBLE);
-            FETCH_ITEMS(intent.getStringExtra("category"));
+
         }
     }
 
@@ -194,11 +209,11 @@ public class Subcategory_main extends Activity implements Cart_Quantity {
             if(y.getFood_name().toLowerCase().contains(s))
             {   if(y.getCategory().equals("Pizzas"))
             {
-                subItem = new  SubItem(y.getID(),"http://40.88.123.141:3000"+y.getFood_image(),y.getFood_name(),y.getPrice(),y.getLarge_price(),y.getCategory(),y.getSubcategory(),y.getDescription());
+                subItem = new  SubItem(y.getID(),"https://doughpaze.ddns.net"+y.getFood_image(),y.getFood_name(),y.getPrice(),y.getLarge_price(),y.getCategory(),y.getSubcategory(),y.getDescription());
             }
             else
             {
-                subItem = new SubItem(y.getID(),"http://40.88.123.141:3000"+y.getFood_image(),y.getFood_name(),y.getPrice(),y.getCategory(),y.getSubcategory(),y.getDescription());
+                subItem = new SubItem(y.getID(),"https://doughpaze.ddns.net"+y.getFood_image(),y.getFood_name(),y.getPrice(),y.getCategory(),y.getSubcategory(),y.getDescription());
             }
                 subItemList.add(subItem);
             }

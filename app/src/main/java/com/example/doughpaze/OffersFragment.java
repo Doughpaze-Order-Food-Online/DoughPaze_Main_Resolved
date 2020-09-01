@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class OffersFragment extends Fragment {
     private ProgressDialog progressDialog;
     private LinearLayout internet;
     TabLayout offers_tabs;
+    private Button retry;
 
 
     public OffersFragment() {
@@ -70,6 +72,19 @@ public class OffersFragment extends Fragment {
         viewPager2 = rootView.findViewById(R.id.offers_viewPager);
         offers_tabs = rootView.findViewById(R.id.offers_tabs);
         internet=rootView.findViewById(R.id.no_internet_container);
+        retry=rootView.findViewById(R.id.retry_btn);
+
+        retry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog = new ProgressDialog(getContext());
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_loading);
+                Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+                FETCH_COUPONS();
+            }
+        });
 
 
 
@@ -142,7 +157,7 @@ public class OffersFragment extends Fragment {
         } else {
             viewPager2.setVisibility(View.GONE);
             internet.setVisibility(View.VISIBLE);
-            FETCH_COUPONS();
+
 
         }
     }

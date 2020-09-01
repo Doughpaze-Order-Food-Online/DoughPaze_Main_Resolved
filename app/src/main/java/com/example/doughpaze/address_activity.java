@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,8 @@ public class address_activity extends Activity implements finishActivity{
     private addressAdapter addressAdapter;
     private RecyclerView rvItem;
     private ImageView back;
+    private Button retry;
+    private LinearLayout internet;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +70,20 @@ public class address_activity extends Activity implements finishActivity{
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        retry=findViewById(R.id.retry_btn);
+        internet=findViewById(R.id.no_internet_container);
+
+        retry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog = new ProgressDialog(address_activity.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_loading);
+                Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+                FetchAddress();
             }
         });
 
@@ -93,6 +110,9 @@ public class address_activity extends Activity implements finishActivity{
     }
 
     private void handleResponse(AddressResponse response) {
+
+        rvItem.setVisibility(View.VISIBLE);
+        internet.setVisibility(View.GONE);
 
         progressDialog.dismiss();
         List<Address> list=new ArrayList<>();
@@ -125,8 +145,8 @@ public class address_activity extends Activity implements finishActivity{
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(this, "Network Error!", Toast.LENGTH_SHORT).show();
-            Log.e("error",error.toString());
+            rvItem.setVisibility(View.GONE);
+            internet.setVisibility(View.VISIBLE);
 
         }
     }
