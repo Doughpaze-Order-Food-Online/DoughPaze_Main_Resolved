@@ -11,4 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:id="@+id/no_available_coupons_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:gravity="center_horizontal"
+        android:text="@string/sorry_coupon_s_are_not_available"
+        android:textSize="@dimen/dimen_16sp"
+        android:visibility="gone" />
+
 </FrameLayout>
