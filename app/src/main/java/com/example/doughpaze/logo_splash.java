@@ -78,14 +78,7 @@ public class logo_splash extends AppCompatActivity {
 
 
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent=new Intent(logo_splash.this,MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }, TIME_OUT);
+
 
         if (error instanceof HttpException) {
 
@@ -102,9 +95,38 @@ public class logo_splash extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-            Log.e("error",error.toString());
-            Toast.makeText(this, "Network Error!", Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(logo_splash.this,MainActivity.class);
+            startActivity(intent);
+            finish();
 
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mSubscriptions!=null)
+        {
+            mSubscriptions.unsubscribe();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mSubscriptions!=null)
+        {
+            mSubscriptions.unsubscribe();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(mSubscriptions!=null)
+        {
+            mSubscriptions.unsubscribe();
         }
     }
 }
