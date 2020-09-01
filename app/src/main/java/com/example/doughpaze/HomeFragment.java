@@ -296,7 +296,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
                 }
                 else
                 {
-                    getActivity().finish();
+                    getActivity().finishAffinity();
                 }
             }
         };
