@@ -17,7 +17,7 @@
             android:gravity="center_vertical"
             android:text="@string/order_id"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/id_num"
@@ -28,7 +28,7 @@
             android:maxLength="15"
             android:text="123456789895322"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/amount_paid_txt"
@@ -39,7 +39,7 @@
             android:gravity="center_vertical"
             android:text="@string/amount_paid"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/Rupees_txt_"
@@ -52,7 +52,7 @@
             android:gravity="center_vertical"
             android:text="@string/rs"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/total"
@@ -64,7 +64,7 @@
             android:gravity="center_vertical"
             android:text="500.00"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/reorder_btn"
@@ -96,7 +96,7 @@
             android:layout_marginTop="@dimen/dimen_8dp"
             android:text="@string/date"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/dimen_18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/order_date"
@@ -109,7 +109,7 @@
             android:text="15/08/2001"
             android:maxLength="20"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/dimen_18sp" />
+            android:textSize="16sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -123,7 +123,7 @@
             android:layout_marginBottom="@dimen/dimen_8dp"
             android:text="@string/status"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/dimen_18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/status_value_txt"
@@ -133,7 +133,7 @@
             android:layout_toEndOf="@id/status"
             android:text="@string/received"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/dimen_18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/payment_txt"
@@ -143,7 +143,7 @@
             android:layout_marginBottom="@dimen/dimen_8dp"
             android:text="@string/payment_mode"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/dimen_18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/paymentMode_txt"
@@ -154,7 +154,7 @@
             android:layout_toEndOf="@id/payment_txt"
             android:text="@string/online"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/dimen_18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/transaction_txt"
@@ -164,7 +164,7 @@
             android:layout_marginBottom="@dimen/dimen_8dp"
             android:text="@string/transaction_id"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/dimen_18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/transaction_ID_txt"
@@ -176,7 +176,7 @@
             android:layout_toEndOf="@id/transaction_txt"
             android:text="11111111222333012"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/dimen_18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/couponText"
@@ -186,7 +186,7 @@
             android:layout_marginBottom="@dimen/dimen_8dp"
             android:text="@string/coupon_name"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/dimen_18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/coupon_name"
@@ -197,7 +197,7 @@
             android:layout_toEndOf="@id/couponText"
             android:text="11111111222333012"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/dimen_18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/delivery_txt"
@@ -206,7 +206,7 @@
             android:layout_below="@id/couponText"
             android:text="@string/delivery_address2"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/dimen_18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/delivery"
@@ -216,7 +216,7 @@
             android:layout_marginBottom="8dp"
             android:text="11111111222333012"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/dimen_18sp" />
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
