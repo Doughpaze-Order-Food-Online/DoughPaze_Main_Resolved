@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class my_transaction_activity extends Activity {
     private ProgressDialog progressDialog;
     private RecyclerView rvItem;
     private ImageView back;
+    private LinearLayout internet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class my_transaction_activity extends Activity {
         mSubscriptions = new CompositeSubscription();
         rvItem = findViewById(R.id.orders_container);
         back=findViewById(R.id.back_btn);
+        internet=findViewById(R.id.no_internet_container);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +86,8 @@ public class my_transaction_activity extends Activity {
     }
 
     private void handleResponse(List<MyOrderResponse> finalOrder) {
-
+        rvItem.setVisibility(View.VISIBLE);
+        internet.setVisibility(View.GONE);
         progressDialog.dismiss();
         transactionAdapter transactionAdapter=new transactionAdapter(finalOrder,this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -109,8 +113,9 @@ public class my_transaction_activity extends Activity {
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(this, "Network Error!", Toast.LENGTH_SHORT).show();
-            Log.e("error",error.toString());
+          rvItem.setVisibility(View.GONE);
+          internet.setVisibility(View.VISIBLE);
+            FetchTransaction();
 
         }
     }

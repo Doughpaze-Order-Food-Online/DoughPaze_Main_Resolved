@@ -36,9 +36,13 @@ import rx.subscriptions.CompositeSubscription;
 public class CouponsFragment extends Fragment {
 
     private RecyclerView rvitem;
-    private CompositeSubscription mSubscriptions;
-    private ProgressDialog progressDialog;
+
     private List<Coupon> coupons;
+
+    public CouponsFragment(List<Coupon> couponList)
+    {
+        this.coupons=couponList;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,71 +51,14 @@ public class CouponsFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_coupons, container, false);
 
         rvitem=view.findViewById(R.id.All_coupons_container);
-        mSubscriptions = new CompositeSubscription();
-
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.show();
-        progressDialog.setContentView(R.layout.progress_loading);
-        Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
-
-        FETCH_COUPONS();
-        return view;
-    }
-
-    private void FETCH_COUPONS() {
-
-        mSubscriptions.add(networkUtils.getRetrofit()
-                .GET_COUPONS()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
-    }
 
 
-    private void handleResponse(List<Coupon> response) {
-        List<Coupon> newresponse=new ArrayList<>();
-        progressDialog.dismiss();
-
-        Date d1=new Date();
-
-        for(Coupon x:response)
-        { long diff= (d1.getTime()-x.getExpiry().getTime())/1000;
-            if(diff<0)
-            {
-                newresponse.add(x);
-            }
-        }
-
-        coupons=newresponse;
-        CouponsAdapter couponsAdapter=new CouponsAdapter(newresponse,getContext());
+        CouponsAdapter couponsAdapter=new CouponsAdapter(coupons,getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvitem.setAdapter(couponsAdapter);
         rvitem.setLayoutManager(layoutManager);
 
 
-    }
-
-    private void handleError(Throwable error) {
-
-        progressDialog.dismiss();
-
-        if (error instanceof HttpException) {
-
-            Gson gson = new GsonBuilder().create();
-
-            try {
-
-                String errorBody = ((HttpException) error).response().errorBody().string();
-                Response response = gson.fromJson(errorBody,Response.class);
-                Toast.makeText(getContext(), response.getMessage(), Toast.LENGTH_SHORT).show();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Toast.makeText(getContext(), "Network Error!", Toast.LENGTH_SHORT).show();
-            Log.e("error",error.toString());
-
-        }
+        return view;
     }
 }

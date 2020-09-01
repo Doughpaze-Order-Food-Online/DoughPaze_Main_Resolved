@@ -1,17 +1,37 @@
 package com.example.doughpaze;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.example.doughpaze.Adapters.OfferListAdapter;
+import com.example.doughpaze.models.Coupon;
+import com.example.doughpaze.models.Response;
+import com.example.doughpaze.network.networkUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
+
+import retrofit2.adapter.rxjava.HttpException;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +41,10 @@ import com.google.android.material.tabs.TabLayoutMediator;
 public class OffersFragment extends Fragment {
 
     ViewPager2 viewPager2;
+    private CompositeSubscription mSubscriptions;
+    private ProgressDialog progressDialog;
+    private LinearLayout internet;
+    TabLayout offers_tabs;
 
 
     public OffersFragment() {
@@ -32,13 +56,40 @@ public class OffersFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_offers, container, false);
+        mSubscriptions = new CompositeSubscription();
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_loading);
+        Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+        FETCH_COUPONS();
+
 
         viewPager2 = rootView.findViewById(R.id.offers_viewPager);
+        offers_tabs = rootView.findViewById(R.id.offers_tabs);
+        internet=rootView.findViewById(R.id.no_internet_container);
 
-        viewPager2.setAdapter(new OfferFragmentStateAdapter(this));
 
-        TabLayout offers_tabs = rootView.findViewById(R.id.offers_tabs);
 
+        return rootView;
+    }
+
+
+    private void FETCH_COUPONS() {
+
+        mSubscriptions.add(networkUtils.getRetrofit()
+                .GET_COUPONS()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse,this::handleError));
+    }
+
+    private void handleResponse(List<Coupon> response) {
+
+        progressDialog.dismiss();
+        viewPager2.setVisibility(View.VISIBLE);
+        internet.setVisibility(View.GONE);
+        viewPager2.setAdapter(new OfferFragmentStateAdapter(this,response));
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(
                 offers_tabs, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
@@ -53,6 +104,33 @@ public class OffersFragment extends Fragment {
         );
         tabLayoutMediator.attach();
 
-        return rootView;
+
+
+
+    }
+
+    private void handleError(Throwable error) {
+
+        progressDialog.dismiss();
+
+        if (error instanceof HttpException) {
+
+            Gson gson = new GsonBuilder().create();
+
+            try {
+
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Response response = gson.fromJson(errorBody,Response.class);
+                Toast.makeText(getContext(), response.getMessage(), Toast.LENGTH_SHORT).show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            viewPager2.setVisibility(View.GONE);
+            internet.setVisibility(View.VISIBLE);
+            FETCH_COUPONS();
+
+        }
     }
 }

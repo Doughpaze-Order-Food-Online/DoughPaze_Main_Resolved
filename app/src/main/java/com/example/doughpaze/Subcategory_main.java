@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,7 +67,7 @@ public class Subcategory_main extends Activity implements Cart_Quantity {
     private List<SubItem> subItemList;
     private SharedPreferences mSharedPreferences;
     private ImageView cart_btn;
-    private Toast t;
+    private LinearLayout internet;
 
 
     @Override
@@ -83,6 +84,7 @@ public class Subcategory_main extends Activity implements Cart_Quantity {
         rvItem = findViewById(R.id.subcategory_container);
         back_img_btn = findViewById(R.id.back_btn);
         update = findViewById(R.id.cart_fill_update_txt);
+        internet=findViewById(R.id.no_internet_container);
 
         search = (TextInputEditText) findViewById(R.id.search_edit_text);
 
@@ -133,6 +135,8 @@ public class Subcategory_main extends Activity implements Cart_Quantity {
 
 
     private void handleResponse(Food_Response response) {
+        rvItem.setVisibility(View.VISIBLE);
+        internet.setVisibility(View.GONE);
         list=new ArrayList<>();
             list=response.getResult();
 
@@ -163,9 +167,8 @@ public class Subcategory_main extends Activity implements Cart_Quantity {
                 e.printStackTrace();
             }
         } else {
-            Log.e("error",error.toString());
-            t=Toast.makeText(Subcategory_main.this, "Network Error !", Toast.LENGTH_SHORT);
-            t.show();
+            rvItem.setVisibility(View.GONE);
+            internet.setVisibility(View.VISIBLE);
             FETCH_ITEMS(intent.getStringExtra("category"));
         }
     }
