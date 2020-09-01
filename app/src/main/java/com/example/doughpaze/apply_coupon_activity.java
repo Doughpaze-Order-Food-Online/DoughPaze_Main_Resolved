@@ -12,8 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,10 +56,11 @@ public class apply_coupon_activity extends Activity implements finishActivity {
     private ProgressDialog progressDialog;
     private RecyclerView rvItem, rvitem2;
     private EditText coupon;
-    private TextView apply;
+    private TextView apply,valid,others;
     private List<Coupon> coupons;
     private SharedPreferences mSharedPreferences;
-
+    private LinearLayout internet;
+    private Button retry;
     private ImageView backBtn;
 
 
@@ -71,12 +74,28 @@ public class apply_coupon_activity extends Activity implements finishActivity {
         rvitem2 = findViewById(R.id.more_coupons_container);
         coupon = findViewById(R.id.enter_edit_txt);
         apply = findViewById(R.id.apply);
+        internet=findViewById(R.id.no_internet_container);
+        retry=findViewById(R.id.retry_btn);
+        valid=findViewById(R.id.valid);
+        others=findViewById(R.id.others);
 
         backBtn = findViewById(R.id.back_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        retry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog = new ProgressDialog(apply_coupon_activity.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_loading);
+                Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+                FETCH_COUPONS();
             }
         });
 
@@ -110,6 +129,12 @@ public class apply_coupon_activity extends Activity implements finishActivity {
     }
 
     private void handleResponse(List<Coupon> response) {
+
+        rvItem.setVisibility(View.VISIBLE);
+        rvitem2.setVisibility(View.VISIBLE);
+        valid.setVisibility(View.VISIBLE);
+        others.setVisibility(View.VISIBLE);
+        internet.setVisibility(View.GONE);
         List<Coupon> applicable=new ArrayList<>();
         List<Coupon> others=new ArrayList<>();
         List<Coupon> newresponse=new ArrayList<>();
@@ -194,8 +219,11 @@ public class apply_coupon_activity extends Activity implements finishActivity {
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(this, "Network Error!", Toast.LENGTH_SHORT).show();
-            Log.e("error",error.toString());
+            rvItem.setVisibility(View.GONE);
+            rvitem2.setVisibility(View.GONE);
+            valid.setVisibility(View.GONE);
+            others.setVisibility(View.GONE);
+            internet.setVisibility(View.VISIBLE);
 
         }
     }

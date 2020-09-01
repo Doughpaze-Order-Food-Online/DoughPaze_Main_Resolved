@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,8 @@ public class myaddress extends Activity {
     private myaddressAdapter addressAdapter;
     private RecyclerView rvItem;
     private ImageView back;
+    private Button retry;
+    private LinearLayout internet;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,10 +65,25 @@ public class myaddress extends Activity {
         });
 
         back = findViewById(R.id.back_btn);
+        internet=findViewById(R.id.no_internet_container);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        retry=findViewById(R.id.retry_btn);
+
+        retry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog = new ProgressDialog(myaddress.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_loading);
+                Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+                FetchAddress();
             }
         });
 
@@ -122,8 +141,10 @@ public class myaddress extends Activity {
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(this, "Network Error!", Toast.LENGTH_SHORT).show();
-            Log.e("error", error.toString());
+
+
+            rvItem.setVisibility(View.GONE);
+            internet.setVisibility(View.VISIBLE);
 
         }
     }

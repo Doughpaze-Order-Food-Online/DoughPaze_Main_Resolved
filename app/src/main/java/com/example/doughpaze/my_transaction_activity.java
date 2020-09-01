@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,6 +47,7 @@ public class my_transaction_activity extends Activity {
     private RecyclerView rvItem;
     private ImageView back;
     private LinearLayout internet;
+    private Button retry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +58,24 @@ public class my_transaction_activity extends Activity {
         rvItem = findViewById(R.id.orders_container);
         back=findViewById(R.id.back_btn);
         internet=findViewById(R.id.no_internet_container);
+        retry=findViewById(R.id.retry_btn);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        retry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog = new ProgressDialog(my_transaction_activity.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_loading);
+                Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+                FetchTransaction();
             }
         });
 
@@ -115,8 +130,6 @@ public class my_transaction_activity extends Activity {
         } else {
           rvItem.setVisibility(View.GONE);
           internet.setVisibility(View.VISIBLE);
-            FetchTransaction();
-
         }
     }
 }

@@ -182,6 +182,7 @@ public class saveaddress extends Activity {
         radioGroup.clearCheck();
 
         Toast.makeText(this, "Address Saved!", Toast.LENGTH_SHORT).show();
+        finish();
 
 
     }
