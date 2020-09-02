@@ -33,7 +33,7 @@
         android:textColor="@color/colorPrimary"
         android:background="@android:color/transparent"
         android:layout_alignParentEnd="true"
-        android:textSize="16sp"/>
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/coupon_head_description_txt"
