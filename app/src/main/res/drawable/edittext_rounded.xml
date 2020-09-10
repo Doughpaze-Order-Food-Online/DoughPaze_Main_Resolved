@@ -9,5 +9,7 @@
     <stroke
         android:color="@color/colorPrimaryText"
         android:width="1dp"/>
-    <size android:width="24dp" android:height="64dp" />
+    <size
+        android:width="24dp"
+        android:height="48dp" />
 </shape>

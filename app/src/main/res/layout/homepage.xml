@@ -22,31 +22,32 @@
             android:layout_height="36dp"
             android:layout_marginStart="@dimen/dimen_16dp"
             android:layout_marginTop="42dp"
-            android:background="@drawable/ic_baseline_menu_24" />
+            android:background="@drawable/ic_baseline_menu_24"
+            android:backgroundTint="@color/colorPrimaryText" />
 
         <ImageView
             android:id="@+id/logo_img"
             android:layout_width="176dp"
-                android:layout_height="80dp"
+            android:layout_height="80dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dimen_16dp"
             android:layout_marginBottom="16dp"
-                android:contentDescription="@string/todo"
-                android:scaleType="fitXY"
-                android:src="@drawable/logo_doughpaze" />
+            android:contentDescription="@string/todo"
+            android:scaleType="fitXY"
+            android:src="@drawable/logo_doughpaze" />
 
-            <ImageView
-                android:id="@+id/cart_Img"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="42dp"
-                android:layout_marginEnd="@dimen/dimen_16dp"
-                android:contentDescription="@string/todo"
-                android:src="@drawable/ic_baseline_add_shopping_cart_24"
-                android:tint="@color/colorPrimaryText"
-                app:tint="@color/colorPrimaryText"
-                tools:ignore="UseAppTint" />
+        <ImageView
+            android:id="@+id/cart_Img"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="42dp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_baseline_add_shopping_cart_24"
+            android:tint="@color/colorPrimaryText"
+            app:tint="@color/colorPrimaryText"
+            tools:ignore="UseAppTint" />
 
         <TextView
 
@@ -59,9 +60,9 @@
             android:background="@drawable/round_button_shape"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
-            android:visibility="gone"
             android:text="@string/_1"
-            android:textColor="@color/colorPrimaryText" />
+            android:textColor="@color/colorPrimaryText"
+            android:visibility="gone" />
 
         <ScrollView
             android:id="@+id/scrollView2"
@@ -89,8 +90,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/banners_container"
-                    android:layout_marginStart="16dp"
                     android:layout_margin="@dimen/dimen_16dp"
+                    android:layout_marginStart="16dp"
                     android:drawableTint="@color/colorPrimaryText"
                     android:gravity="center_vertical"
                     android:text="@string/categories"
@@ -102,10 +103,10 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/categories_container"
-                    android:padding="@dimen/dimen_8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/categories_txt"
+                    android:padding="@dimen/dimen_8dp"
                     android:scrollbarSize="2dp">
 
 
