@@ -35,6 +35,7 @@ Restaurant App for ordering food online at your doorstep.
 - API calls
 - Networking and Jason Parsing
 - User Login/Signup Authentication
+- Otp verification Via Email ( Through Mobile Number Not yet Completed ).
 
 ## Implementations and Libraries used
 ### API request libraries
@@ -63,3 +64,7 @@ Restaurant App for ordering food online at your doorstep.
 ### paytm all in one sdk
 - implementation 'com.paytm.appinvokesdk:appinvokesdk:1.3'
 ( Not yet fully implemented )
+
+### User Instructions
+- Till now Please Login with Google only As the facebook authentication is not yet fully implemented.
+- Note:- OTP will be recieved on email provided by user respectively. ( via mobile number not yet fully implemented.)
