@@ -63,7 +63,7 @@ public class CouponImageAdpter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View itemView = layoutInflater.inflate(R.layout.banners_list_item, container, false);
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
-        String url="https://doughpaze.ddns.net"+List.get(position).getCoupon_location();
+        String url = "http://3.131.127.136:5000" + List.get(position).getCoupon_location();
         Glide
                 .with(context)
                 .load(url)

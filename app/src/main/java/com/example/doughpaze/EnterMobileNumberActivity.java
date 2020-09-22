@@ -61,17 +61,23 @@ public class EnterMobileNumberActivity extends AppCompatActivity {
         type=intent.getStringExtra("type");
         token = intent.getStringExtra("token");
         name = intent.getStringExtra("name");
-        email= intent.getStringExtra("email");
+        email = intent.getStringExtra("email");
         mobile_no = intent.getStringExtra("phone");
-        dob= intent.getStringExtra("dob");
+        dob = intent.getStringExtra("dob");
         password = intent.getStringExtra("password");
 
-        button.setOnClickListener(view->otp_send());
+        button.setOnClickListener(view -> otp_send());
 
     }
 
-    private void otp_send()
-    {
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+    }
+
+    private void otp_send() {
         String number = Objects.requireNonNull(Number.getText()).toString();
 
 

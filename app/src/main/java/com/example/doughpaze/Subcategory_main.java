@@ -209,11 +209,11 @@ public class Subcategory_main extends Activity implements Cart_Quantity {
             if(y.getFood_name().toLowerCase().contains(s))
             {   if(y.getCategory().equals("Pizzas"))
             {
-                subItem = new  SubItem(y.getID(),"https://doughpaze.ddns.net"+y.getFood_image(),y.getFood_name(),y.getPrice(),y.getLarge_price(),y.getCategory(),y.getSubcategory(),y.getDescription());
+                subItem = new SubItem(y.getID(), "http://3.131.127.136:5000" + y.getFood_image(), y.getFood_name(), y.getPrice(), y.getLarge_price(), y.getCategory(), y.getSubcategory(), y.getDescription());
             }
             else
             {
-                subItem = new SubItem(y.getID(),"https://doughpaze.ddns.net"+y.getFood_image(),y.getFood_name(),y.getPrice(),y.getCategory(),y.getSubcategory(),y.getDescription());
+                subItem = new SubItem(y.getID(), "http://3.131.127.136:5000" + y.getFood_image(), y.getFood_name(), y.getPrice(), y.getCategory(), y.getSubcategory(), y.getDescription());
             }
                 subItemList.add(subItem);
             }

@@ -4,7 +4,7 @@ import com.google.android.material.shape.EdgeTreatment;
 
 public class constants {
 
-    public static final String BASE_URL = "https://doughpaze.ddns.net/api/";
+    public static final String BASE_URL = "http://3.131.127.136:5000/api/";
     public static final String TOKEN = "token";
     public static final String EMAIL= "email";
     public static final String NAME= "name";

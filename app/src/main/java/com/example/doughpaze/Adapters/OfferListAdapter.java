@@ -48,8 +48,8 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Offe
 
     @Override
     public void onBindViewHolder(@NonNull OfferListAdapter.OfferListItemHolder offerListItemHolder, int i) {
-       Coupon coupon=myOrderResponseList.get(i);
-       String url="https://doughpaze.ddns.net"+coupon.getCoupon_location();
+       Coupon coupon = myOrderResponseList.get(i);
+        String url = "http://3.131.127.136:5000" + coupon.getCoupon_location();
 
         Glide
         .with(context)

@@ -142,7 +142,7 @@ public class item_description_activity extends Activity {
         name.setText(response.getFood_name());
         price.setText(String.valueOf(response.getPrice()));
         description.setText(response.getDescription());
-        String url="https://doughpaze.ddns.net"+response.getFood_image();
+        String url = "http://3.131.127.136:5000" + response.getFood_image();
 
         Glide
         .with(this)

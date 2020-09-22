@@ -105,12 +105,19 @@ public class otp_Activity extends AppCompatActivity {
 
         if(type.equals("login_otp")){ button.setOnClickListener(view -> OTP_LOGIN());}
 
-        if(type.equals("google") || type.equals("facebook")){button.setOnClickListener(view -> GOOGLE_LOGIN());}
+        if (type.equals("google") || type.equals("facebook")) {
+            button.setOnClickListener(view -> GOOGLE_LOGIN());
+        }
 
-        resend.setOnClickListener(view->RESEND_OTP());
+        resend.setOnClickListener(view -> RESEND_OTP());
 
 
+    }
 
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 
 
