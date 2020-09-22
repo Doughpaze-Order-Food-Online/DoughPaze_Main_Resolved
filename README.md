@@ -2,7 +2,7 @@
 Restaurant App for ordering food online at your doorstep.
 
 ## Status
-- Testing stage
+- Developing stage
 
 ## Main Componets of the Project
 - Android app
