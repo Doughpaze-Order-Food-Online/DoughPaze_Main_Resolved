@@ -27,8 +27,9 @@ Restaurant App for ordering food online at your doorstep.
   - Harish Jartarghar - Lead Backend Developer
 ### Procedure
 - The User Interface is designed with reference to the popular Apps Like Swiggy and Zomato.
-- Problems and bugs faced while developing were resolved by searching the issues on websites like Stackoverflow, Youtube and Official Android developer page.
-- Main(starting) xml designs were created first and then connected with back-end respectively with complete cordination and frequent testing. 
+- Problems and bugs faced while developing were resolved by searching the issues on websites like Stackoverflow, Youtube and Official Android developer site.
+- themes, colors and icons used are taken from https://www.materialpalette.com/ 
+- Main(starting) xml designs with respective front-end java code were created first and then connected with back-end respectively with complete cordination and frequent testing. 
 
 ## Main Technologies used while Developing
 - Material Design Widgets
