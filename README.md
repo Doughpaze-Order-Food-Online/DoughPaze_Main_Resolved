@@ -69,3 +69,15 @@ Restaurant App for ordering food online at your doorstep.
 ### User Instructions
 - Till now Please Login with Google only As the facebook authentication is not yet fully implemented.
 - Note:- OTP will be recieved on email provided by user respectively. ( via mobile number not yet fully implemented.)
+
+
+## Server Side 
+- The server is developed using nodejs backend tool
+- Express Framework is used to implement rest apis.
+- MongoDb is used as the data storage that is database.
+- Mongoose package is used as agent to the mongodb database.
+- Other packages are used based on the requirements in the applcation.
+- Apis are implemented based on the requirements of the app.
+
+
+
