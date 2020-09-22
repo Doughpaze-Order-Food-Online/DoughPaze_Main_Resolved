@@ -39,6 +39,7 @@ import rx.subscriptions.CompositeSubscription;
 
 public class otp_Activity extends AppCompatActivity {
 
+
     private String otp;
     private String name;
     private String email;
