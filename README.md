@@ -15,7 +15,7 @@ Restaurant App for ordering food online at your doorstep.
 - ViewPager with Image Slider
 - Bottom Sheet Dialogue, Alert Dialogue, DatePicker
 
-## Devloping Approach
+## Development Approach
 ### Programming Languages Used
 - xml
 - Java
@@ -37,6 +37,14 @@ Restaurant App for ordering food online at your doorstep.
 - Networking and Jason Parsing
 - User Login/Signup Authentication
 - Otp verification Via Email ( Through Mobile Number Not yet Completed ).
+
+## Server Side 
+- The server is developed using nodejs backend tool
+- Express Framework is used to implement rest apis.
+- MongoDb is used as the data storage that is database.
+- Mongoose package is used as agent to the mongodb database.
+- Other packages are used based on the requirements in the applcation.
+- Apis are implemented based on the requirements of the app.
 
 ## Implementations and Libraries used
 ### API request libraries
@@ -71,13 +79,7 @@ Restaurant App for ordering food online at your doorstep.
 - Note:- OTP will be recieved on email provided by user respectively. ( via mobile number not yet fully implemented.)
 
 
-## Server Side 
-- The server is developed using nodejs backend tool
-- Express Framework is used to implement rest apis.
-- MongoDb is used as the data storage that is database.
-- Mongoose package is used as agent to the mongodb database.
-- Other packages are used based on the requirements in the applcation.
-- Apis are implemented based on the requirements of the app.
+
 
 
 
