@@ -227,19 +227,25 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         switch (item.getItemId()){
             case R.id.feedback:
                 intent = new Intent(getContext(), feedBack_Activity.class);
+                startActivity(intent);
 //                Objects.requireNonNull(getActivity()).finish();
                 break;
             case R.id.terms_policies:
                 intent = new Intent(getContext(), TermsAndPoliciesActivity.class);
+                startActivity(intent);
 //                Objects.requireNonNull(getActivity()).finish();
                 break;
             case R.id.help_support:
                 intent = new Intent(getContext(), HelpAndSupportActivity.class);
+                startActivity(intent);
 //                Objects.requireNonNull(getActivity()).finish();
                 break;
+            case R.id.facebook_about:
+                Toast.makeText(getActivity(), "Facebook Page will be uploaded soon", Toast.LENGTH_SHORT).show();
+                break;
+
         }
 
-        startActivity(intent);
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
