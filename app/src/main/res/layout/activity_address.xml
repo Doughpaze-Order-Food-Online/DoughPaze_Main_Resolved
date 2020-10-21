@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/todo"
             android:scaleType="fitCenter"
-            android:src="@drawable/no_internet" />
+            android:src="@drawable/nointernetfinal" />
 
         <TextView
             android:layout_width="match_parent"
