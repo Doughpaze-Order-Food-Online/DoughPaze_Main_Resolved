@@ -14,14 +14,18 @@ import android.os.ResultReceiver;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.doughpaze.models.Response;
@@ -49,7 +53,7 @@ import rx.subscriptions.CompositeSubscription;
 
 import static com.example.doughpaze.utils.validation.validateFields;
 
-public class location_activity extends Activity {
+public class location_activity extends AppCompatActivity {
     private Button location, proceed;
     private TextInputEditText user_landmark, user_house;
     private ResultReceiver resultReceiver;
@@ -64,6 +68,7 @@ public class location_activity extends Activity {
     private FusedLocationProviderClient mFusedLocationClient;
     private Location mylocation;
     private static final String TAG = location_activity.class.getSimpleName();
+    private ImageView BackBtnImg;
 
     // Constants
     private static final int REQUEST_LOCATION_PERMISSION = 1;
@@ -75,9 +80,20 @@ public class location_activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.location);
 
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         mSubscriptions = new CompositeSubscription();
 
+        BackBtnImg = findViewById(R.id.back_btn_location);
+
+        BackBtnImg.requestFocus();
+
+        BackBtnImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         location = (Button) findViewById(R.id.location);
         user_house = (TextInputEditText) findViewById(R.id.user_house);
@@ -87,6 +103,7 @@ public class location_activity extends Activity {
         user_landmark_layout = (TextInputLayout) findViewById(R.id.user_landmark);
         save_for_future = (CheckBox) findViewById(R.id.save_for_future);
         radioGroup = (RadioGroup) findViewById(R.id.type);
+
 
 
         location.setOnClickListener(new View.OnClickListener() {
@@ -104,9 +121,6 @@ public class location_activity extends Activity {
         proceed.setOnClickListener(view->DETAILS());
 
     }
-
-
-
 
     private void DETAILS() {
         user_landmark_layout.setError(null);

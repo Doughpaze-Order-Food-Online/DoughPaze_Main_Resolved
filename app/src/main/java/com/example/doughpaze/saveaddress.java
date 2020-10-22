@@ -24,6 +24,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.example.doughpaze.models.Response;
@@ -51,12 +52,12 @@ import rx.subscriptions.CompositeSubscription;
 
 import static com.example.doughpaze.utils.validation.validateFields;
 
-public class saveaddress extends Activity {
-    private Button location,proceed,save;
+public class saveaddress extends AppCompatActivity {
+    private Button location, proceed, save;
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
-    private TextInputEditText user_landmark,user_house;
+    private TextInputEditText user_landmark, user_house;
     private ResultReceiver resultReceiver;
-    private TextInputLayout user_house_layout,user_landmark_layout ;
+    private TextInputLayout user_house_layout, user_landmark_layout;
     private double latitude, longitude;
     private CompositeSubscription mSubscriptions;
     private SharedPreferences mSharedPreferences;

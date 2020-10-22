@@ -1,13 +1,18 @@
 package com.example.doughpaze;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +25,7 @@ import com.example.doughpaze.Adapters.OfferListAdapter;
 import com.example.doughpaze.models.Coupon;
 import com.example.doughpaze.models.Response;
 import com.example.doughpaze.network.networkUtils;
+import com.example.doughpaze.utils.CustomSwipeRefreshLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.Gson;
@@ -49,6 +55,7 @@ public class OffersFragment extends Fragment {
     private LinearLayout internet;
     TabLayout offers_tabs;
     private Button retry;
+    private CustomSwipeRefreshLayout customSwipeRefreshLayout;
 
 
     public OffersFragment() {
@@ -86,9 +93,38 @@ public class OffersFragment extends Fragment {
             }
         });
 
+        customSwipeRefreshLayout = rootView.findViewById(R.id.swipe_refresh_layout);
+
+        customSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (customSwipeRefreshLayout.isRefreshing()) {
+                    if (isOnline()) {
+                        //Add the functionality here
+                    } else {
+                        Handler h = new Handler();
+                        h.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getContext(), "No response!! please check your\nInternet Connectivity", Toast.LENGTH_SHORT).show();
+                                customSwipeRefreshLayout.setRefreshing(false);
+                            }
+                        }, 1000);
+                    }
+                }
+
+            }
+        });
 
 
         return rootView;
+    }
+
+    private boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnected();
     }
 
 
@@ -98,7 +134,7 @@ public class OffersFragment extends Fragment {
                 .GET_COUPONS()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
+                .subscribe(this::handleResponse, this::handleError));
     }
 
     private void handleResponse(List<Coupon> response) {

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,13 +51,13 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-public class apply_coupon_activity extends Activity implements finishActivity {
+public class apply_coupon_activity extends AppCompatActivity implements finishActivity {
 
     private CompositeSubscription mSubscriptions;
     private ProgressDialog progressDialog;
     private RecyclerView rvItem, rvitem2;
     private EditText coupon;
-    private TextView apply,valid,others;
+    private TextView apply, valid, others;
     private List<Coupon> coupons;
     private SharedPreferences mSharedPreferences;
     private LinearLayout internet;
@@ -68,7 +69,6 @@ public class apply_coupon_activity extends Activity implements finishActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.apply_coupon_activity);
-
         mSubscriptions = new CompositeSubscription();
         rvItem = findViewById(R.id.coupon_list_view);
         rvitem2 = findViewById(R.id.more_coupons_container);
@@ -86,6 +86,7 @@ public class apply_coupon_activity extends Activity implements finishActivity {
                 finish();
             }
         });
+
 
         retry.setOnClickListener(new View.OnClickListener() {
             @Override

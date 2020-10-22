@@ -6,14 +6,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
-public class order_sucess_activity extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class order_sucess_activity extends AppCompatActivity {
 
     private static int TIME_OUT = 2000; //Time to launch the another activity
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_success);
-        Intent intent=getIntent();
+        Intent intent = getIntent();
 
         new Handler().postDelayed(new Runnable() {
             @Override

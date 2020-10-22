@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -55,7 +56,7 @@ import rx.subscriptions.CompositeSubscription;
 
 import static com.example.doughpaze.utils.constants.BASE;
 
-public class Subcategory_main extends Activity implements Cart_Quantity {
+public class Subcategory_main extends AppCompatActivity implements Cart_Quantity {
 
     private CompositeSubscription mSubscriptions;
     private Intent intent;

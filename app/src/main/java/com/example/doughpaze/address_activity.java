@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,7 +40,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-public class address_activity extends Activity implements finishActivity{
+public class address_activity extends AppCompatActivity implements finishActivity {
     private TextView addnew;
     private CompositeSubscription mSubscriptions;
     private SharedPreferences mSharedPreferences;

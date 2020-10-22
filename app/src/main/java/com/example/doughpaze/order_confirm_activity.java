@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,14 +57,14 @@ import rx.subscriptions.CompositeSubscription;
 
 import static java.lang.Integer.parseInt;
 
-public class order_confirm_activity extends Activity {
-    private String  TAG ="order_confirm_activity";
+public class order_confirm_activity extends AppCompatActivity {
+    private String TAG = "order_confirm_activity";
     private TextView total;
     private SharedPreferences mSharedPreferences;
     private confirmOrderAdapter cofirmOrderAdapter;
     private RecyclerView rvItem;
     private Button proceed;
-    private CompositeSubscription mSubscriptions,Subscriptions;
+    private CompositeSubscription mSubscriptions, Subscriptions;
     private ProgressDialog progressDialog;
     private Integer ActivityRequestCode = 2;
     private TextView payment_error;

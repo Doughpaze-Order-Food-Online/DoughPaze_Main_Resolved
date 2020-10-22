@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,12 +32,12 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-public class order_details extends Activity {
+public class order_details extends AppCompatActivity {
 
     private CompositeSubscription mSubscriptions;
     private SharedPreferences mSharedPreferences;
     private ProgressDialog progressDialog;
-    private TextView orderId,total,paymentMode_txt,transaction_ID_txt,date,address,couponText,coupon,transaction_txt;
+    private TextView orderId, total, paymentMode_txt, transaction_ID_txt, date, address, couponText, coupon, transaction_txt;
     private RecyclerView rvItem;
     private Button proceed;
     private RelativeLayout parent;
