@@ -35,24 +35,14 @@ import com.example.doughpaze.Adapters.CouponImageAdpter;
 import com.example.doughpaze.models.Category;
 import com.example.doughpaze.models.Coupon;
 import com.example.doughpaze.models.FoodCart;
-import com.example.doughpaze.models.Images;
-import com.example.doughpaze.models.Response;
 import com.example.doughpaze.models.banners;
-import com.example.doughpaze.network.networkUtils;
-import com.example.doughpaze.utils.constants;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import retrofit2.adapter.rxjava.HttpException;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -86,10 +76,14 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Intent intent= Objects.requireNonNull(getActivity()).getIntent();
+        Type type=new TypeToken<List<banners>>(){}.getType();
+        Gson gson=new Gson();
+        mSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getContext());
+        bannersList=gson.fromJson(mSharedPreferences.getString("banner", null),type);
 
-        bannersList= (List<banners>) intent.getSerializableExtra("banner");
-        CouponsList= (List<Coupon>) intent.getSerializableExtra("coupons");
+        Type type2=new TypeToken<List<Coupon>>(){}.getType();
+        CouponsList= gson.fromJson(mSharedPreferences.getString("coupon", null),type2);
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_main, container, false);
@@ -302,7 +296,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
                 }
                 else
                 {
-                    getActivity().finishAffinity();
+                    Objects.requireNonNull(getActivity()).finishAffinity();
                 }
             }
         };

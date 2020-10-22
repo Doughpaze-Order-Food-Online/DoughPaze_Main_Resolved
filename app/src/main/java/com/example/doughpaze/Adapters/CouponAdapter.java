@@ -246,7 +246,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponItem
             editor.apply();
         }
         else {
-            alertBox("Sorry! This Coupon is not valid");
+            alertBox(response.getMessage());
         }
 
 

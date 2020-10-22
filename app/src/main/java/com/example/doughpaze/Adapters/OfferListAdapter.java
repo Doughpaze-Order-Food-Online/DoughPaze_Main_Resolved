@@ -22,6 +22,8 @@ import java.util.List;
 
 import rx.subscriptions.CompositeSubscription;
 
+import static com.example.doughpaze.utils.constants.BASE;
+
 public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.OfferListItemHolder> {
 
     private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
@@ -49,7 +51,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Offe
     @Override
     public void onBindViewHolder(@NonNull OfferListAdapter.OfferListItemHolder offerListItemHolder, int i) {
        Coupon coupon = myOrderResponseList.get(i);
-        String url = "http://3.131.127.136:5000" + coupon.getCoupon_location();
+        String url = BASE + coupon.getCoupon_location();
 
         Glide
         .with(context)

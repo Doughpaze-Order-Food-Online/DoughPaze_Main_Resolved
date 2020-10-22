@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.example.doughpaze.utils.constants.BASE;
+
 
 public class BannerAdapter extends PagerAdapter {
 
@@ -62,7 +64,7 @@ public class BannerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View itemView = layoutInflater.inflate(R.layout.banners_list_item, container, false);
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
-        String url = "http://3.131.127.136:5000" + bannersList.get(position).getBanner_location();
+        String url = BASE + bannersList.get(position).getBanner_location();
                     Glide
                     .with(context)
                     .load(url)

@@ -5,33 +5,24 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.doughpaze.models.Images;
+import com.example.doughpaze.models.Coupon;
 import com.example.doughpaze.models.Response;
+import com.example.doughpaze.models.banners;
 import com.example.doughpaze.network.networkUtils;
 import com.google.gson.Gson;
-
-import java.io.Serializable;
-
+import java.util.List;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-import static android.net.sip.SipErrorCode.TIME_OUT;
+
 
 public class logo_splash extends AppCompatActivity {
 
     private CompositeSubscription mSubscriptions;
     private SharedPreferences mSharedPreferences;
-    private static int TIME_OUT = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,45 +31,63 @@ public class logo_splash extends AppCompatActivity {
         mSubscriptions = new CompositeSubscription();
 
 
+        Runnable runnable = () -> {
+
+            Intent i = new Intent(logo_splash.this, MainActivity.class);
+            startActivity(i);
+            finish();
+        };
+
+        Handler handler = new Handler();
+        int TIME_OUT = 2000;
+        handler.postDelayed(runnable, TIME_OUT);
         FETCH_IMAGES();
     }
 
     private void FETCH_IMAGES() {
 
-        mSubscriptions.add(networkUtils.getRetrofit().IMAGES()
+        mSubscriptions.addAll(networkUtils.getRetrofit()
+                 .BANNERS()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
+                .subscribe(this::handleResponse,this::handleError),
+                networkUtils.getRetrofit()
+                        .Coupons()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(this::handleResponse2,this::handleError));
     }
 
-    private void handleResponse(Images response) {
-
-        Intent intent=new Intent(logo_splash.this,MainActivity.class);
-        intent.putExtra("banner",(Serializable)response.getBannersList());
-        intent.putExtra("coupons",(Serializable)response.getCouponsList());
-//        startActivity(intent);
-
+    private void handleResponse(List<banners> response) {
         mSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
 
         Gson gson = new Gson();
 
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        String banner = gson.toJson(response.getBannersList());
-        String coupon=gson.toJson(response.getCouponsList());
+        String banner = gson.toJson(response);
         editor.putString("banner",banner);
-        editor.putString("coupon",coupon);
         editor.apply();
-        startActivity(intent);
-        finish();
+
+
+    }
+
+
+    private void handleResponse2(List<Coupon> response) {
+        mSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        Gson gson = new Gson();
+
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        String banner = gson.toJson(response);
+        editor.putString("coupon",banner);
+        editor.apply();
+
 
     }
 
     private void handleError(Throwable error) {
-
-
-
-
 
         if (error instanceof HttpException) {
 
