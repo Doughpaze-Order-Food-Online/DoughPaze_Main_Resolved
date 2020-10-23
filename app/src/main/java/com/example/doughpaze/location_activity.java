@@ -68,7 +68,7 @@ public class location_activity extends AppCompatActivity {
     private FusedLocationProviderClient mFusedLocationClient;
     private Location mylocation;
     private static final String TAG = location_activity.class.getSimpleName();
-    private ImageView BackBtnImg;
+    private Button BackBtn;
 
     // Constants
     private static final int REQUEST_LOCATION_PERMISSION = 1;
@@ -78,17 +78,16 @@ public class location_activity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.location);
+        setContentView(R.layout.activity_location_activity);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         mSubscriptions = new CompositeSubscription();
 
-        BackBtnImg = findViewById(R.id.back_btn_location);
+        BackBtn = findViewById(R.id.back_btn_location);
 
-        BackBtnImg.requestFocus();
 
-        BackBtnImg.setOnClickListener(new View.OnClickListener() {
+        BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -246,7 +245,7 @@ public class location_activity extends AppCompatActivity {
                     getLocation();
                 } else {
                     Toast.makeText(this,
-                          "Permission Denied",
+                            "Permission Denied",
                             Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -272,8 +271,8 @@ public class location_activity extends AppCompatActivity {
                 if (location != null) {
                     mylocation= location;
 
-                    latitude=location.getLatitude();
-                   longitude=location.getLongitude();
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
 
 
                     setAddress(location);

@@ -71,6 +71,7 @@ public class saveaddress extends AppCompatActivity {
 
     // Constants
     private static final int REQUEST_LOCATION_PERMISSION = 1;
+    private Button BackBtn;
     private static final String TRACKING_LOCATION_KEY = "tracking_location";
 
 
@@ -78,19 +79,28 @@ public class saveaddress extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.location);
+        setContentView(R.layout.activity_location_activity);
 
 
+        BackBtn = findViewById(R.id.back_btn_location);
+
+
+        BackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         mSubscriptions = new CompositeSubscription();
         location = (Button) findViewById(R.id.location);
-        user_house=(TextInputEditText) findViewById(R.id.user_house);
-        user_landmark=(TextInputEditText)findViewById(R.id.user_land);
-        proceed=(Button)findViewById(R.id.proceed);
-        user_house_layout=(TextInputLayout) findViewById(R.id.house_flat_input);
-        user_landmark_layout=(TextInputLayout)findViewById(R.id.user_landmark);
-        save_for_future=(CheckBox)findViewById(R.id.save_for_future);
-        radioGroup=(RadioGroup)findViewById(R.id.type);
+        user_house = (TextInputEditText) findViewById(R.id.user_house);
+        user_landmark = (TextInputEditText) findViewById(R.id.user_land);
+        proceed = (Button) findViewById(R.id.proceed);
+        user_house_layout = (TextInputLayout) findViewById(R.id.house_flat_input);
+        user_landmark_layout = (TextInputLayout) findViewById(R.id.user_landmark);
+        save_for_future = (CheckBox) findViewById(R.id.save_for_future);
+        radioGroup = (RadioGroup) findViewById(R.id.type);
         save=findViewById(R.id.Save);
 
         save.setVisibility(View.VISIBLE);
