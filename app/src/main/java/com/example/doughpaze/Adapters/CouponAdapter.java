@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,6 +74,27 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponItem
         String heading2="Use code "+coupon.getCoupon_name() +" & get "+coupon.getDiscount()+"% discount up to Rs."+coupon.getMax_discount()+" on orders above Rs."+coupon.getMin_amount();
         couponItemHolder.description2.setText(heading2);
 
+        if(coupon.getTerms()!=null)
+        {
+            couponItemHolder.more.setVisibility(View.VISIBLE);
+
+        }
+        else
+        {
+            couponItemHolder.more.setVisibility(View.GONE);
+        }
+
+        couponItemHolder.more.setOnClickListener(v -> {
+            if(couponItemHolder.terms.getVisibility()==View.VISIBLE)
+            {
+                couponItemHolder.terms_container.setVisibility(View.GONE);
+            }
+            else
+            {
+                couponItemHolder.terms_container.setVisibility(View.VISIBLE);
+                couponItemHolder.terms.setText(coupon.getTerms());
+            }
+        });
 
         couponItemHolder.apply.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,8 +179,9 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponItem
     }
 
     class CouponItemHolder extends RecyclerView.ViewHolder {
-        private TextView name, description1, description2,more;
+        private TextView name, description1, description2,more,terms;
         private Button apply;
+        private LinearLayout terms_container;
 
 
 
@@ -170,7 +193,9 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponItem
             description2=itemView.findViewById(R.id.description2_txt);
             more=itemView.findViewById(R.id.more_btn);
             apply=itemView.findViewById(R.id.apply_btn);
+            terms=itemView.findViewById(R.id.terms);
             mSubscriptions = new CompositeSubscription();
+            terms_container=itemView.findViewById(R.id.terms_container);
 
         }
     }

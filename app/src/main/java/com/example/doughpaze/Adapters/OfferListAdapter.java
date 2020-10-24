@@ -61,6 +61,28 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Offe
         .diskCacheStrategy(DiskCacheStrategy.DATA)
         .into(offerListItemHolder.imageView);
 
+        if(coupon.getTerms()!=null)
+        {
+            offerListItemHolder.more.setVisibility(View.VISIBLE);
+
+        }
+        else
+        {
+            offerListItemHolder.more.setVisibility(View.GONE);
+        }
+
+        offerListItemHolder.more.setOnClickListener(v -> {
+            if(offerListItemHolder.terms.getVisibility()==View.VISIBLE)
+            {
+                offerListItemHolder.terms_container.setVisibility(View.GONE);
+            }
+            else
+            {
+                offerListItemHolder.terms_container.setVisibility(View.VISIBLE);
+                offerListItemHolder.terms.setText(coupon.getTerms());
+            }
+        });
+
         String description="Get "+coupon.getDiscount()+"% off on "+coupon.getCategory()+" Items";
         offerListItemHolder.offer_head_description_txt.setText(description);
         offerListItemHolder.category_txt.setText(coupon.getCategory());
@@ -87,8 +109,8 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Offe
 
     class OfferListItemHolder extends RecyclerView.ViewHolder {
     private ImageView imageView;
-    private TextView offer_head_description_txt,category_txt;
-    private LinearLayout parent;
+    private TextView offer_head_description_txt,category_txt,more,terms;
+    private LinearLayout parent,terms_container;
 
         OfferListItemHolder(View itemView) {
             super(itemView);
@@ -96,6 +118,9 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Offe
             offer_head_description_txt=itemView.findViewById(R.id.offer_head_description_txt);
             category_txt=itemView.findViewById(R.id.category_txt);
             parent=itemView.findViewById(R.id.parent);
+            terms_container=itemView.findViewById(R.id.terms_container);
+            terms=itemView.findViewById(R.id.terms);
+            more=itemView.findViewById(R.id.more_btn);
 
         }
     }

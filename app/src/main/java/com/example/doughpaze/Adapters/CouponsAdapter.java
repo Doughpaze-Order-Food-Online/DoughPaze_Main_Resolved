@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,28 @@ public class CouponsAdapter extends RecyclerView.Adapter<CouponsAdapter.CouponsI
         String heading2="Use code "+coupon.getCoupon_name() +" & get "+coupon.getDiscount()+"% discount up to Rs."+coupon.getMax_discount()+" on orders above Rs."+coupon.getMin_amount();
         couponsItemHolder.description2.setText(heading2);
 
+        if(coupon.getTerms()!=null)
+        {
+            couponsItemHolder.more.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            couponsItemHolder.more.setVisibility(View.GONE);
+
+        }
+
+        couponsItemHolder.more.setOnClickListener(v -> {
+            if(couponsItemHolder.terms.getVisibility()==View.VISIBLE)
+            {
+                couponsItemHolder.terms_container.setVisibility(View.GONE);
+            }
+            else
+            {
+                couponsItemHolder.terms_container.setVisibility(View.VISIBLE);
+                couponsItemHolder.terms.setText(coupon.getTerms());
+            }
+        });
+
         couponsItemHolder.apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,8 +103,9 @@ public class CouponsAdapter extends RecyclerView.Adapter<CouponsAdapter.CouponsI
     }
 
     class CouponsItemHolder extends RecyclerView.ViewHolder {
-        private TextView name, description1, description2,more;
+        private TextView name, description1, description2,more,terms;
         private Button apply;
+        private LinearLayout terms_container;
 
 
         CouponsItemHolder(View itemView) {
@@ -92,6 +116,8 @@ public class CouponsAdapter extends RecyclerView.Adapter<CouponsAdapter.CouponsI
             more=itemView.findViewById(R.id.more_btn);
             apply=itemView.findViewById(R.id.apply_btn);
             apply.setText("Copy to Clipboard");
+            terms_container=itemView.findViewById(R.id.terms_container);
+            terms=itemView.findViewById(R.id.terms);
         }
     }
 

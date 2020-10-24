@@ -33,6 +33,8 @@ public class Coupon implements Serializable {
 
     @SerializedName("duration")
     int duration;
+    @SerializedName("terms")
+    String terms;
 
 
     public String getCategory() {
@@ -101,5 +103,9 @@ public class Coupon implements Serializable {
 
     public void setExpiry(Date expiry) {
         this.expiry = expiry;
+    }
+
+    public String getTerms() {
+        return terms;
     }
 }
