@@ -275,7 +275,7 @@ public class apply_coupon_activity extends AppCompatActivity implements finishAc
                             double saving = (total * x.getDiscount()) / 100;
                             saving = saving > x.getMax_discount() ? x.getMax_discount() : saving;
                             String coupon_name = x.getCoupon_name();
-                            CouponsUsed(saving,coupon_name,x.getLimit());
+                            CouponsUsed(saving,coupon_name,x.getLimit(),x.getDuration());
 
                             break;
                         }
@@ -296,7 +296,7 @@ public class apply_coupon_activity extends AppCompatActivity implements finishAc
                                     double saving=(total*x.getDiscount())/100;
                                     saving=saving>x.getMax_discount()?x.getMax_discount():saving;
                                     String coupon_name=x.getCoupon_name();
-                                    CouponsUsed(saving,coupon_name,x.getLimit());
+                                    CouponsUsed(saving,coupon_name,x.getLimit(),x.getDuration());
 
 
                                 }
@@ -369,7 +369,7 @@ public class apply_coupon_activity extends AppCompatActivity implements finishAc
 
     }
 
-    private void CouponsUsed(Double saving,String coupon_name,int limit)
+    private void CouponsUsed(Double saving,String coupon_name,int limit,int duration)
     {
 
         progressDialog = new ProgressDialog(this);
@@ -381,7 +381,7 @@ public class apply_coupon_activity extends AppCompatActivity implements finishAc
                 .getDefaultSharedPreferences(this);
 
         mSubscriptions.add(networkUtils.getRetrofit(mSharedPreferences.getString(constants.TOKEN, null))
-                .CHECK_COUPON_AVAILIBILITY(mSharedPreferences.getString(constants.PHONE, null),coupon_name,saving,limit)
+                .CHECK_COUPON_AVAILIBILITY(mSharedPreferences.getString(constants.PHONE, null),coupon_name,saving,limit,duration)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse2,this::handleError2));
@@ -399,7 +399,7 @@ public class apply_coupon_activity extends AppCompatActivity implements finishAc
             editor.apply();
         }
         else {
-            alertBox("Sorry! This Coupon is not valid");
+            alertBox(response.getMessage());
         }
 
 

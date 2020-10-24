@@ -94,6 +94,7 @@
                 android:textColor="@color/colorPrimaryText" />
 
             <TextView
+                android:id="@+id/terms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/bullet_1"
@@ -101,70 +102,6 @@
 
 
         </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
-
-            <TextView
-                android:id="@+id/bullet_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/u25cf"
-                android:textColor="@color/colorPrimaryText" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/bullet_2"
-                tools:text="Coupon code can be applied only once in 2hrs" />
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
-
-            <TextView
-                android:id="@+id/bullet_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/u25cf"
-                android:textColor="@color/colorPrimaryText" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/bullet_3"
-                android:text="@string/other_t_amp_cs_may_apply" />
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
-
-            <TextView
-                android:id="@+id/bullet_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/u25cf"
-                android:textColor="@color/colorPrimaryText" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/bullet_4"
-                tools:text="Offer vslid till 02, 2020 23:59 PM" />
-
-
-        </RelativeLayout>
-
 
     </LinearLayout>
 

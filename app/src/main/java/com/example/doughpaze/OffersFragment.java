@@ -100,7 +100,12 @@ public class OffersFragment extends Fragment {
             public void onRefresh() {
                 if (customSwipeRefreshLayout.isRefreshing()) {
                     if (isOnline()) {
-                        //Add the functionality here
+                        progressDialog = new ProgressDialog(getContext());
+                        progressDialog.show();
+                        progressDialog.setContentView(R.layout.progress_loading);
+                        Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+                        FETCH_COUPONS();
+                        customSwipeRefreshLayout.setRefreshing(false);
                     } else {
                         Handler h = new Handler();
                         h.postDelayed(new Runnable() {
