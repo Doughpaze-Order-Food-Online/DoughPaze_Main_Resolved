@@ -5,13 +5,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.doughpaze.models.Coupon;
 import com.example.doughpaze.models.Response;
 import com.example.doughpaze.models.banners;
 import com.example.doughpaze.network.networkUtils;
 import com.google.gson.Gson;
+
 import java.util.List;
+
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -104,10 +109,7 @@ public class logo_splash extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-            Intent intent=new Intent(logo_splash.this,MainActivity.class);
-            startActivity(intent);
-            finish();
-
+            Toast.makeText(this, "Network Error", Toast.LENGTH_SHORT).show();
         }
     }
 
