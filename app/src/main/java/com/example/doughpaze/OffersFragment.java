@@ -73,11 +73,15 @@ public class OffersFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_offers, container, false);
+
+        viewPager2 = rootView.findViewById(R.id.offers_viewPager);
+        offers_tabs = rootView.findViewById(R.id.offers_tabs);
+        internet = rootView.findViewById(R.id.no_internet_container);
+        retry = rootView.findViewById(R.id.retry_btn);
         mSubscriptions = new CompositeSubscription();
         mSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getContext());
-        if(mSharedPreferences.getString("offer", null)==null)
-        {
+        if (mSharedPreferences.getString("offer", null) == null) {
             progressDialog = new ProgressDialog(getContext());
             progressDialog.show();
             progressDialog.setContentView(R.layout.progress_loading);
@@ -108,13 +112,6 @@ public class OffersFragment extends Fragment {
             tabLayoutMediator.attach();
         }
 
-
-
-
-        viewPager2 = rootView.findViewById(R.id.offers_viewPager);
-        offers_tabs = rootView.findViewById(R.id.offers_tabs);
-        internet=rootView.findViewById(R.id.no_internet_container);
-        retry=rootView.findViewById(R.id.retry_btn);
 
         retry.setOnClickListener(new View.OnClickListener() {
             @Override
