@@ -109,7 +109,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponItem
                         double saving=(total*coupon.getDiscount())/100;
                         saving=saving>coupon.getMax_discount()?coupon.getMax_discount():saving;
                         String coupon_name=coupon.getCoupon_name();
-                        CouponsUsed(saving,coupon_name,coupon.getLimit());
+                        CouponsUsed(saving,coupon_name,coupon.getLimit(),coupon.getDuration());
                     }
 
                 }
@@ -129,7 +129,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponItem
                                 double saving=(total*coupon.getDiscount())/100;
                                 saving=saving>coupon.getMax_discount()?coupon.getMax_discount():saving;
                                 String coupon_name=coupon.getCoupon_name();
-                                CouponsUsed(saving,coupon_name,coupon.getLimit());
+                                CouponsUsed(saving,coupon_name,coupon.getLimit(),coupon.getDuration());
                                 break;
                             }
                         }
@@ -216,7 +216,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponItem
 
     }
 
-    private void CouponsUsed(Double saving,String coupon_name,int limit)
+    private void CouponsUsed(Double saving,String coupon_name,int limit,int duration)
     {
 
         progressDialog = new ProgressDialog(context);
@@ -228,7 +228,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponItem
                 .getDefaultSharedPreferences(context);
 
         mSubscriptions.add(networkUtils.getRetrofit(mSharedPreferences.getString(constants.TOKEN, null))
-                .CHECK_COUPON_AVAILIBILITY(mSharedPreferences.getString(constants.PHONE, null),coupon_name,saving,limit)
+                .CHECK_COUPON_AVAILIBILITY(mSharedPreferences.getString(constants.PHONE, null),coupon_name,saving,limit,duration)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse2,this::handleError2));

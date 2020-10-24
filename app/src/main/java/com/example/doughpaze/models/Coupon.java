@@ -31,6 +31,9 @@ public class Coupon implements Serializable {
     @SerializedName("expiry")
     Date expiry;
 
+    @SerializedName("duration")
+    int duration;
+
 
     public String getCategory() {
         return category;
@@ -62,6 +65,10 @@ public class Coupon implements Serializable {
 
     public void setDiscount(int discount) {
         this.discount = discount;
+    }
+
+    public int getDuration() {
+        return duration;
     }
 
     public void setMin_amount(int min_amount) {

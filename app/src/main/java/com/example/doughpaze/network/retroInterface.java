@@ -104,7 +104,7 @@ public interface retroInterface {
                                                 @Query("tid") String tid,@Query("amount") Double amount,@Query("refundId") String refundId);
 
     @POST("coupon_available")
-    Observable<Response>  CHECK_COUPON_AVAILIBILITY(@Query("mobile_no") String mobile_no, @Query("coupon") String coupon,@Query("saving") Double saving,@Query("limit") int limit);
+    Observable<Response>  CHECK_COUPON_AVAILIBILITY(@Query("mobile_no") String mobile_no, @Query("coupon") String coupon,@Query("saving") Double saving,@Query("limit") int limit,@Query("duration") int duration);
 
     @GET("item_details")
     Observable<SubItem> GET_ITEM_DETAILS(@Query("id") String id);
