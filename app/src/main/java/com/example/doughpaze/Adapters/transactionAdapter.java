@@ -24,6 +24,7 @@ import com.example.doughpaze.R;;
 import com.example.doughpaze.address_activity;
 import com.example.doughpaze.models.Address;
 import com.example.doughpaze.models.AddressResponse;
+import com.example.doughpaze.models.FinalOrder;
 import com.example.doughpaze.models.FoodCart;
 import com.example.doughpaze.models.MyOrderResponse;
 import com.example.doughpaze.models.Response;
@@ -55,6 +56,7 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
     private SharedPreferences mSharedPreferences;
     private Context context;
     private ProgressDialog progressDialog;
+    private refresh refresh;
 
 
 
@@ -62,9 +64,10 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
 
 
 
-    public transactionAdapter(List<MyOrderResponse> list,Context context) {
+    public transactionAdapter(List<MyOrderResponse> list,Context context,refresh refresh) {
         this.myOrderResponseList=list;
         this.context=context;
+        this.refresh=refresh;
 
     }
 
@@ -121,16 +124,39 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
         Date d1=new Date();
         long diff= (d1.getTime()-myOrderResponse.getDate().getTime())/1000;
 
-        if(diff>1800 || !myOrderResponse.getOrder_status().equals("Ordered") || myOrderResponse.getOrder_status().equals("Payment Initiated"))
-        {
-            transactionItemHolder.reorder.setVisibility(View.VISIBLE);
-            transactionItemHolder.cancel.setVisibility(View.GONE);
-        }
-        else
+        if(myOrderResponse.getPayment_status() && diff<=1800)
         {
             transactionItemHolder.reorder.setVisibility(View.GONE);
             transactionItemHolder.cancel.setVisibility(View.VISIBLE);
+            transactionItemHolder.check.setVisibility(View.GONE);
         }
+        else if(myOrderResponse.getOrder_status().trim().toLowerCase().equals("Payment Initiated".toLowerCase().trim()) || myOrderResponse.getOrder_status().trim().toLowerCase().equals("PENDING".toLowerCase().trim()))
+        {
+            transactionItemHolder.reorder.setVisibility(View.GONE);
+            transactionItemHolder.cancel.setVisibility(View.GONE);
+            transactionItemHolder.check.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            transactionItemHolder.reorder.setVisibility(View.VISIBLE);
+            transactionItemHolder.cancel.setVisibility(View.GONE);
+            transactionItemHolder.check.setVisibility(View.GONE);
+        }
+
+        transactionItemHolder.check.setOnClickListener(v -> {
+            mSharedPreferences = PreferenceManager
+                    .getDefaultSharedPreferences(context);
+
+            FinalOrder final_order=new FinalOrder();
+
+            String token = mSharedPreferences.getString(constants.TOKEN, null);
+            mSubscriptions.add(networkUtils.getRetrofit(token)
+                    .PLACE_ONLINE_ORDER(final_order,constants.MID,myOrderResponse.getOrderId())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(this::handleResponse_COD,this::handleError));
+
+        });
 
 
         transactionItemHolder.reorder.setOnClickListener(new View.OnClickListener() {
@@ -195,11 +221,21 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
 
     }
 
+    private void handleResponse_COD(Response response) {
+        if(progressDialog!=null)
+        {
+            progressDialog.dismiss();
+        }
+        refresh.FETCH_AGAIN();
+        Toast.makeText(context, "Status Updated! Refreshing", Toast.LENGTH_SHORT).show();
+
+    }
+
     class transactionItemHolder extends RecyclerView.ViewHolder {
         private Button reorder;
         private TextView total,orderId,date,status,payment_mode,tid,address,coupon,tidtext,couponText;
         private RecyclerView rvItem;
-        private Button cancel;
+        private Button cancel,check;
 
 
 
@@ -219,6 +255,7 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
             mSubscriptions = new CompositeSubscription();
             tidtext=itemView.findViewById(R.id.transaction_txt);
             couponText=itemView.findViewById(R.id.couponText);
+            check=itemView.findViewById(R.id.check_status_btn);
 
         }
     }

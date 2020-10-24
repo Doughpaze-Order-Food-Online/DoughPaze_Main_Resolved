@@ -297,6 +297,14 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
                 else
                 {
                     Objects.requireNonNull(getActivity()).finishAffinity();
+
+                    mSharedPreferences = PreferenceManager
+                            .getDefaultSharedPreferences(getContext());
+
+
+                    SharedPreferences.Editor editor = mSharedPreferences.edit();
+                    editor.putString("offer",null);
+                    editor.apply();
                 }
             }
         };

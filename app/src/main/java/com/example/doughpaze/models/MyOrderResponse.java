@@ -49,6 +49,9 @@ public class MyOrderResponse {
     @SerializedName("coupon_name")
     String coupon_name;
 
+    @SerializedName("payment_status")
+    Boolean payment_status;
+
 
     public String getOrderId() {
         return orderId;
@@ -160,6 +163,10 @@ public class MyOrderResponse {
 
     public void setCoupon_name(String coupon_name) {
         this.coupon_name = coupon_name;
+    }
+
+    public Boolean getPayment_status() {
+        return payment_status;
     }
 }
 

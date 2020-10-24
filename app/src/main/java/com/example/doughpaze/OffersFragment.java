@@ -2,6 +2,7 @@ package com.example.doughpaze;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,14 +26,17 @@ import android.widget.Toast;
 import com.example.doughpaze.Adapters.OfferListAdapter;
 import com.example.doughpaze.models.Coupon;
 import com.example.doughpaze.models.Response;
+import com.example.doughpaze.models.banners;
 import com.example.doughpaze.network.networkUtils;
 import com.example.doughpaze.utils.CustomSwipeRefreshLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -56,6 +61,7 @@ public class OffersFragment extends Fragment {
     TabLayout offers_tabs;
     private Button retry;
     private CustomSwipeRefreshLayout customSwipeRefreshLayout;
+    private SharedPreferences mSharedPreferences;
 
 
     public OffersFragment() {
@@ -68,12 +74,41 @@ public class OffersFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_offers, container, false);
         mSubscriptions = new CompositeSubscription();
+        mSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getContext());
+        if(mSharedPreferences.getString("offer", null)==null)
+        {
+            progressDialog = new ProgressDialog(getContext());
+            progressDialog.show();
+            progressDialog.setContentView(R.layout.progress_loading);
+            Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+            FETCH_COUPONS();
+        }
+        else
+        {
+            Type type=new TypeToken<List<Coupon>>(){}.getType();
+            Gson gson=new Gson();
 
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.show();
-        progressDialog.setContentView(R.layout.progress_loading);
-        Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
-        FETCH_COUPONS();
+           List<Coupon> couponList=gson.fromJson(mSharedPreferences.getString("offer", null),type);
+            viewPager2.setVisibility(View.VISIBLE);
+            internet.setVisibility(View.GONE);
+            viewPager2.setAdapter(new OfferFragmentStateAdapter(this,couponList));
+            TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(
+                    offers_tabs, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+                @Override
+                public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                    if (position == 0) {
+                        tab.setText("Restaurant Offers");
+                    } else {
+                        tab.setText("Payment offers/coupons");
+                    }
+                }
+            }
+            );
+            tabLayoutMediator.attach();
+        }
+
+
 
 
         viewPager2 = rootView.findViewById(R.id.offers_viewPager);
@@ -156,6 +191,17 @@ public class OffersFragment extends Fragment {
                 newresponse.add(x);
             }
         }
+
+        mSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getContext());
+
+        Gson gson = new Gson();
+
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        String banner = gson.toJson(newresponse);
+        editor.putString("offer",banner);
+        editor.apply();
+
         viewPager2.setVisibility(View.VISIBLE);
         internet.setVisibility(View.GONE);
         viewPager2.setAdapter(new OfferFragmentStateAdapter(this,newresponse));

@@ -62,6 +62,7 @@ public class order_details extends AppCompatActivity {
         couponText=findViewById(R.id.couponText);
         parent=findViewById(R.id.parent);
         transaction_txt=findViewById(R.id.transaction_txt);
+        parent.setVisibility(View.GONE);
 
         Fetch_Details( intent.getStringExtra("id"));
 

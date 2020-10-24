@@ -397,8 +397,7 @@ public class order_confirm_activity extends AppCompatActivity {
                 Log.e(TAG, "Response (onTransactionResponse) : "+bundle.toString());
                 PaymentDetails paymentDetails=new PaymentDetails();
 
-                if(Objects.equals(bundle.get("RESPCODE"), "01") || Objects.equals(bundle.get("RESPCODE"), "400"))
-                {
+
                     paymentDetails.setBankname(bundle.getString("BANKNAME"));
                     paymentDetails.setOrderId(bundle.getString("ORDERID"));
                     paymentDetails.setAmountpaid(Double.parseDouble(bundle.getString("TXNAMOUNT")));
@@ -406,33 +405,13 @@ public class order_confirm_activity extends AppCompatActivity {
                     paymentDetails.setTransactionId(bundle.getString("TXNID"));
                     paymentDetails.setPaymentType(bundle.getString("PAYMENTMODE"));
                     paymentDetails.setBankTransactionId(bundle.getString("BANKTXNID"));
-                    paymentDetails.setPayment_status(true);
-
                     progressDialog=new ProgressDialog(order_confirm_activity.this);
                     progressDialog.show();
                     progressDialog.setContentView(R.layout.progress_loading);
                     Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
-
                     PLACE_ORDER(paymentDetails);
-                }
-                else
-                {
-                    paymentDetails.setBankname(bundle.getString("BANKNAME"));
-                    paymentDetails.setOrderId(bundle.getString("ORDERID"));
-                    paymentDetails.setAmountpaid(Double.parseDouble(bundle.getString("TXNAMOUNT")));
-                    paymentDetails.setDate(bundle.getString("TXNDATE"));
-                    paymentDetails.setTransactionId(bundle.getString("TXNID"));
-                    paymentDetails.setPaymentType(bundle.getString("PAYMENTMODE"));
-                    paymentDetails.setBankTransactionId(bundle.getString("BANKTXNID"));
-                    paymentDetails.setPayment_status(false);
 
-                    progressDialog=new ProgressDialog(order_confirm_activity.this);
-                    progressDialog.show();
-                    progressDialog.setContentView(R.layout.progress_loading);
-                    Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
 
-                    PLACE_ORDER(paymentDetails);
-                }
 
 
 
@@ -440,42 +419,37 @@ public class order_confirm_activity extends AppCompatActivity {
 
             @Override
             public void networkNotAvailable() {
-                Log.e(TAG, "network not available ");
+                Alert();
             }
 
             @Override
             public void onErrorProceed(String s) {
-                Log.e(TAG, " onErrorProcess "+s.toString());
+                Alert();
             }
 
             @Override
             public void clientAuthenticationFailed(String s) {
-                Log.e(TAG, "Clientauth "+s);
+                Alert();
             }
 
             @Override
             public void someUIErrorOccurred(String s) {
-                Log.e(TAG, " UI error "+s);
+                Alert();
             }
 
             @Override
             public void onErrorLoadingWebPage(int i, String s, String s1) {
-                Log.e(TAG, " error loading web "+s+"--"+s1);
+                Alert();
             }
 
             @Override
             public void onBackPressedCancelTransaction() {
-                Log.e(TAG, "backPress ");
+                Alert();
             }
 
             @Override
             public void onTransactionCancel(String s, Bundle bundle) {
-                Log.e(TAG, " transaction cancel "+s);
-                PaymentDetails paymentDetails=new PaymentDetails();
-                paymentDetails.setPayment_status(false);
-                paymentDetails.setStatus("Payment Transaction Cancelled");
-                paymentDetails.setOrderId(bundle.getString("ORDERID"));
-                PLACE_ORDER(paymentDetails);
+                Alert();
             }
         });
 
@@ -541,7 +515,7 @@ public class order_confirm_activity extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(this, "Error Occurred! Contact the Doughpaze team!", Toast.LENGTH_SHORT).show();
+            Alert();
         }
 
     }
@@ -597,4 +571,25 @@ public class order_confirm_activity extends AppCompatActivity {
         editor.putString("reorder",null);
         editor.apply();
     }
+
+    private void Alert()
+    {
+
+        new AlertDialog.Builder(order_confirm_activity.this)
+                .setTitle("Something Went Wrong!")
+                .setMessage("If Amount is Debited from your bank account, Check the status of the payment in My Transactions, else place the order again after sometime :) ")
+                .setNeutralButton("Okay", (DialogInterface.OnClickListener) (dialog, which) -> {
+                    Intent i=new Intent(order_confirm_activity.this,my_transaction_activity.class);
+                    startActivity(i);
+                    finish();
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+
+
+
+
+
+    }
+
 }

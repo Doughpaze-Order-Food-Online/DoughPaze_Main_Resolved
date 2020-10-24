@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doughpaze.Adapters.addressAdapter;
+import com.example.doughpaze.Adapters.refresh;
 import com.example.doughpaze.Adapters.transactionAdapter;
 import com.example.doughpaze.models.Address;
 import com.example.doughpaze.models.AddressResponse;
@@ -39,7 +40,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-public class my_transaction_activity extends AppCompatActivity {
+public class my_transaction_activity extends AppCompatActivity implements refresh {
 
     private TextView addnew;
     private CompositeSubscription mSubscriptions;
@@ -105,7 +106,7 @@ public class my_transaction_activity extends AppCompatActivity {
         rvItem.setVisibility(View.VISIBLE);
         internet.setVisibility(View.GONE);
         progressDialog.dismiss();
-        transactionAdapter transactionAdapter=new transactionAdapter(finalOrder,this);
+        transactionAdapter transactionAdapter=new transactionAdapter(finalOrder,this,this::FETCH_AGAIN);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvItem.setAdapter(transactionAdapter);
         rvItem.setLayoutManager(layoutManager);
@@ -132,5 +133,15 @@ public class my_transaction_activity extends AppCompatActivity {
           rvItem.setVisibility(View.GONE);
           internet.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void FETCH_AGAIN() {
+        progressDialog=new ProgressDialog(this);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_loading);
+        Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+        FetchTransaction();
     }
 }

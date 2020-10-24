@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen_16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="visible">
+            android:visibility="gone">
 
 
             <TextView
