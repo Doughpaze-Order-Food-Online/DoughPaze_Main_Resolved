@@ -28,6 +28,7 @@ public class logo_splash extends AppCompatActivity {
 
     private CompositeSubscription mSubscriptions;
     private SharedPreferences mSharedPreferences;
+    private int error_flag=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +94,11 @@ public class logo_splash extends AppCompatActivity {
     }
 
     private void handleError(Throwable error) {
+        if(error_flag==1)
+        {
+            return;
+        }
+        error_flag=1;
 
         if (error instanceof HttpException) {
 
