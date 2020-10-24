@@ -190,7 +190,7 @@
     <string name="service_not_available">Error</string>
     <string name="no_address_found">Address Not Foubd</string>
     <string name="oh_no">Oh No!!</string>
-    <string name="no_internet_found_nplease_check_your_connection">No internet found.\nPlease check your connection or</string>
+    <string name="no_internet_found_nplease_check_your_connection">No internet found.\nPlease check your connection or\nSwipe down to Refresh\nOr</string>
     <string name="retry">Retry</string>
     <string name="sorry_coupon_s_are_not_available">Sorry, no coupon\'s are available\nat present.</string>
     <string name="you_don_t_have_any_saved_naddress_add_new_to_place_the_orders_easily">You don\'t have any saved\naddress, add new to place the orders easily.</string>
