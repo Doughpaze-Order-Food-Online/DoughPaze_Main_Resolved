@@ -5,10 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission
-        android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission
-        android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
@@ -19,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".location_activity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HelpAndSupportActivity"
             android:screenOrientation="portrait" />
@@ -48,28 +50,20 @@
         <activity
             android:name=".Subcategory_main"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name=".order_details"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".CartActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".profileActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".item_description_activity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".address_activity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".location_activity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".order_confirm_activity"
@@ -89,11 +83,9 @@
         <activity
             android:name=".loginActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".myaddress"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".saveaddress"
             android:screenOrientation="portrait" />
@@ -113,9 +105,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service android:name=".utils.addressServiceIntent" />
-
-
     </application>
 
 </manifest>

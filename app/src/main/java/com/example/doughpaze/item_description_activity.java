@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.doughpaze.FoodList.SubItem;
@@ -36,7 +37,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-public class item_description_activity extends Activity {
+public class item_description_activity extends AppCompatActivity {
 
     Intent i;
     private CompositeSubscription mSubscriptions;

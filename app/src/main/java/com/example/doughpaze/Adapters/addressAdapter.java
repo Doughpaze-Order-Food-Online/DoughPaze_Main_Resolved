@@ -11,38 +11,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.doughpaze.FoodList.ChangePrice;
 import com.example.doughpaze.R;
-import com.example.doughpaze.address_activity;
-import com.example.doughpaze.location_activity;
 import com.example.doughpaze.models.Address;
-import com.example.doughpaze.models.AddressResponse;
-import com.example.doughpaze.models.FoodCart;
 import com.example.doughpaze.models.Response;
 import com.example.doughpaze.network.networkUtils;
 import com.example.doughpaze.order_confirm_activity;
 import com.example.doughpaze.utils.constants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 

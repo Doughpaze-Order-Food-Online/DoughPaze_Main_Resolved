@@ -24,6 +24,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.example.doughpaze.models.Response;
@@ -51,12 +52,12 @@ import rx.subscriptions.CompositeSubscription;
 
 import static com.example.doughpaze.utils.validation.validateFields;
 
-public class saveaddress extends Activity {
-    private Button location,proceed,save;
+public class saveaddress extends AppCompatActivity {
+    private Button location, proceed, save;
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
-    private TextInputEditText user_landmark,user_house;
+    private TextInputEditText user_landmark, user_house;
     private ResultReceiver resultReceiver;
-    private TextInputLayout user_house_layout,user_landmark_layout ;
+    private TextInputLayout user_house_layout, user_landmark_layout;
     private double latitude, longitude;
     private CompositeSubscription mSubscriptions;
     private SharedPreferences mSharedPreferences;
@@ -70,6 +71,7 @@ public class saveaddress extends Activity {
 
     // Constants
     private static final int REQUEST_LOCATION_PERMISSION = 1;
+    private Button BackBtn;
     private static final String TRACKING_LOCATION_KEY = "tracking_location";
 
 
@@ -77,19 +79,28 @@ public class saveaddress extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.location);
+        setContentView(R.layout.activity_location_activity);
 
 
+        BackBtn = findViewById(R.id.back_btn_location);
+
+
+        BackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         mSubscriptions = new CompositeSubscription();
         location = (Button) findViewById(R.id.location);
-        user_house=(TextInputEditText) findViewById(R.id.user_house);
-        user_landmark=(TextInputEditText)findViewById(R.id.user_land);
-        proceed=(Button)findViewById(R.id.proceed);
-        user_house_layout=(TextInputLayout) findViewById(R.id.house_flat_input);
-        user_landmark_layout=(TextInputLayout)findViewById(R.id.user_landmark);
-        save_for_future=(CheckBox)findViewById(R.id.save_for_future);
-        radioGroup=(RadioGroup)findViewById(R.id.type);
+        user_house = (TextInputEditText) findViewById(R.id.user_house);
+        user_landmark = (TextInputEditText) findViewById(R.id.user_land);
+        proceed = (Button) findViewById(R.id.proceed);
+        user_house_layout = (TextInputLayout) findViewById(R.id.house_flat_input);
+        user_landmark_layout = (TextInputLayout) findViewById(R.id.user_landmark);
+        save_for_future = (CheckBox) findViewById(R.id.save_for_future);
+        radioGroup = (RadioGroup) findViewById(R.id.type);
         save=findViewById(R.id.Save);
 
         save.setVisibility(View.VISIBLE);

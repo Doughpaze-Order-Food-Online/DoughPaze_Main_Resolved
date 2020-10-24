@@ -1,18 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".location_activity">
 
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:text="@string/address_details"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="30sp"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/back_btn_location"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        android:background="@drawable/ic_baseline_arrow_back_24"
+        android:backgroundTint="@color/colorPrimaryText"
+        android:contentDescription="@string/todo"
+        tools:ignore="UseAppTint" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_below="@id/back_btn_location"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:visibility="visible">
 
 
         <LinearLayout
@@ -21,15 +44,6 @@
             android:orientation="vertical"
             android:padding="32dp">
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="16dp"
-                android:text="@string/address_details"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="30sp" />
 
             <Button
                 android:id="@+id/location"
@@ -62,6 +76,7 @@
                 style="@style/Widget.Design.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
                 android:hint="@string/house_flat_block_no"
                 app:boxStrokeColor="@color/colorPrimary"
                 app:boxStrokeWidthFocused="2dp"
@@ -73,6 +88,7 @@
                     android:id="@+id/user_house"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:focusableInTouchMode="true"
                     android:inputType="text"
                     android:textColor="@color/colorPrimaryText"
                     android:textCursorDrawable="@null" />
@@ -87,6 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:focusableInTouchMode="true"
                 android:hint="@string/landmark"
                 app:boxStrokeColor="@color/colorPrimary"
                 app:boxStrokeWidthFocused="2dp"
@@ -98,6 +115,7 @@
                     android:id="@+id/user_land"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusableInTouchMode="true"
                     android:inputType="textMultiLine"
                     android:textColor="@color/colorPrimaryText"
                     android:textCursorDrawable="@null" />
@@ -147,8 +165,8 @@
                 android:id="@+id/save_for_future"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:text="@string/save_for_future" />
+                android:text="@string/save_for_future"
+                android:visibility="visible" />
 
 
             <Button
@@ -162,9 +180,9 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="@string/proceed"
-                android:visibility="visible"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/Save"
@@ -179,10 +197,10 @@
                 android:text="@string/save_address"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="24sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
 
         </LinearLayout>
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
