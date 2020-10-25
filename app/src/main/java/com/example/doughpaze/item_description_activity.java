@@ -25,6 +25,7 @@ import com.example.doughpaze.FoodList.SubItem;
 import com.example.doughpaze.models.FoodCart;
 import com.example.doughpaze.models.Response;
 import com.example.doughpaze.network.networkUtils;
+import com.example.doughpaze.utils.constants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -143,7 +144,7 @@ public class item_description_activity extends AppCompatActivity {
         name.setText(response.getFood_name());
         price.setText(String.valueOf(response.getPrice()));
         description.setText(response.getDescription());
-        String url = "http://3.131.127.136:5000" + response.getFood_image();
+        String url = constants.BASE + response.getFood_image();
 
         Glide
         .with(this)
