@@ -45,7 +45,7 @@ public class logo_splash extends AppCompatActivity {
         };
 
         Handler handler = new Handler();
-        int TIME_OUT = 2000;
+        int TIME_OUT = 3000;
         handler.postDelayed(runnable, TIME_OUT);
         FETCH_IMAGES();
     }
