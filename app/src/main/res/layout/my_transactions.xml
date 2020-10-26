@@ -34,10 +34,10 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif-medium"
-            android:text="@string/my_transactions_amp_norders"
+            android:text="@string/my_transactions_and_norders"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
-            android:textSize="30sp" />
+            android:textSize="24sp" />
 
     </RelativeLayout>
 

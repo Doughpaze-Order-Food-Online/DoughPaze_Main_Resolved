@@ -34,7 +34,7 @@
             android:fontFamily="sans-serif-medium"
             android:text="@string/apply_coupons"
             android:textColor="@color/colorPrimary"
-            android:textSize="30sp" />
+            android:textSize="28sp" />
 
     </RelativeLayout>
 
