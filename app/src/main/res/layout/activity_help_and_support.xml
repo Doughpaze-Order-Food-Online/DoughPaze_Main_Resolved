@@ -38,7 +38,7 @@
             android:fontFamily="sans-serif-medium"
             android:text="@string/help_or_contact_us"
             android:textColor="@color/colorPrimary"
-            android:textSize="30sp" />
+            android:textSize="28sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
