@@ -28,6 +28,7 @@ import com.example.doughpaze.models.FinalOrder;
 import com.example.doughpaze.models.FoodCart;
 import com.example.doughpaze.models.MyOrderResponse;
 import com.example.doughpaze.models.Response;
+import com.example.doughpaze.models.User;
 import com.example.doughpaze.network.networkUtils;
 import com.example.doughpaze.order_confirm_activity;
 import com.example.doughpaze.utils.constants;
@@ -148,8 +149,19 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
                     .getDefaultSharedPreferences(context);
 
             FinalOrder final_order=new FinalOrder();
+            final_order.setOrderId(myOrderResponse.getOrderId());
+            //user
+            User user=new User();
+            user.setEmail(mSharedPreferences.getString(constants.EMAIL, null));
+            user.setMobile_no(mSharedPreferences.getString(constants.PHONE, null));
+            user.setName(mSharedPreferences.getString(constants.NAME, null));
+            final_order.setUser(user);
 
             String token = mSharedPreferences.getString(constants.TOKEN, null);
+            progressDialog=new ProgressDialog(context);
+            progressDialog.show();
+            progressDialog.setContentView(R.layout.progress_loading);
+            Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
             mSubscriptions.add(networkUtils.getRetrofit(token)
                     .PLACE_ONLINE_ORDER(final_order,constants.MID,myOrderResponse.getOrderId())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -227,6 +239,14 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
             progressDialog.dismiss();
         }
         refresh.FETCH_AGAIN();
+        mSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString("cart",null);
+        editor.putString("address",null);
+        editor.putString("discount",null);
+        editor.putString("coupon_name",null);
+        editor.apply();
         Toast.makeText(context, "Status Updated! Refreshing", Toast.LENGTH_SHORT).show();
 
     }
@@ -270,7 +290,7 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
                 .CANCEL_ONLINE_ORDER(id,orderId,constants.MID,trasnsactionId,amount,GENERATE_ID())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
+                .subscribe(this::handleResponse,this::handleError2));
     }
 
     private void CANCEL_OFFLINE_ORDER(String id,String orderId)
@@ -284,7 +304,7 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
                 .CANCEL_OFFLINE_ORDER(id,orderId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
+                .subscribe(this::handleResponse,this::handleError2));
     }
 
 
@@ -297,6 +317,33 @@ public class transactionAdapter extends RecyclerView.Adapter<transactionAdapter.
     private void handleError(Throwable error) {
 
         progressDialog.dismiss();
+        Log.e("Error",error.toString());
+
+        if (error instanceof HttpException) {
+
+            Gson gson = new GsonBuilder().create();
+
+            try {
+
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Response response = gson.fromJson(errorBody,Response.class);
+                refresh.FETCH_AGAIN();
+                Toast.makeText(context, "Status Updated! Refreshing", Toast.LENGTH_SHORT).show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show();
+            Log.e("error",error.toString());
+
+        }
+    }
+
+    private void handleError2(Throwable error) {
+
+        progressDialog.dismiss();
+        Log.e("Error",error.toString());
 
         if (error instanceof HttpException) {
 

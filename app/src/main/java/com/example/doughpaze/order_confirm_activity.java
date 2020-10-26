@@ -472,6 +472,7 @@ public class order_confirm_activity extends AppCompatActivity {
                     + data.getStringExtra("response"), Toast.LENGTH_SHORT).show();
         }else{
             Log.e(TAG, " payment failed");
+            Alert();
         }
     }
 
@@ -504,6 +505,7 @@ public class order_confirm_activity extends AppCompatActivity {
     }
 
     private void handleResponse_COD(Response response) {
+
         if(progressDialog!=null)
         {
             progressDialog.dismiss();
@@ -512,10 +514,12 @@ public class order_confirm_activity extends AppCompatActivity {
         if(!response.getOtp().equals("-1"))
         {
             GO_TO_PROFILE(response.getToken());
+
         }
         else
         {
             Alert();
+
         }
 
     }
@@ -533,7 +537,8 @@ public class order_confirm_activity extends AppCompatActivity {
 
                 String errorBody = ((HttpException) error).response().errorBody().string();
                 Response response = gson.fromJson(errorBody,Response.class);
-                Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+
+                Alert();
 
             } catch (IOException e) {
                 e.printStackTrace();
